@@ -1,532 +1,851 @@
-<script type="module">
-    // Firebase SDK imports
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import {
-        getAuth,
-        signInWithPopup,
-        GoogleAuthProvider,
-        createUserWithEmailAndPassword,
-        signInWithEmailAndPassword,
-        signOut,
-        onAuthStateChanged,
-        signInWithCustomToken,
-        signInAnonymously
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import {
-        getFirestore,
-        doc,
-        getDoc,
-        setDoc,
-        addDoc,
-        collection,
-        query,
-        where,
-        onSnapshot,
-        serverTimestamp,
-        getDocs
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusConnect - Your Academic Task Marketplace</title>
+    <meta name="description" content="CampusConnect: The ultimate platform for college students to get academic help and earn money by completing tasks like assignments, notes, reports, and PPTs within their college community.">
+    <meta name="keywords" content="college students, academic help, assignments, notes, reports, PPTs, earn money, student jobs, campus tasks, peer help, university, student platform">
 
-    // --- Firebase Configuration & Initialization ---
-    // IMPORTANT: These variables are provided by the Canvas environment.
-    // DO NOT hardcode your Firebase config here.
-    const appId = "clglink";
-    const firebaseConfig = {
-  apiKey: "AIzaSyCiH_Oa7hzN0WL2e3391M-1LaIf0jzmPDA",
-  authDomain: "clglink-37e05.firebaseapp.com",
-  projectId: "clglink-37e05",
-  storageBucket: "clglink-37e05.firebasestorage.app",
-  messagingSenderId: "150826464811",
-  appId: "1:150826464811:web:ab87ebcdba820f98ca1c6e",
-  measurementId: "G-E3FL29DWML"
-};
-    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.yourstartup.com/"> <!-- Replace with your actual URL -->
+    <meta property="og:title" content="CampusConnect - Your Academic Task Marketplace">
+    <meta property="og:description" content="CampusConnect: The ultimate platform for college students to get academic help and earn money by completing tasks like assignments, notes, reports, and PPTs within their college community.">
+    <meta property="og:image" content="https://placehold.co/1200x630/60A5FA/FFFFFF?text=CampusConnect"> <!-- Replace with your actual logo/image -->
 
-    let app;
-    let auth;
-    let db;
-    let currentUserData = null; // Stores user profile data from Firestore
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.yourstartup.com/"> <!-- Replace with your actual URL -->
+    <meta property="twitter:title" content="CampusConnect - Your Academic Task Marketplace">
+    <meta property="twitter:description" content="CampusConnect: The ultimate platform for college students to get academic help and earn money by completing tasks like assignments, notes, reports, and PPTs within their college community.">
+    <meta property="twitter:image" content="https://placehold.co/1200x630/60A5FA/FFFFFF?text=CampusConnect"> <!-- Replace with your actual logo/image -->
 
-    // Initialize Firebase
-    try {
-        app = initializeApp(firebaseConfig);
-        auth = getAuth(app);
-        db = getFirestore(app);
-        console.log("Firebase initialized successfully.");
-    } catch (error) {
-        console.error("Error initializing Firebase:", error);
-        showMessage("Error initializing Firebase. Check console for details.", "error");
-    }
-
-    // --- Global UI Elements ---
-    const landingPage = document.getElementById('landing-page');
-    const authPage = document.getElementById('auth-page');
-    const onboardingPage = document.getElementById('onboarding-page');
-    const dashboardPage = document.getElementById('dashboard-page');
-    const logoutButton = document.getElementById('logout-button');
-    const homeLink = document.getElementById('home-link');
-    const messageBox = document.getElementById('message-box');
-    const messageContent = document.getElementById('message-content');
-    const messageCloseButton = document.getElementById('message-close-button');
-
-    // --- Message Box Functions ---
-    function showMessage(message, type = "info") {
-        messageContent.textContent = message;
-        messageBox.className = `fixed bottom-4 right-4 p-4 rounded-lg shadow-xl z-50 transition-all duration-300 ease-in-out transform translate-y-0`;
-        if (type === "error") {
-            messageBox.classList.add('bg-red-600', 'text-white');
-        } else if (type === "success") {
-            messageBox.classList.add('bg-green-600', 'text-white');
-        } else {
-            messageBox.classList.add('bg-gray-800', 'text-white');
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for Inter font and general body styling */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Light blue-gray background */
+            color: #334155; /* Darker text for readability */
+            line-height: 1.6;
         }
-        messageBox.classList.remove('hidden');
-        setTimeout(() => {
-            hideMessage();
-        }, 5000); // Hide after 5 seconds
-    }
-
-    function hideMessage() {
-        messageBox.classList.add('hidden');
-    }
-
-    messageCloseButton.addEventListener('click', hideMessage);
-
-    // --- Page Navigation Logic ---
-    function showPage(pageId) {
-        document.querySelectorAll('.page-section').forEach(section => {
-            section.classList.remove('active');
-        });
-        document.getElementById(pageId).classList.add('active');
-        window.scrollTo(0, 0); // Scroll to top on page change
-    }
-
-    // --- Authentication Logic ---
-    const googleSignInButton = document.getElementById('google-signin-button');
-    const emailAuthForm = document.getElementById('email-auth-form');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const signupButton = document.getElementById('signup-button');
-    const loginButton = document.getElementById('login-button');
-    const authMessage = document.getElementById('auth-message');
-
-    // Google Sign-in
-    googleSignInButton.addEventListener('click', async () => {
-        try {
-            const provider = new GoogleAuthProvider();
-            await signInWithPopup(auth, provider);
-            // onAuthStateChanged listener will handle redirection
-        } catch (error) {
-            console.error("Google Sign-in Error:", error);
-            authMessage.textContent = `Error: ${error.message}`;
-            showMessage(`Google Sign-in failed: ${error.message}`, "error");
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-    });
-
-    // Email/Password Sign Up
-    signupButton.addEventListener('click', async (e) => {
-        e.preventDefault();
-        const email = emailInput.value;
-        const password = passwordInput.value;
-        if (!email || !password) {
-            authMessage.textContent = "Please enter email and password.";
-            return;
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 10px;
         }
-        try {
-            await createUserWithEmailAndPassword(auth, email, password);
-            authMessage.textContent = "Signed up successfully! Redirecting...";
-            showMessage("Signed up successfully! Welcome.", "success");
-            // onAuthStateChanged listener will handle redirection
-        } catch (error) {
-            console.error("Email Sign-up Error:", error);
-            authMessage.textContent = `Error: ${error.message}`;
-            showMessage(`Sign up failed: ${error.message}`, "error");
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 10px;
         }
-    });
-
-    // Email/Password Log In
-    loginButton.addEventListener('click', async (e) => {
-        e.preventDefault();
-        const email = emailInput.value;
-        const password = passwordInput.value;
-        if (!email || !password) {
-            authMessage.textContent = "Please enter email and password.";
-            return;
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
         }
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-            authMessage.textContent = "Logged in successfully! Redirecting...";
-            showMessage("Logged in successfully! Welcome back.", "success");
-            // onAuthStateChanged listener will handle redirection
-        } catch (error) {
-            console.error("Email Login Error:", error);
-            authMessage.textContent = `Error: ${error.message}`;
-            showMessage(`Login failed: ${error.message}`, "error");
+        /* Hide all sections by default, show only the active one via JS */
+        .page-section {
+            display: none;
         }
-    });
-
-    // Logout
-    logoutButton.addEventListener('click', async () => {
-        try {
-            await signOut(auth);
-            showMessage("Logged out successfully.", "info");
-            // onAuthStateChanged listener will handle redirection
-        } catch (error) {
-            console.error("Logout Error:", error);
-            showMessage(`Logout failed: ${error.message}`, "error");
+        .page-section.active {
+            display: block;
         }
-    });
+    </style>
+</head>
+<body class="antialiased">
 
-    // --- Firebase Auth State Listener ---
-    onAuthStateChanged(auth, async (user) => {
-        if (user) {
-            // User is signed in
-            logoutButton.classList.remove('hidden');
-            const userDocRef = doc(db, "users", user.uid); // Corrected path
-            try {
-                const userDocSnap = await getDoc(userDocRef);
-                if (userDocSnap.exists()) {
-                    // User profile exists, go to dashboard
-                    currentUserData = userDocSnap.data();
-                    console.log("User data loaded:", currentUserData);
-                    renderDashboard(currentUserData);
-                    showPage('dashboard-page');
-                } else {
-                    // User profile does not exist, go to onboarding
-                    showPage('onboarding-page');
-                }
-            } catch (error) {
-                console.error("Error fetching user document:", error);
-                showMessage(`Error loading profile: ${error.message}`, "error");
-                // Optionally, force logout or show a critical error page
-            }
-        } else {
-            // User is signed out
-            logoutButton.classList.add('hidden');
-            currentUserData = null;
-            showPage('landing-page');
-        }
-    });
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-sm py-4 px-6 fixed w-full z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" id="home-link" class="text-2xl font-bold text-indigo-600">CampusConnect</a>
+            <nav>
+                <button id="logout-button" class="hidden bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out">Logout</button>
+            </nav>
+        </div>
+    </header>
 
-    // Initial sign-in with custom token if available (for Canvas environment)
-    if (initialAuthToken) {
-        signInWithCustomToken(auth, initialAuthToken).catch((error) => {
-            console.error("Error signing in with custom token:", error);
-            // Fallback to anonymous or public view if custom token fails
-            signInAnonymously(auth).catch((anonError) => {
-                console.error("Error signing in anonymously:", anonError);
-            });
-        });
-    } else {
-        // If no custom token, sign in anonymously to allow Firestore access based on rules
-        // This is important for public data access if your rules allow it for unauthenticated users
-        // For this MVP, we assume authenticated users for most features.
-        signInAnonymously(auth).catch((anonError) => {
-            console.error("Error signing in anonymously:", anonError);
-        });
-    }
+    <main class="pt-20"> <!-- Padding top to account for fixed header -->
 
+        <!-- Landing Page Section -->
+        <section id="landing-page" class="page-section active">
+            <!-- Hero Section -->
+            <div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-20 px-6 text-center rounded-b-3xl shadow-lg">
+                <div class="container mx-auto max-w-4xl">
+                    <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
+                        Unlock Your Campus Potential: Get Help, Get Paid!
+                    </h1>
+                    <p class="text-lg md:text-xl mb-8 opacity-90">
+                        CampusConnect is your peer-to-peer marketplace for academic tasks.
+                        Request assignments, notes, PPTs, or offer your skills to earn money, all within your college!
+                    </p>
+                    <button id="landing-cta-button" class="bg-white text-indigo-700 hover:bg-indigo-100 font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                        Join CampusConnect Now!
+                    </button>
+                </div>
+            </div>
 
-    // --- Onboarding Logic ---
-    const onboardingForm = document.getElementById('onboarding-form');
-
-    onboardingForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const user = auth.currentUser;
-        if (!user) {
-            showMessage("You must be logged in to complete your profile.", "error");
-            return;
-        }
-
-        const fullName = document.getElementById('fullName').value;
-        const collegeName = document.getElementById('collegeName').value;
-        const yearSemester = document.getElementById('yearSemester').value;
-        const branch = document.getElementById('branch').value;
-        const mobileNumber = document.getElementById('mobileNumber').value;
-
-        if (!fullName || !collegeName) {
-            showMessage("Please fill in all required fields (Full Name, College).", "error");
-            return;
-        }
-
-        const userProfile = {
-            fullName,
-            college: collegeName,
-            yearSemester,
-            branch,
-            mobile: mobileNumber,
-            createdAt: serverTimestamp(),
-            userId: user.uid // Store the Firebase UID
-        };
-
-        try {
-            const userDocRef = doc(db, "users", user.uid); // Corrected path
-            await setDoc(userDocRef, userProfile, { merge: true }); // Use merge to avoid overwriting existing fields
-            currentUserData = userProfile; // Update local user data
-            showMessage("Profile saved successfully! Redirecting to dashboard.", "success");
-            renderDashboard(currentUserData);
-            showPage('dashboard-page');
-        } catch (error) {
-            console.error("Error saving user profile:", error);
-            showMessage(`Error saving profile: ${error.message}`, "error");
-        }
-    });
-
-    // --- Dashboard Logic ---
-    const dashboardUserName = document.getElementById('dashboard-user-name');
-    const dashboardUserCollege = document.getElementById('dashboard-user-college');
-    const dashboardUserRole = document.getElementById('dashboard-user-role');
-    const dashboardUserId = document.getElementById('dashboard-user-id');
-    const roleSelectionView = document.getElementById('role-selection-view');
-    const requesterView = document.getElementById('requester-view');
-    const workerView = document.getElementById('worker-view');
-    const becomeRequesterButton = document.getElementById('become-requester-button');
-    const becomeWorkerButton = document.getElementById('become-worker-button');
-    const postTaskForm = document.getElementById('post-task-form');
-    const postTaskMessage = document.getElementById('post-task-message');
-    const myPostedTasks = document.getElementById('my-posted-tasks');
-    const availableTasksList = document.getElementById('available-tasks-list');
-
-    function renderDashboard(userData) {
-        dashboardUserName.textContent = userData.fullName || 'Student';
-        dashboardUserCollege.textContent = userData.college || 'N/A';
-        dashboardUserRole.textContent = userData.role ? (userData.role === 'request' ? 'Requester' : 'Worker') : 'Not Set';
-        dashboardUserId.textContent = userData.userId;
-
-        // Show the appropriate view based on if a role is set
-        if (userData.role) {
-            roleSelectionView.classList.add('hidden');
-            if (userData.role === 'request') {
-                requesterView.classList.remove('hidden');
-                workerView.classList.add('hidden');
-                fetchMyPostedTasks(userData.userId);
-            } else if (userData.role === 'do') {
-                requesterView.classList.add('hidden');
-                workerView.classList.remove('hidden');
-                fetchAvailableTasks(userData.college);
-            }
-        } else {
-            // If no role is set, show the role selection view
-            roleSelectionView.classList.remove('hidden');
-            requesterView.classList.add('hidden');
-            workerView.classList.add('hidden');
-        }
-    }
-
-    // Set role to Requester
-    becomeRequesterButton.addEventListener('click', async () => {
-        const user = auth.currentUser;
-        if (user) {
-            try {
-                const userDocRef = doc(db, "users", user.uid); // Corrected path
-                await setDoc(userDocRef, { role: 'request' }, { merge: true });
-                currentUserData.role = 'request'; // Update local data
-                showMessage("You are now a Requester!", "success");
-                renderDashboard(currentUserData);
-            } catch (error) {
-                console.error("Error setting role to requester:", error);
-                showMessage(`Error: Could not set role.`, "error");
-            }
-        }
-    });
-
-    // Set role to Worker
-    becomeWorkerButton.addEventListener('click', async () => {
-        const user = auth.currentUser;
-        if (user) {
-            try {
-                const userDocRef = doc(db, "users", user.uid); // Corrected path
-                await setDoc(userDocRef, { role: 'do' }, { merge: true });
-                currentUserData.role = 'do'; // Update local data
-                showMessage("You are now a Worker!", "success");
-                renderDashboard(currentUserData);
-            } catch (error) {
-                console.error("Error setting role to worker:", error);
-                showMessage(`Error: Could not set role.`, "error");
-            }
-        }
-    });
-
-
-    // Post a Task
-    postTaskForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const user = auth.currentUser;
-        if (!user || !currentUserData) {
-            showMessage("You must be logged in and have a profile to post a task.", "error");
-            return;
-        }
-
-        const taskDescription = document.getElementById('taskDescription').value;
-        const taskPrice = parseFloat(document.getElementById('taskPrice').value);
-        const taskFormat = document.getElementById('taskFormat').value;
-
-        if (!taskDescription || !taskPrice || !taskFormat) {
-            showMessage("Please fill in all task details.", "error");
-            return;
-        }
-
-        const platformFee = 10; // ₹10 platform fee
-        const workerReceives = taskPrice - platformFee;
-
-        const taskData = {
-            postedByUid: user.uid,
-            college: currentUserData.college, // Associate task with poster's college
-            description: taskDescription,
-            price: taskPrice,
-            workerReceives: workerReceives, // Amount worker will receive
-            format: taskFormat,
-            status: 'open', // 'open', 'accepted', 'completed', 'cancelled'
-            createdAt: serverTimestamp()
-        };
-
-        try {
-            await addDoc(collection(db, "tasks"), taskData); // Corrected path
-            postTaskForm.reset();
-            showMessage("Task posted successfully!", "success");
-            // Tasks will automatically refresh due to onSnapshot in fetchMyPostedTasks
-        } catch (error) {
-            console.error("Error posting task:", error);
-            showMessage(`Error posting task: ${error.message}`, "error");
-        }
-    });
-
-    // Fetch My Posted Tasks (Requester)
-    function fetchMyPostedTasks(userId) {
-        const q = query(collection(db, "tasks"), where("postedByUid", "==", userId)); // Corrected path
-        onSnapshot(q, (snapshot) => {
-            if (snapshot.empty) {
-                myPostedTasks.innerHTML = '<p class="text-center text-gray-600">No tasks posted yet.</p>';
-                return;
-            }
-            myPostedTasks.innerHTML = ''; // Clear previous tasks
-            snapshot.forEach((doc) => {
-                const task = doc.data();
-                const taskId = doc.id;
-                const taskCard = `
-                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm border-l-4 border-indigo-400">
-                        <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
-                        <p class="text-gray-600">Format: ${task.format}</p>
-                        <p class="text-gray-600">Offer: ₹${task.price} (Worker gets ₹${task.workerReceives})</p>
-                        <p class="text-gray-600">Status: <span class="font-medium text-blue-700">${task.status.toUpperCase()}</span></p>
-                        <p class="text-gray-500 text-sm mt-2">Posted on: ${task.createdAt ? new Date(task.createdAt.toDate()).toLocaleDateString() : 'N/A'}</p>
+            <!-- How It Works Section -->
+            <div id="how-it-works" class="py-16 px-6 bg-white">
+                <div class="container mx-auto max-w-5xl text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">How CampusConnect Works</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                        <!-- Step 1 -->
+                        <div class="bg-blue-50 p-8 rounded-xl shadow-md transform hover:scale-105 transition duration-300 ease-in-out">
+                            <div class="text-indigo-500 mb-4">
+                                <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-700 mb-3">1. Post a Task</h3>
+                            <p class="text-gray-600">Need help with an assignment, notes, report, or PPT? Post your task with details and your offer price. Even handwritten assignments are welcome!</p>
                         </div>
-                `;
-                myPostedTasks.innerHTML += taskCard;
-            });
-        }, (error) => {
-            console.error("Error fetching my posted tasks:", error);
-            showMessage(`Error loading your tasks: ${error.message}`, "error");
-        });
-    }
+                        <!-- Step 2 -->
+                        <div class="bg-green-50 p-8 rounded-xl shadow-md transform hover:scale-105 transition duration-300 ease-in-out">
+                            <div class="text-green-500 mb-4">
+                                <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-700 mb-3">2. Accept & Complete</h3>
+                            <p class="text-gray-600">Students from your college can browse tasks, accept what they can do, and complete the work. Payments are held securely until completion.</p>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="bg-purple-50 p-8 rounded-xl shadow-md transform hover:scale-105 transition duration-300 ease-in-out">
+                            <div class="text-purple-500 mb-4">
+                                <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-700 mb-3">3. Get Paid / Get Done</h3>
+                            <p class="text-gray-600">Once the task is confirmed, the payment is released to the task-taker. Get your academic work done efficiently, or earn extra cash!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    // Fetch Available Tasks (Worker) - College-Based Filtering
-    function fetchAvailableTasks(college) {
-        // Fetch tasks where status is 'open' AND college matches the worker's college
-        const q = query(
-            collection(db, "tasks"), // Corrected path
-            where("status", "==", "open"),
-            where("college", "==", college) // College-based filtering
-        );
+            <!-- Benefits Section -->
+            <div class="py-16 px-6 bg-gray-50">
+                <div class="container mx-auto max-w-5xl text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">Why CampusConnect?</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <!-- Benefit 1: For Requesters -->
+                        <div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-indigo-500">
+                            <h3 class="text-2xl font-semibold text-gray-700 mb-4">For Students Needing Help</h3>
+                            <ul class="text-left text-gray-600 space-y-3">
+                                <li class="flex items-start">
+                                    <svg class="w-6 h-6 text-indigo-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    <p><strong>Save Time & Stress:</strong> Delegate academic tasks and focus on what matters most.</p>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-6 h-6 text-indigo-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    <p><strong>Reliable Help:</strong> Get assistance from verified students within your own college.</p>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-6 h-6 text-indigo-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    <p><strong>Secure Payments:</strong> Your payment is held until you confirm the work is complete.</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Benefit 2: For Task Takers -->
+                        <div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-purple-500">
+                            <h3 class="text-2xl font-semibold text-gray-700 mb-4">For Students Who Want to Earn</h3>
+                            <ul class="text-left text-gray-600 space-y-3">
+                                <li class="flex items-start">
+                                    <svg class="w-6 h-6 text-purple-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    <p><strong>Earn Extra Cash:</strong> Utilize your skills to help peers and get paid for it.</p>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-6 h-6 text-purple-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    <p><strong>Flexible Work:</strong> Choose tasks that fit your schedule and expertise.</p>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-6 h-6 text-purple-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    <p><strong>Build Your Network:</strong> Connect with other students and seniors in your college.</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        onSnapshot(q, async (snapshot) => {
-            if (snapshot.empty) {
-                availableTasksList.innerHTML = '<p class="text-center text-gray-600">No open tasks available in your college.</p>';
-                return;
-            }
-            availableTasksList.innerHTML = ''; // Clear previous tasks
+            <!-- Testimonials Section (Placeholder) -->
+            <div class="py-16 px-6 bg-blue-50">
+                <div class="container mx-auto max-w-5xl text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">What Students Are Saying</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <p class="italic text-gray-700 mb-4">"CampusConnect saved my semester! Got my report done perfectly and on time."</p>
+                            <p class="font-semibold text-indigo-600">- Priya S., Engineering Student</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <p class="italic text-gray-700 mb-4">"Earning money by helping juniors with their assignments is so rewarding. Flexible and easy!"</p>
+                            <p class="font-semibold text-indigo-600">- Rohan K., Commerce Student</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <p class="italic text-gray-700 mb-4">"Finally, a platform that understands student needs. Highly recommend!"</p>
+                            <p class="font-semibold text-indigo-600">- Ananya M., Arts Student</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            for (const docSnapshot of snapshot.docs) {
-                const task = docSnapshot.data();
-                const taskId = docSnapshot.id;
+            <!-- Contact/Join Now Section -->
+            <div class="py-20 px-6 bg-gradient-to-r from-purple-600 to-indigo-500 text-white text-center rounded-t-3xl shadow-lg">
+                <div class="container mx-auto max-w-3xl">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Connect & Conquer Academics?</h2>
+                    <p class="text-lg md:text-xl mb-8 opacity-90">
+                        Join CampusConnect today and transform your academic journey.
+                    </p>
+                    <button id="landing-join-button" class="bg-white text-purple-700 hover:bg-purple-100 font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                        Get Started Now!
+                    </button>
+                </div>
+            </div>
+        </section>
 
-                // Fetch poster's name for display
-                let posterName = "Unknown";
-                try {
-                    const posterDocRef = doc(db, "users", task.postedByUid); // Corrected path
-                    const posterDocSnap = await getDoc(posterDocRef);
-                    if (posterDocSnap.exists()) {
-                        posterName = posterDocSnap.data().fullName || "A student";
-                    }
-                } catch (error) {
-                    console.error("Error fetching poster name:", error);
-                }
+        <!-- Login/Signup Page Section -->
+        <section id="auth-page" class="page-section py-20 px-6">
+            <div class="container mx-auto max-w-md bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Welcome to CampusConnect</h2>
 
-                const taskCard = `
-                    <div class="bg-blue-50 p-6 rounded-lg shadow-sm border-l-4 border-purple-400">
-                        <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
-                        <p class="text-gray-600">Format: ${task.format}</p>
-                        <p class="text-gray-600">You earn: <span class="font-bold text-green-700">₹${task.workerReceives}</span> (Offer: ₹${task.price})</p>
-                        <p class="text-gray-600">Posted by: ${posterName} from ${task.college}</p>
-                        <p class="text-gray-500 text-sm mt-2">Posted on: ${task.createdAt ? new Date(task.createdAt.toDate()).toLocaleDateString() : 'N/A'}</p>
-                        <button data-task-id="${taskId}" class="accept-task-button mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
-                            Accept Task
+                <!-- Google Sign-in -->
+                <button id="google-signin-button" class="w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 mb-6">
+                    <svg class="w-6 h-6 mr-3" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M44.5 20H24V28.5H35.5C34.05 32.5 30.5 35.5 24 35.5C17.5 35.5 12 30 12 23.5C12 17 17.5 11.5 24 11.5C27.5 11.5 30.5 13 32.5 15L38 10C35 7 30 5 24 5C13 5 4 14 4 23.5C4 33 13 42 24 42C35 42 44 33 44.5 23.5V20Z" fill="#4285F4"/>
+                        <path d="M24 42C13 42 4 33 4 23.5C4 14 13 5 24 5V11.5C17.5 11.5 12 17 12 23.5C12 30 17.5 35.5 24 35.5C30.5 35.5 34.05 32.5 35.5 28.5H44.5C44 33 35 42 24 42Z" fill="#34A853"/>
+                        <path d="M44.5 20H24V28.5H35.5C34.05 32.5 30.5 35.5 24 35.5C17.5 35.5 12 30 12 23.5C12 17 17.5 11.5 24 11.5C27.5 11.5 30.5 13 32.5 15L38 10C35 7 30 5 24 5C13 5 4 14 4 23.5C4 33 13 42 24 42Z" fill="#FBBC05"/>
+                        <path d="M44.5 20H24V28.5H35.5C34.05 32.5 30.5 35.5 24 35.5C17.5 35.5 12 30 12 23.5C12 17 17.5 11.5 24 11.5C27.5 11.5 30.5 13 32.5 15L38 10C35 7 30 5 24 5C13 5 4 14 4 23.5C4 33 13 42 24 42Z" fill="#EA4335"/>
+                    </svg>
+                    Sign in with Google
+                </button>
+
+                <div class="relative flex py-5 items-center">
+                    <div class="flex-grow border-t border-gray-300"></div>
+                    <span class="flex-shrink mx-4 text-gray-500">OR</span>
+                    <div class="flex-grow border-t border-gray-300"></div>
+                </div>
+
+                <!-- Email/Password Form -->
+                <form id="email-auth-form" class="space-y-4">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                        <input type="email" id="email" name="email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" id="password" name="password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    <button type="submit" id="signup-button" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                        Sign Up
+                    </button>
+                    <button type="button" id="login-button" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 mt-2">
+                        Already have an account? Log In
+                    </button>
+                </form>
+                <p id="auth-message" class="text-center text-sm mt-4 text-red-600"></p>
+            </div>
+        </section>
+
+        <!-- User Onboarding Page Section -->
+        <section id="onboarding-page" class="page-section py-20 px-6">
+            <div class="container mx-auto max-w-md bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Tell Us About Yourself</h2>
+                <form id="onboarding-form" class="space-y-6">
+                    <div>
+                        <label for="fullName" class="block text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="collegeName" class="block text-sm font-medium text-gray-700">College Name</label>
+                        <select id="collegeName" name="collegeName" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value="">Select your college</option>
+                            <option value="RV College of Engineering">RV College of Engineering</option>
+                            <option value="PES University">PES University</option>
+                            <option value="BMS College of Engineering">BMS College of Engineering</option>
+                            <option value="Christ University">Christ University</option>
+                            <option value="MS Ramaiah Institute of Technology">MS Ramaiah Institute of Technology</option>
+                            <option value="Other">Other (Please specify in mobile number field)</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="yearSemester" class="block text-sm font-medium text-gray-700">Year/Semester</label>
+                            <input type="text" id="yearSemester" name="yearSemester" placeholder="e.g., 3rd Year / 5th Sem" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                        <div>
+                            <label for="branch" class="block text-sm font-medium text-gray-700">Branch</label>
+                            <input type="text" id="branch" name="branch" placeholder="e.g., Computer Science" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="mobileNumber" class="block text-sm font-medium text-gray-700">Mobile Number (Optional)</label>
+                        <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="e.g., +91 9876543210" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                        Complete Profile
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Dashboard Page Section -->
+        <section id="dashboard-page" class="page-section py-20 px-6">
+            <div class="container mx-auto max-w-5xl">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Your CampusConnect Dashboard</h2>
+                <div id="user-info-display" class="bg-indigo-50 p-4 rounded-lg shadow-md mb-8 text-center">
+                    <p class="text-indigo-800 text-lg">Welcome, <span id="dashboard-user-name" class="font-semibold"></span>!</p>
+                    <p class="text-indigo-700 text-sm">College: <span id="dashboard-user-college"></span> | Role: <span id="dashboard-user-role"></span></p>
+                    <p class="text-indigo-700 text-sm">Your User ID: <span id="dashboard-user-id" class="font-mono text-xs"></span></p>
+                </div>
+
+                <!-- Role Selection View (new) -->
+                <div id="role-selection-view" class="hidden text-center bg-white p-8 rounded-xl shadow-lg mb-8">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">What would you like to do?</h3>
+                    <p class="text-gray-600 mb-6">Choose your path to get started. You can change this anytime.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-xl mx-auto">
+                        <button id="become-requester-button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                            Post a New Task
+                        </button>
+                        <button id="become-worker-button" class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                            View Available Tasks
                         </button>
                     </div>
-                `;
-                availableTasksList.innerHTML += taskCard;
-            }
+                </div>
 
-            // Attach event listeners to newly rendered buttons
-            document.querySelectorAll('.accept-task-button').forEach(button => {
-                button.addEventListener('click', async (event) => {
-                    const taskId = event.target.dataset.taskId;
-                    await acceptTask(taskId);
-                });
-            });
+                <!-- Requester View -->
+                <div id="requester-view" class="hidden bg-white p-8 rounded-xl shadow-lg mb-8">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Post a New Task</h3>
+                    <form id="post-task-form" class="space-y-4">
+                        <div>
+                            <label for="taskDescription" class="block text-sm font-medium text-gray-700">Task Description</label>
+                            <textarea id="taskDescription" name="taskDescription" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., Need help with a 10-page report on 'Sustainable Energy', due next week."></textarea>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="taskPrice" class="block text-sm font-medium text-gray-700">Your Offer Price (₹)</label>
+                                <input type="number" id="taskPrice" name="taskPrice" min="50" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., 250">
+                            </div>
+                            <div>
+                                <label for="taskFormat" class="block text-sm font-medium text-gray-700">Format</label>
+                                <select id="taskFormat" name="taskFormat" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <option value="">Select Format</option>
+                                    <option value="Assignment">Assignment</option>
+                                    <option value="Notes">Notes</option>
+                                    <option value="Report">Report</option>
+                                    <option value="PPT">PPT (Presentation)</option>
+                                    <option value="Senior Guidance">Senior Guidance</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                            Post Task
+                        </button>
+                        <p id="post-task-message" class="text-center text-sm mt-4 text-green-600"></p>
+                    </form>
 
-        }, (error) => {
-            console.error("Error fetching available tasks:", error);
-            showMessage(`Error loading available tasks: ${error.message}`, "error");
-        });
-    }
+                    <h3 class="text-2xl font-bold text-gray-800 mt-12 mb-6 text-center">Your Posted Tasks</h3>
+                    <div id="my-posted-tasks" class="space-y-4">
+                        <p class="text-center text-gray-600">No tasks posted yet.</p>
+                    </div>
+                </div>
 
-    // Accept Task Logic (Worker)
-    async function acceptTask(taskId) {
-        const user = auth.currentUser;
-        if (!user) {
-            showMessage("You must be logged in to accept a task.", "error");
-            return;
+                <!-- Worker View -->
+                <div id="worker-view" class="hidden bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Available Tasks</h3>
+                    <div id="available-tasks-list" class="space-y-4">
+                        <p class="text-center text-gray-600">Loading tasks...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Message Box -->
+        <div id="message-box" class="fixed bottom-4 right-4 bg-gray-800 text-white p-4 rounded-lg shadow-xl hidden z-50">
+            <p id="message-content"></p>
+            <button id="message-close-button" class="absolute top-1 right-2 text-white text-lg font-bold">&times;</button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-10 px-6 text-center">
+        <div class="container mx-auto max-w-5xl">
+            <p class="mb-4">&copy; 2025 CampusConnect. All rights reserved.</p>
+            <p class="text-sm">
+                <a href="#" class="hover:text-white mx-2">Privacy Policy</a> |
+                <a href="#" class="hover:text-white mx-2">Terms of Service</a>
+            </p>
+            <p class="text-sm mt-4">
+                Contact us: <a href="mailto:info@campusconnect.com" class="hover:text-white">info@campusconnect.com</a>
+                <span class="mx-2">|</span> Follow us on <a href="#" class="hover:text-white">Social Media</a> (Coming Soon!)
+            </p>
+        </div>
+    </footer>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        // Firebase SDK imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import {
+            getAuth,
+            signInWithPopup,
+            GoogleAuthProvider,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            signOut,
+            onAuthStateChanged,
+            signInWithCustomToken,
+            signInAnonymously
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import {
+            getFirestore,
+            doc,
+            getDoc,
+            setDoc,
+            addDoc,
+            collection,
+            query,
+            where,
+            onSnapshot,
+            serverTimestamp,
+            getDocs
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // --- Firebase Configuration & Initialization ---
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let app;
+        let auth;
+        let db;
+        let currentUserData = null;
+
+        // Initialize Firebase
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+            console.log("Firebase initialized successfully.");
+        } catch (error) {
+            console.error("Error initializing Firebase:", error);
+            showMessage("Error initializing Firebase. Check console for details.", "error");
         }
 
-        const taskDocRef = doc(db, "tasks", taskId); // Corrected path
-        try {
-            // Check if task is still open before accepting
-            const taskDocSnap = await getDoc(taskDocRef);
-            if (!taskDocSnap.exists() || taskDocSnap.data().status !== 'open') {
-                showMessage("This task is no longer available or has been accepted.", "error");
+        // --- Global UI Elements ---
+        const landingPage = document.getElementById('landing-page');
+        const authPage = document.getElementById('auth-page');
+        const onboardingPage = document.getElementById('onboarding-page');
+        const dashboardPage = document.getElementById('dashboard-page');
+        const logoutButton = document.getElementById('logout-button');
+        const homeLink = document.getElementById('home-link');
+        const messageBox = document.getElementById('message-box');
+        const messageContent = document.getElementById('message-content');
+        const messageCloseButton = document.getElementById('message-close-button');
+
+        // --- Message Box Functions ---
+        function showMessage(message, type = "info") {
+            messageContent.textContent = message;
+            messageBox.className = `fixed bottom-4 right-4 p-4 rounded-lg shadow-xl z-50 transition-all duration-300 ease-in-out transform translate-y-0`;
+            if (type === "error") {
+                messageBox.classList.add('bg-red-600', 'text-white');
+            } else if (type === "success") {
+                messageBox.classList.add('bg-green-600', 'text-white');
+            } else {
+                messageBox.classList.add('bg-gray-800', 'text-white');
+            }
+            messageBox.classList.remove('hidden');
+            setTimeout(() => {
+                hideMessage();
+            }, 5000);
+        }
+
+        function hideMessage() {
+            messageBox.classList.add('hidden');
+        }
+
+        // --- Page Navigation Logic ---
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // --- Authentication Logic ---
+        const googleSignInButton = document.getElementById('google-signin-button');
+        const emailAuthForm = document.getElementById('email-auth-form');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const signupButton = document.getElementById('signup-button');
+        const loginButton = document.getElementById('login-button');
+        const authMessage = document.getElementById('auth-message');
+
+        googleSignInButton.addEventListener('click', async () => {
+            try {
+                const provider = new GoogleAuthProvider();
+                await signInWithPopup(auth, provider);
+            } catch (error) {
+                console.error("Google Sign-in Error:", error);
+                authMessage.textContent = `Error: ${error.message}`;
+                showMessage(`Google Sign-in failed: ${error.message}`, "error");
+            }
+        });
+
+        signupButton.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            if (!email || !password) {
+                authMessage.textContent = "Please enter email and password.";
                 return;
             }
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+                authMessage.textContent = "Signed up successfully! Redirecting...";
+                showMessage("Signed up successfully! Welcome.", "success");
+            } catch (error) {
+                console.error("Email Sign-up Error:", error);
+                authMessage.textContent = `Error: ${error.message}`;
+                showMessage(`Sign up failed: ${error.message}`, "error");
+            }
+        });
 
-            // Update task status and assign worker
-            await setDoc(taskDocRef, {
-                status: 'accepted',
-                acceptedByUid: user.uid,
-                acceptedAt: serverTimestamp()
-            }, { merge: true }); // Use merge to only update specified fields
-
-            showMessage("Task accepted successfully! It now appears in your accepted tasks (feature to be built).", "success");
-            // Future: Add a section for "My Accepted Tasks" in worker view
-        } catch (error) {
-            console.error("Error accepting task:", error);
-            showMessage(`Error accepting task: ${error.message}`, "error");
-        }
-    }
-
-    // --- Initial Page Load & Event Listeners ---
-    document.addEventListener('DOMContentLoaded', () => {
-        // Initial page display is handled by onAuthStateChanged
-        // Attach event listeners for navigation buttons
-        document.getElementById('landing-cta-button').addEventListener('click', () => showPage('auth-page'));
-        document.getElementById('landing-join-button').addEventListener('click', () => showPage('auth-page'));
-        document.getElementById('home-link').addEventListener('click', (e) => {
+        loginButton.addEventListener('click', async (e) => {
             e.preventDefault();
-            if (auth.currentUser) {
-                // If logged in, go to dashboard
-                showPage('dashboard-page');
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            if (!email || !password) {
+                authMessage.textContent = "Please enter email and password.";
+                return;
+            }
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                authMessage.textContent = "Logged in successfully! Redirecting...";
+                showMessage("Logged in successfully! Welcome back.", "success");
+            } catch (error) {
+                console.error("Email Login Error:", error);
+                authMessage.textContent = `Error: ${error.message}`;
+                showMessage(`Login failed: ${error.message}`, "error");
+            }
+        });
+
+        logoutButton.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                showMessage("Logged out successfully.", "info");
+            } catch (error) {
+                console.error("Logout Error:", error);
+                showMessage(`Logout failed: ${error.message}`, "error");
+            }
+        });
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                logoutButton.classList.remove('hidden');
+                const userDocRef = doc(db, "users", user.uid);
+                try {
+                    const userDocSnap = await getDoc(userDocRef);
+                    if (userDocSnap.exists()) {
+                        currentUserData = userDocSnap.data();
+                        renderDashboard(currentUserData);
+                        showPage('dashboard-page');
+                    } else {
+                        showPage('onboarding-page');
+                    }
+                } catch (error) {
+                    console.error("Error fetching user document:", error);
+                    showMessage(`Error loading profile: ${error.message}`, "error");
+                }
             } else {
-                // If not logged in, go to landing
+                logoutButton.classList.add('hidden');
+                currentUserData = null;
                 showPage('landing-page');
             }
         });
-    });
-</script>
+
+        if (initialAuthToken) {
+            signInWithCustomToken(auth, initialAuthToken).catch((error) => {
+                console.error("Error signing in with custom token:", error);
+            });
+        } else {
+            signInAnonymously(auth).catch((anonError) => {
+                console.error("Error signing in anonymously:", anonError);
+            });
+        }
+
+        const onboardingForm = document.getElementById('onboarding-form');
+        onboardingForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = auth.currentUser;
+            if (!user) {
+                showMessage("You must be logged in to complete your profile.", "error");
+                return;
+            }
+
+            const fullName = document.getElementById('fullName').value;
+            const collegeName = document.getElementById('collegeName').value;
+            const yearSemester = document.getElementById('yearSemester').value;
+            const branch = document.getElementById('branch').value;
+            const mobileNumber = document.getElementById('mobileNumber').value;
+
+            if (!fullName || !collegeName) {
+                showMessage("Please fill in all required fields (Full Name, College).", "error");
+                return;
+            }
+
+            const userProfile = {
+                fullName,
+                college: collegeName,
+                yearSemester,
+                branch,
+                mobile: mobileNumber,
+                createdAt: serverTimestamp(),
+                userId: user.uid
+            };
+
+            try {
+                const userDocRef = doc(db, "users", user.uid);
+                await setDoc(userDocRef, userProfile, { merge: true });
+                currentUserData = userProfile;
+                showMessage("Profile saved successfully! Redirecting to dashboard.", "success");
+                renderDashboard(currentUserData);
+                showPage('dashboard-page');
+            } catch (error) {
+                console.error("Error saving user profile:", error);
+                showMessage(`Error saving profile: ${error.message}`, "error");
+            }
+        });
+
+        const dashboardUserName = document.getElementById('dashboard-user-name');
+        const dashboardUserCollege = document.getElementById('dashboard-user-college');
+        const dashboardUserRole = document.getElementById('dashboard-user-role');
+        const dashboardUserId = document.getElementById('dashboard-user-id');
+        const roleSelectionView = document.getElementById('role-selection-view');
+        const requesterView = document.getElementById('requester-view');
+        const workerView = document.getElementById('worker-view');
+        const becomeRequesterButton = document.getElementById('become-requester-button');
+        const becomeWorkerButton = document.getElementById('become-worker-button');
+        const postTaskForm = document.getElementById('post-task-form');
+        const postTaskMessage = document.getElementById('post-task-message');
+        const myPostedTasks = document.getElementById('my-posted-tasks');
+        const availableTasksList = document.getElementById('available-tasks-list');
+
+        function renderDashboard(userData) {
+            dashboardUserName.textContent = userData.fullName || 'Student';
+            dashboardUserCollege.textContent = userData.college || 'N/A';
+            dashboardUserRole.textContent = userData.role ? (userData.role === 'request' ? 'Requester' : 'Worker') : 'Not Set';
+            dashboardUserId.textContent = userData.userId;
+
+            if (userData.role) {
+                roleSelectionView.classList.add('hidden');
+                if (userData.role === 'request') {
+                    requesterView.classList.remove('hidden');
+                    workerView.classList.add('hidden');
+                    fetchMyPostedTasks(userData.userId);
+                } else if (userData.role === 'do') {
+                    requesterView.classList.add('hidden');
+                    workerView.classList.remove('hidden');
+                    fetchAvailableTasks(userData.college);
+                }
+            } else {
+                roleSelectionView.classList.remove('hidden');
+                requesterView.classList.add('hidden');
+                workerView.classList.add('hidden');
+            }
+        }
+
+        becomeRequesterButton.addEventListener('click', async () => {
+            const user = auth.currentUser;
+            if (user) {
+                try {
+                    const userDocRef = doc(db, "users", user.uid);
+                    await setDoc(userDocRef, { role: 'request' }, { merge: true });
+                    currentUserData.role = 'request';
+                    showMessage("You are now a Requester!", "success");
+                    renderDashboard(currentUserData);
+                } catch (error) {
+                    console.error("Error setting role to requester:", error);
+                    showMessage(`Error: Could not set role.`, "error");
+                }
+            }
+        });
+
+        becomeWorkerButton.addEventListener('click', async () => {
+            const user = auth.currentUser;
+            if (user) {
+                try {
+                    const userDocRef = doc(db, "users", user.uid);
+                    await setDoc(userDocRef, { role: 'do' }, { merge: true });
+                    currentUserData.role = 'do';
+                    showMessage("You are now a Worker!", "success");
+                    renderDashboard(currentUserData);
+                } catch (error) {
+                    console.error("Error setting role to worker:", error);
+                    showMessage(`Error: Could not set role.`, "error");
+                }
+            }
+        });
+
+        postTaskForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = auth.currentUser;
+            if (!user || !currentUserData) {
+                showMessage("You must be logged in and have a profile to post a task.", "error");
+                return;
+            }
+
+            const taskDescription = document.getElementById('taskDescription').value;
+            const taskPrice = parseFloat(document.getElementById('taskPrice').value);
+            const taskFormat = document.getElementById('taskFormat').value;
+
+            if (!taskDescription || !taskPrice || !taskFormat) {
+                showMessage("Please fill in all task details.", "error");
+                return;
+            }
+
+            const platformFee = 10;
+            const workerReceives = taskPrice - platformFee;
+
+            const taskData = {
+                postedByUid: user.uid,
+                college: currentUserData.college,
+                description: taskDescription,
+                price: taskPrice,
+                workerReceives: workerReceives,
+                format: taskFormat,
+                status: 'open',
+                createdAt: serverTimestamp()
+            };
+
+            try {
+                await addDoc(collection(db, "tasks"), taskData);
+                postTaskForm.reset();
+                showMessage("Task posted successfully!", "success");
+            } catch (error) {
+                console.error("Error posting task:", error);
+                showMessage(`Error posting task: ${error.message}`, "error");
+            }
+        });
+
+        function fetchMyPostedTasks(userId) {
+            const q = query(collection(db, "tasks"), where("postedByUid", "==", userId));
+            onSnapshot(q, (snapshot) => {
+                if (snapshot.empty) {
+                    myPostedTasks.innerHTML = '<p class="text-center text-gray-600">No tasks posted yet.</p>';
+                    return;
+                }
+                myPostedTasks.innerHTML = '';
+                snapshot.forEach((doc) => {
+                    const task = doc.data();
+                    const taskId = doc.id;
+                    const taskCard = `
+                        <div class="bg-gray-50 p-6 rounded-lg shadow-sm border-l-4 border-indigo-400">
+                            <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
+                            <p class="text-gray-600">Format: ${task.format}</p>
+                            <p class="text-gray-600">Offer: ₹${task.price} (Worker gets ₹${task.workerReceives})</p>
+                            <p class="text-gray-600">Status: <span class="font-medium text-blue-700">${task.status.toUpperCase()}</span></p>
+                            <p class="text-gray-500 text-sm mt-2">Posted on: ${task.createdAt ? new Date(task.createdAt.toDate()).toLocaleDateString() : 'N/A'}</p>
+                        </div>
+                    `;
+                    myPostedTasks.innerHTML += taskCard;
+                });
+            }, (error) => {
+                console.error("Error fetching my posted tasks:", error);
+                showMessage(`Error loading your tasks: ${error.message}`, "error");
+            });
+        }
+
+        function fetchAvailableTasks(college) {
+            const q = query(
+                collection(db, "tasks"),
+                where("status", "==", "open"),
+                where("college", "==", college)
+            );
+
+            onSnapshot(q, async (snapshot) => {
+                if (snapshot.empty) {
+                    availableTasksList.innerHTML = '<p class="text-center text-gray-600">No open tasks available in your college.</p>';
+                    return;
+                }
+                availableTasksList.innerHTML = '';
+                for (const docSnapshot of snapshot.docs) {
+                    const task = docSnapshot.data();
+                    const taskId = docSnapshot.id;
+                    let posterName = "Unknown";
+                    try {
+                        const posterDocRef = doc(db, "users", task.postedByUid);
+                        const posterDocSnap = await getDoc(posterDocRef);
+                        if (posterDocSnap.exists()) {
+                            posterName = posterDocSnap.data().fullName || "A student";
+                        }
+                    } catch (error) {
+                        console.error("Error fetching poster name:", error);
+                    }
+                    const taskCard = `
+                        <div class="bg-blue-50 p-6 rounded-lg shadow-sm border-l-4 border-purple-400">
+                            <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
+                            <p class="text-gray-600">Format: ${task.format}</p>
+                            <p class="text-gray-600">You earn: <span class="font-bold text-green-700">₹${task.workerReceives}</span> (Offer: ₹${task.price})</p>
+                            <p class="text-gray-600">Posted by: ${posterName} from ${task.college}</p>
+                            <p class="text-gray-500 text-sm mt-2">Posted on: ${task.createdAt ? new Date(task.createdAt.toDate()).toLocaleDateString() : 'N/A'}</p>
+                            <button data-task-id="${taskId}" class="accept-task-button mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+                                Accept Task
+                            </button>
+                        </div>
+                    `;
+                    availableTasksList.innerHTML += taskCard;
+                }
+                document.querySelectorAll('.accept-task-button').forEach(button => {
+                    button.addEventListener('click', async (event) => {
+                        const taskId = event.target.dataset.taskId;
+                        await acceptTask(taskId);
+                    });
+                });
+            }, (error) => {
+                console.error("Error fetching available tasks:", error);
+                showMessage(`Error loading available tasks: ${error.message}`, "error");
+            });
+        }
+
+        async function acceptTask(taskId) {
+            const user = auth.currentUser;
+            if (!user) {
+                showMessage("You must be logged in to accept a task.", "error");
+                return;
+            }
+            const taskDocRef = doc(db, "tasks", taskId);
+            try {
+                const taskDocSnap = await getDoc(taskDocRef);
+                if (!taskDocSnap.exists() || taskDocSnap.data().status !== 'open') {
+                    showMessage("This task is no longer available or has been accepted.", "error");
+                    return;
+                }
+                await setDoc(taskDocRef, {
+                    status: 'accepted',
+                    acceptedByUid: user.uid,
+                    acceptedAt: serverTimestamp()
+                }, { merge: true });
+                showMessage("Task accepted successfully! It now appears in your accepted tasks (feature to be built).", "success");
+            } catch (error) {
+                console.error("Error accepting task:", error);
+                showMessage(`Error accepting task: ${error.message}`, "error");
+            }
+        }
+
+        // --- Initial Page Load & Event Listeners ---
+        document.addEventListener('DOMContentLoaded', () => {
+            messageCloseButton.addEventListener('click', hideMessage);
+            document.getElementById('landing-cta-button').addEventListener('click', () => showPage('auth-page'));
+            document.getElementById('landing-join-button').addEventListener('click', () => showPage('auth-page'));
+            document.getElementById('home-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                if (auth.currentUser) {
+                    showPage('dashboard-page');
+                } else {
+                    showPage('landing-page');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
