@@ -1,29 +1,27 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CampusConnect - Your Academic Task Marketplace</title>
-    <meta name="description" content="CampusConnect: The ultimate platform for college students to get academic help and earn money by completing tasks like assignments, notes, reports, and PPTs within their college community.">
-    <meta name="keywords" content="college students, academic help, assignments, notes, reports, PPTs, earn money, student jobs, campus tasks, peer help, university, student platform">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.yourstartup.com/"> <!-- Replace with your actual URL -->
-    <meta property="og:title" content="CampusConnect - Your Academic Task Marketplace">
-    <meta property="og:description" content="CampusConnect: The ultimate platform for college students to get academic help and earn money by completing tasks like assignments, notes, reports, and PPTs within their college community.">
-    <meta property="og:image" content="https://placehold.co/1200x630/60A5FA/FFFFFF?text=CampusConnect"> <!-- Replace with your actual logo/image -->
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.yourstartup.com/"> <!-- Replace with your actual URL -->
-    <meta property="twitter:title" content="CampusConnect - Your Academic Task Marketplace">
-    <meta property="twitter:description" content="CampusConnect: The ultimate platform for college students to get academic help and earn money by completing tasks like assignments, notes, reports, and PPTs within their college community.">
-    <meta property="twitter:image" content="https://placehold.co/1200x630/60A5FA/FFFFFF?text=CampusConnect"> <!-- Replace with your actual logo/image -->
-
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CampusConnect - Your Academic Task Marketplace</title>
+<meta content="CampusConnect: The ultimate platform for college students to get academic help and earn money by completing tasks like assignments, notes, reports, and PPTs within their college community." name="description"/>
+<meta content="college students, academic help, assignments, notes, reports, PPTs, earn money, student jobs, campus tasks, peer help, university, student platform" name="keywords"/>
+<!-- Open Graph / Facebook -->
+<meta content="website" property="og:type"/>
+<meta content="https://www.yourstartup.com/" property="og:url"/> <!-- Replace with your actual URL -->
+<meta content="CampusConnect - Your Academic Task Marketplace" property="og:title"/>
+<meta content="CampusConnect: The ultimate platform for college students to get academic help and earn money by completing tasks like assignments, notes, reports, and PPTs within their college community." property="og:description"/>
+<meta content="https://placehold.co/1200x630/60A5FA/FFFFFF?text=CampusConnect" property="og:image"/> <!-- Replace with your actual logo/image -->
+<!-- Twitter -->
+<meta content="summary_large_image" property="twitter:card"/>
+<meta content="https://www.yourstartup.com/" property="twitter:url"/> <!-- Replace with your actual URL -->
+<meta content="CampusConnect - Your Academic Task Marketplace" property="twitter:title"/>
+<meta content="CampusConnect: The ultimate platform for college students to get academic help and earn money by completing tasks like assignments, notes, reports, and PPTs within their college community." property="twitter:description"/>
+<meta content="https://placehold.co/1200x630/60A5FA/FFFFFF?text=CampusConnect" property="twitter:image"/> <!-- Replace with your actual logo/image -->
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
         /* Custom CSS for Inter font and general body styling */
         body {
             font-family: 'Inter', sans-serif;
@@ -56,350 +54,328 @@
     </style>
 </head>
 <body class="antialiased">
-
-    <!-- Header/Navigation -->
-    <header class="bg-white shadow-sm py-4 px-6 fixed w-full z-10">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="#" id="home-link" class="text-2xl font-bold text-indigo-600">CampusConnect</a>
-            <nav>
-                <button id="logout-button" class="hidden bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out">Logout</button>
-            </nav>
-        </div>
-    </header>
-
-    <main class="pt-20"> <!-- Padding top to account for fixed header -->
-
-        <!-- Landing Page Section -->
-        <section id="landing-page" class="page-section active">
-            <!-- Hero Section -->
-            <div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-20 px-6 text-center rounded-b-3xl shadow-lg">
-                <div class="container mx-auto max-w-4xl">
-                    <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
+<!-- Header/Navigation -->
+<header class="bg-white shadow-sm py-4 px-6 fixed w-full z-10">
+<div class="container mx-auto flex justify-between items-center">
+<a class="text-2xl font-bold text-indigo-600" href="#" id="home-link">CampusConnect</a>
+<nav>
+<button class="hidden bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out" id="logout-button">Logout</button>
+</nav>
+</div>
+</header>
+<main class="pt-20"> <!-- Padding top to account for fixed header -->
+<!-- Landing Page Section -->
+<section class="page-section active" id="landing-page">
+<!-- Hero Section -->
+<div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-20 px-6 text-center rounded-b-3xl shadow-lg">
+<div class="container mx-auto max-w-4xl">
+<h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
                         Unlock Your Campus Potential: Get Help, Get Paid!
                     </h1>
-                    <p class="text-lg md:text-xl mb-8 opacity-90">
+<p class="text-lg md:text-xl mb-8 opacity-90">
                         CampusConnect is your peer-to-peer marketplace for academic tasks.
                         Request assignments, notes, PPTs, or offer your skills to earn money, all within your college!
                     </p>
-                    <button id="landing-cta-button" class="bg-white text-indigo-700 hover:bg-indigo-100 font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+<button class="bg-white text-indigo-700 hover:bg-indigo-100 font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105" id="landing-cta-button">
                         Join CampusConnect Now!
                     </button>
-                </div>
-            </div>
-
-            <!-- How It Works Section -->
-            <div id="how-it-works" class="py-16 px-6 bg-white">
-                <div class="container mx-auto max-w-5xl text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">How CampusConnect Works</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                        <!-- Step 1 -->
-                        <div class="bg-blue-50 p-8 rounded-xl shadow-md transform hover:scale-105 transition duration-300 ease-in-out">
-                            <div class="text-indigo-500 mb-4">
-                                <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                            </div>
-                            <h3 class="text-xl font-semibold text-gray-700 mb-3">1. Post a Task</h3>
-                            <p class="text-gray-600">Need help with an assignment, notes, report, or PPT? Post your task with details and your offer price. Even handwritten assignments are welcome!</p>
-                        </div>
-                        <!-- Step 2 -->
-                        <div class="bg-green-50 p-8 rounded-xl shadow-md transform hover:scale-105 transition duration-300 ease-in-out">
-                            <div class="text-green-500 mb-4">
-                                <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            </div>
-                            <h3 class="text-xl font-semibold text-gray-700 mb-3">2. Accept & Complete</h3>
-                            <p class="text-gray-600">Students from your college can browse tasks, accept what they can do, and complete the work. Payments are held securely until completion.</p>
-                        </div>
-                        <!-- Step 3 -->
-                        <div class="bg-purple-50 p-8 rounded-xl shadow-md transform hover:scale-105 transition duration-300 ease-in-out">
-                            <div class="text-purple-500 mb-4">
-                                <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                            </div>
-                            <h3 class="text-xl font-semibold text-gray-700 mb-3">3. Get Paid / Get Done</h3>
-                            <p class="text-gray-600">Once the task is confirmed, the payment is released to the task-taker. Get your academic work done efficiently, or earn extra cash!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Creator Section (Adharv S Ravi) -->
-            <div id="creator-section" class="py-16 px-6 bg-gray-100">
-                <div class="container mx-auto max-w-5xl text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">Meet the Creator</h2>
-                    <div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-indigo-500 max-w-xl mx-auto">
-                        <!-- Correctly linked public image URL -->
-                        <img src="https://i.ibb.co/rGr1xtPn/Whats-App-Image-2025-08-07-at-12-59-07-f5ec3f42.jpg" alt="Adharv S Ravi" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-indigo-500 object-cover">
-                        <h3 class="text-2xl font-semibold text-gray-700 mb-2">Adharv S Ravi</h3>
-                        <p class="text-gray-600 mb-4">
+</div>
+</div>
+<!-- How It Works Section -->
+<div class="py-16 px-6 bg-white" id="how-it-works">
+<div class="container mx-auto max-w-5xl text-center">
+<h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">How CampusConnect Works</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+<!-- Step 1 -->
+<div class="bg-blue-50 p-8 rounded-xl shadow-md transform hover:scale-105 transition duration-300 ease-in-out">
+<div class="text-indigo-500 mb-4">
+<svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<h3 class="text-xl font-semibold text-gray-700 mb-3">1. Post a Task</h3>
+<p class="text-gray-600">Need help with an assignment, notes, report, or PPT? Post your task with details and your offer price. Even handwritten assignments are welcome!</p>
+</div>
+<!-- Step 2 -->
+<div class="bg-green-50 p-8 rounded-xl shadow-md transform hover:scale-105 transition duration-300 ease-in-out">
+<div class="text-green-500 mb-4">
+<svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<h3 class="text-xl font-semibold text-gray-700 mb-3">2. Accept &amp; Complete</h3>
+<p class="text-gray-600">Students from your college can browse tasks, accept what they can do, and complete the work. Payments are held securely until completion.</p>
+</div>
+<!-- Step 3 -->
+<div class="bg-purple-50 p-8 rounded-xl shadow-md transform hover:scale-105 transition duration-300 ease-in-out">
+<div class="text-purple-500 mb-4">
+<svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<h3 class="text-xl font-semibold text-gray-700 mb-3">3. Get Paid / Get Done</h3>
+<p class="text-gray-600">Once the task is confirmed, the payment is released to the task-taker. Get your academic work done efficiently, or earn extra cash!</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Creator Section (Adharv S Ravi) -->
+<div class="py-16 px-6 bg-gray-100" id="creator-section">
+<div class="container mx-auto max-w-5xl text-center">
+<h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">Meet the Creator</h2>
+<div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-indigo-500 max-w-xl mx-auto">
+<!-- Correctly linked public image URL -->
+<img alt="Adharv S Ravi" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-indigo-500 object-cover" src="https://i.ibb.co/rGr1xtPn/Whats-App-Image-2025-08-07-at-12-59-07-f5ec3f42.jpg"/>
+<h3 class="text-2xl font-semibold text-gray-700 mb-2">Adharv S Ravi</h3>
+<p class="text-gray-600 mb-4">
                             Sapthagiri NPS University student, 2nd Year (2025)
                         </p>
-                        <p class="text-gray-500 italic">
+<p class="text-gray-500 italic">
                             "Driven by a passion to build tools that empower the student community, I created CampusConnect to bridge the gap between students needing help and those ready to provide it."
                         </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Benefits Section -->
-            <div class="py-16 px-6 bg-gray-50">
-                <div class="container mx-auto max-w-5xl text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">Why CampusConnect?</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                        <!-- Benefit 1: For Requesters -->
-                        <div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-indigo-500">
-                            <h3 class="text-2xl font-semibold text-gray-700 mb-4">For Students Needing Help</h3>
-                            <ul class="text-left text-gray-600 space-y-3">
-                                <li class="flex items-start">
-                                    <svg class="w-6 h-6 text-indigo-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                    <p><strong>Save Time & Stress:</strong> Delegate academic tasks and focus on what matters most.</p>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg class="w-6 h-6 text-indigo-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                    <p><strong>Reliable Help:</strong> Get assistance from verified students within your own college.</p>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg class="w-6 h-6 text-indigo-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                    <p><strong>Secure Payments:</strong> Your payment is held until you confirm the work is complete.</p>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- Benefit 2: For Task Takers -->
-                        <div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-purple-500">
-                            <h3 class="text-2xl font-semibold text-gray-700 mb-4">For Students Who Want to Earn</h3>
-                            <ul class="text-left text-gray-600 space-y-3">
-                                <li class="flex items-start">
-                                    <svg class="w-6 h-6 text-purple-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                    <p><strong>Earn Extra Cash:</strong> Utilize your skills to help peers and get paid for it.</p>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg class="w-6 h-6 text-purple-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                    <p><strong>Flexible Work:</strong> Choose tasks that fit your schedule and expertise.</p>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg class="w-6 h-6 text-purple-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                    <p><strong>Build Your Network:</strong> Connect with other students and seniors in your college.</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Testimonials Section (Placeholder) -->
-            <div class="py-16 px-6 bg-blue-50">
-                <div class="container mx-auto max-w-5xl text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">What Students Are Saying</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <p class="italic text-gray-700 mb-4">"CampusConnect saved my semester! Got my report done perfectly and on time."</p>
-                            <p class="font-semibold text-indigo-600">- Priya S., Engineering Student</p>
-                        </div>
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <p class="italic text-gray-700 mb-4">"Earning money by helping juniors with their assignments is so rewarding. Flexible and easy!"</p>
-                            <p class="font-semibold text-indigo-600">- Rohan K., Commerce Student</p>
-                        </div>
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <p class="italic text-gray-700 mb-4">"Finally, a platform that understands student needs. Highly recommend!"</p>
-                            <p class="font-semibold text-indigo-600">- Ananya M., Arts Student</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contact/Join Now Section -->
-            <div class="py-20 px-6 bg-gradient-to-r from-purple-600 to-indigo-500 text-white text-center rounded-t-3xl shadow-lg">
-                <div class="container mx-auto max-w-3xl">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Connect & Conquer Academics?</h2>
-                    <p class="text-lg md:text-xl mb-8 opacity-90">
+</div>
+</div>
+</div>
+<!-- Benefits Section -->
+<div class="py-16 px-6 bg-gray-50">
+<div class="container mx-auto max-w-5xl text-center">
+<h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">Why CampusConnect?</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+<!-- Benefit 1: For Requesters -->
+<div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-indigo-500">
+<h3 class="text-2xl font-semibold text-gray-700 mb-4">For Students Needing Help</h3>
+<ul class="text-left text-gray-600 space-y-3">
+<li class="flex items-start">
+<svg class="w-6 h-6 text-indigo-500 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
+<p><strong>Save Time &amp; Stress:</strong> Delegate academic tasks and focus on what matters most.</p>
+</li>
+<li class="flex items-start">
+<svg class="w-6 h-6 text-indigo-500 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
+<p><strong>Reliable Help:</strong> Get assistance from verified students within your own college.</p>
+</li>
+<li class="flex items-start">
+<svg class="w-6 h-6 text-indigo-500 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
+<p><strong>Secure Payments:</strong> Your payment is held until you confirm the work is complete.</p>
+</li>
+</ul>
+</div>
+<!-- Benefit 2: For Task Takers -->
+<div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-purple-500">
+<h3 class="text-2xl font-semibold text-gray-700 mb-4">For Students Who Want to Earn</h3>
+<ul class="text-left text-gray-600 space-y-3">
+<li class="flex items-start">
+<svg class="w-6 h-6 text-purple-500 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
+<p><strong>Earn Extra Cash:</strong> Utilize your skills to help peers and get paid for it.</p>
+</li>
+<li class="flex items-start">
+<svg class="w-6 h-6 text-purple-500 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
+<p><strong>Flexible Work:</strong> Choose tasks that fit your schedule and expertise.</p>
+</li>
+<li class="flex items-start">
+<svg class="w-6 h-6 text-purple-500 mr-3 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
+<p><strong>Build Your Network:</strong> Connect with other students and seniors in your college.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Testimonials Section (Placeholder) -->
+<div class="py-16 px-6 bg-blue-50">
+<div class="container mx-auto max-w-5xl text-center">
+<h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">What Students Are Saying</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="bg-white p-6 rounded-lg shadow-md">
+<p class="italic text-gray-700 mb-4">"CampusConnect saved my semester! Got my report done perfectly and on time."</p>
+<p class="font-semibold text-indigo-600">- Priya S., Engineering Student</p>
+</div>
+<div class="bg-white p-6 rounded-lg shadow-md">
+<p class="italic text-gray-700 mb-4">"Earning money by helping juniors with their assignments is so rewarding. Flexible and easy!"</p>
+<p class="font-semibold text-indigo-600">- Rohan K., Commerce Student</p>
+</div>
+<div class="bg-white p-6 rounded-lg shadow-md">
+<p class="italic text-gray-700 mb-4">"Finally, a platform that understands student needs. Highly recommend!"</p>
+<p class="font-semibold text-indigo-600">- Ananya M., Arts Student</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Contact/Join Now Section -->
+<div class="py-20 px-6 bg-gradient-to-r from-purple-600 to-indigo-500 text-white text-center rounded-t-3xl shadow-lg">
+<div class="container mx-auto max-w-3xl">
+<h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Connect &amp; Conquer Academics?</h2>
+<p class="text-lg md:text-xl mb-8 opacity-90">
                         Join CampusConnect today and transform your academic journey.
                     </p>
-                    <button id="landing-join-button" class="bg-white text-purple-700 hover:bg-purple-100 font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+<button class="bg-white text-purple-700 hover:bg-purple-100 font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105" id="landing-join-button">
                         Get Started Now!
                     </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Login/Signup Page Section -->
-        <section id="auth-page" class="page-section py-20 px-6">
-            <div class="container mx-auto max-w-md bg-white p-8 rounded-xl shadow-lg">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Welcome to CampusConnect</h2>
-
-                <!-- Google Sign-in -->
-                <button id="google-signin-button" class="w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 mb-6">
-                    <svg class="w-6 h-6 mr-3" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M44.5 20H24V28.5H35.5C34.05 32.5 30.5 35.5 24 35.5C17.5 35.5 12 30 12 23.5C12 17 17.5 11.5 24 11.5C27.5 11.5 30.5 13 32.5 15L38 10C35 7 30 5 24 5C13 5 4 14 4 23.5C4 33 13 42 24 42C35 42 44 33 44.5 23.5V20Z" fill="#4285F4"/>
-                        <path d="M24 42C13 42 4 33 4 23.5C4 14 13 5 24 5V11.5C17.5 11.5 12 17 12 23.5C12 30 17.5 35.5 24 35.5C30.5 35.5 34.05 32.5 35.5 28.5H44.5C44 33 35 42 24 42Z" fill="#34A853"/>
-                        <path d="M44.5 20H24V28.5H35.5C34.05 32.5 30.5 35.5 24 35.5C17.5 35.5 12 30 12 23.5C12 17 17.5 11.5 24 11.5C27.5 11.5 30.5 13 32.5 15L38 10C35 7 30 5 24 5C13 5 4 14 4 23.5C4 33 13 42 24 42Z" fill="#FBBC05"/>
-                        <path d="M44.5 20H24V28.5H35.5C34.05 32.5 30.5 35.5 24 35.5C17.5 35.5 12 30 12 23.5C12 17 17.5 11.5 24 11.5C27.5 11.5 30.5 13 32.5 15L38 10C35 7 30 5 24 5C13 5 4 14 4 23.5C4 33 13 42 24 42Z" fill="#EA4335"/>
-                    </svg>
+</div>
+</div>
+</section>
+<!-- Login/Signup Page Section -->
+<section class="page-section py-20 px-6" id="auth-page">
+<div class="container mx-auto max-w-md bg-white p-8 rounded-xl shadow-lg">
+<h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Welcome to CampusConnect</h2>
+<!-- Google Sign-in -->
+<button class="w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 mb-6" id="google-signin-button">
+<svg class="w-6 h-6 mr-3" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44.5 20H24V28.5H35.5C34.05 32.5 30.5 35.5 24 35.5C17.5 35.5 12 30 12 23.5C12 17 17.5 11.5 24 11.5C27.5 11.5 30.5 13 32.5 15L38 10C35 7 30 5 24 5C13 5 4 14 4 23.5C4 33 13 42 24 42C35 42 44 33 44.5 23.5V20Z" fill="#4285F4"></path>
+<path d="M24 42C13 42 4 33 4 23.5C4 14 13 5 24 5V11.5C17.5 11.5 12 17 12 23.5C12 30 17.5 35.5 24 35.5C30.5 35.5 34.05 32.5 35.5 28.5H44.5C44 33 35 42 24 42Z" fill="#34A853"></path>
+<path d="M44.5 20H24V28.5H35.5C34.05 32.5 30.5 35.5 24 35.5C17.5 35.5 12 30 12 23.5C12 17 17.5 11.5 24 11.5C27.5 11.5 30.5 13 32.5 15L38 10C35 7 30 5 24 5C13 5 4 14 4 23.5C4 33 13 42 24 42Z" fill="#FBBC05"></path>
+<path d="M44.5 20H24V28.5H35.5C34.05 32.5 30.5 35.5 24 35.5C17.5 35.5 12 30 12 23.5C12 17 17.5 11.5 24 11.5C27.5 11.5 30.5 13 32.5 15L38 10C35 7 30 5 24 5C13 5 4 14 4 23.5C4 33 13 42 24 42Z" fill="#EA4335"></path>
+</svg>
                     Sign in with Google
                 </button>
-
-                <div class="relative flex py-5 items-center">
-                    <div class="flex-grow border-t border-gray-300"></div>
-                    <span class="flex-shrink mx-4 text-gray-500">OR</span>
-                    <div class="flex-grow border-t border-gray-300"></div>
-                </div>
-
-                <!-- Email/Password Form -->
-                <form id="email-auth-form" class="space-y-4">
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-                        <input type="email" id="email" name="email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    </div>
-                    <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" id="password" name="password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    </div>
-                    <button type="submit" id="signup-button" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+<div class="relative flex py-5 items-center">
+<div class="flex-grow border-t border-gray-300"></div>
+<span class="flex-shrink mx-4 text-gray-500">OR</span>
+<div class="flex-grow border-t border-gray-300"></div>
+</div>
+<!-- Email/Password Form -->
+<form class="space-y-4" id="email-auth-form">
+<div>
+<label class="block text-sm font-medium text-gray-700" for="email">Email Address</label>
+<input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="email" name="email" required="" type="email"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700" for="password">Password</label>
+<input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="password" name="password" required="" type="password"/>
+</div>
+<button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105" id="signup-button" type="submit">
                         Sign Up
                     </button>
-                    <button type="button" id="login-button" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 mt-2">
+<button class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 mt-2" id="login-button" type="button">
                         Already have an account? Log In
                     </button>
-                </form>
-                <p id="auth-message" class="text-center text-sm mt-4 text-red-600"></p>
-            </div>
-        </section>
-
-        <!-- User Onboarding Page Section -->
-        <section id="onboarding-page" class="page-section py-20 px-6">
-            <div class="container mx-auto max-w-md bg-white p-8 rounded-xl shadow-lg">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Tell Us About Yourself</h2>
-                <form id="onboarding-form" class="space-y-6">
-                    <div>
-                        <label for="fullName" class="block text-sm font-medium text-gray-700">Full Name</label>
-                        <input type="text" id="fullName" name="fullName" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    </div>
-                    <div>
-                        <label for="collegeName" class="block text-sm font-medium text-gray-700">College Name</label>
-                        <select id="collegeName" name="collegeName" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <option value="">Select your college</option>
-                            <option value="RV College of Engineering">RV College of Engineering</option>
-                            <option value="PES University">PES University</option>
-                            <option value="BMS College of Engineering">BMS College of Engineering</option>
-                            <option value="Christ University">Christ University</option>
-                            <option value="MS Ramaiah Institute of Technology">MS Ramaiah Institute of Technology</option>
-                            <option value="Other">Other (Please specify in mobile number field)</option>
-                        </select>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label for="yearSemester" class="block text-sm font-medium text-gray-700">Year/Semester</label>
-                            <input type="text" id="yearSemester" name="yearSemester" placeholder="e.g., 3rd Year / 5th Sem" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        </div>
-                        <div>
-                            <label for="branch" class="block text-sm font-medium text-gray-700">Branch</label>
-                            <input type="text" id="branch" name="branch" placeholder="e.g., Computer Science" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        </div>
-                    </div>
-                    <div>
-                        <label for="mobileNumber" class="block text-sm font-medium text-gray-700">Mobile Number (Optional)</label>
-                        <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="e.g., +91 9876543210" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    </div>
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+</form>
+<p class="text-center text-sm mt-4 text-red-600" id="auth-message"></p>
+</div>
+</section>
+<!-- User Onboarding Page Section -->
+<section class="page-section py-20 px-6" id="onboarding-page">
+<div class="container mx-auto max-w-md bg-white p-8 rounded-xl shadow-lg">
+<h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Tell Us About Yourself</h2>
+<form class="space-y-6" id="onboarding-form">
+<div>
+<label class="block text-sm font-medium text-gray-700" for="fullName">Full Name</label>
+<input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="fullName" name="fullName" required="" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700" for="collegeName">College Name</label>
+<select class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="collegeName" name="collegeName" required="">
+<option value="">Select your college</option>
+<option value="RV College of Engineering">RV College of Engineering</option>
+<option value="PES University">PES University</option>
+<option value="BMS College of Engineering">BMS College of Engineering</option>
+<option value="Christ University">Christ University</option>
+<option value="MS Ramaiah Institute of Technology">MS Ramaiah Institute of Technology</option>
+<option value="Other">Other (Please specify in mobile number field)</option>
+</select>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium text-gray-700" for="yearSemester">Year/Semester</label>
+<input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="yearSemester" name="yearSemester" placeholder="e.g., 3rd Year / 5th Sem" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700" for="branch">Branch</label>
+<input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="branch" name="branch" placeholder="e.g., Computer Science" type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700" for="mobileNumber">Mobile Number (Optional)</label>
+<input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="mobileNumber" name="mobileNumber" placeholder="e.g., +91 9876543210" type="tel"/>
+</div>
+<button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105" type="submit">
                         Complete Profile
                     </button>
-                </form>
-            </div>
-        </section>
-
-        <!-- Dashboard Page Section -->
-        <section id="dashboard-page" class="page-section py-20 px-6">
-            <div class="container mx-auto max-w-5xl">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Your CampusConnect Dashboard</h2>
-                <div id="user-info-display" class="bg-indigo-50 p-4 rounded-lg shadow-md mb-8 text-center">
-                    <p class="text-indigo-800 text-lg">Welcome, <span id="dashboard-user-name" class="font-semibold"></span>!</p>
-                    <p class="text-indigo-700 text-sm">College: <span id="dashboard-user-college"></span> | Role: <span id="dashboard-user-role"></span></p>
-                    <p class="text-indigo-700 text-sm">Your User ID: <span id="dashboard-user-id" class="font-mono text-xs"></span></p>
-                </div>
-
-                <!-- Role Selection View (new) -->
-                <div id="role-selection-view" class="hidden text-center bg-white p-8 rounded-xl shadow-lg mb-8">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-6">What would you like to do?</h3>
-                    <p class="text-gray-600 mb-6">Choose your path to get started. You can change this anytime.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-xl mx-auto">
-                        <button id="become-requester-button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+</form>
+</div>
+</section>
+<!-- Dashboard Page Section -->
+<section class="page-section py-20 px-6" id="dashboard-page">
+<div class="container mx-auto max-w-5xl">
+<h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Your CampusConnect Dashboard</h2>
+<div class="bg-indigo-50 p-4 rounded-lg shadow-md mb-8 text-center" id="user-info-display">
+<p class="text-indigo-800 text-lg">Welcome, <span class="font-semibold" id="dashboard-user-name"></span>!</p>
+<p class="text-indigo-700 text-sm">College: <span id="dashboard-user-college"></span> | Role: <span id="dashboard-user-role"></span></p>
+<p class="text-indigo-700 text-sm">Your User ID: <span class="font-mono text-xs" id="dashboard-user-id"></span></p>
+</div>
+<!-- Role Selection View (new) -->
+<div class="hidden text-center bg-white p-8 rounded-xl shadow-lg mb-8" id="role-selection-view">
+<h3 class="text-2xl font-bold text-gray-800 mb-6">What would you like to do?</h3>
+<p class="text-gray-600 mb-6">Choose your path to get started. You can change this anytime.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-xl mx-auto">
+<button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105" id="become-requester-button">
                             Post a New Task
                         </button>
-                        <button id="become-worker-button" class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+<button class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105" id="become-worker-button">
                             View Available Tasks
                         </button>
-                    </div>
-                </div>
-
-                <!-- Requester View -->
-                <div id="requester-view" class="hidden bg-white p-8 rounded-xl shadow-lg mb-8">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Post a New Task</h3>
-                    <form id="post-task-form" class="space-y-4">
-                        <div>
-                            <label for="taskDescription" class="block text-sm font-medium text-gray-700">Task Description</label>
-                            <textarea id="taskDescription" name="taskDescription" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., Need help with a 10-page report on 'Sustainable Energy', due next week."></textarea>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label for="taskPrice" class="block text-sm font-medium text-gray-700">Your Offer Price (₹)</label>
-                                <input type="number" id="taskPrice" name="taskPrice" min="50" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., 250">
-                            </div>
-                            <div>
-                                <label for="taskFormat" class="block text-sm font-medium text-gray-700">Format</label>
-                                <select id="taskFormat" name="taskFormat" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                    <option value="">Select Format</option>
-                                    <option value="Assignment">Assignment</option>
-                                    <option value="Notes">Notes</option>
-                                    <option value="Report">Report</option>
-                                    <option value="PPT">PPT (Presentation)</option>
-                                    <option value="Senior Guidance">Senior Guidance</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+</div>
+</div>
+<!-- Requester View -->
+<div class="hidden bg-white p-8 rounded-xl shadow-lg mb-8" id="requester-view">
+<h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Post a New Task</h3>
+<form class="space-y-4" id="post-task-form">
+<div>
+<label class="block text-sm font-medium text-gray-700" for="taskDescription">Task Description</label>
+<textarea class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="taskDescription" name="taskDescription" placeholder="e.g., Need help with a 10-page report on 'Sustainable Energy', due next week." required="" rows="4"></textarea>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium text-gray-700" for="taskPrice">Your Offer Price (₹)</label>
+<input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="taskPrice" min="50" name="taskPrice" placeholder="e.g., 250" required="" type="number"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700" for="taskFormat">Format</label>
+<select class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="taskFormat" name="taskFormat" required="">
+<option value="">Select Format</option>
+<option value="Assignment">Assignment</option>
+<option value="Notes">Notes</option>
+<option value="Report">Report</option>
+<option value="PPT">PPT (Presentation)</option>
+<option value="Senior Guidance">Senior Guidance</option>
+<option value="Other">Other</option>
+</select>
+</div>
+</div>
+<button class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105" type="submit">
                             Post Task
                         </button>
-                        <p id="post-task-message" class="text-center text-sm mt-4 text-green-600"></p>
-                    </form>
-
-                    <h3 class="text-2xl font-bold text-gray-800 mt-12 mb-6 text-center">Your Posted Tasks</h3>
-                    <div id="my-posted-tasks" class="space-y-4">
-                        <p class="text-center text-gray-600">No tasks posted yet.</p>
-                    </div>
-                </div>
-
-                <!-- Worker View -->
-                <div id="worker-view" class="hidden bg-white p-8 rounded-xl shadow-lg">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Available Tasks</h3>
-                    <div id="available-tasks-list" class="space-y-4">
-                        <p class="text-center text-gray-600">Loading tasks...</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Global Message Box -->
-        <div id="message-box" class="fixed bottom-4 right-4 bg-gray-800 text-white p-4 rounded-lg shadow-xl hidden z-50">
-            <p id="message-content"></p>
-            <button id="message-close-button" class="absolute top-1 right-2 text-white text-lg font-bold">&times;</button>
-        </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-gray-300 py-10 px-6 text-center">
-        <div class="container mx-auto max-w-5xl">
-            <p class="mb-4">&copy; 2025 CampusConnect. All rights reserved.</p>
-            <p class="text-sm">
-                <a href="#" class="hover:text-white mx-2">Privacy Policy</a> |
-                <a href="#" class="hover:text-white mx-2">Terms of Service</a>
+<p class="text-center text-sm mt-4 text-green-600" id="post-task-message"></p>
+</form>
+<h3 class="text-2xl font-bold text-gray-800 mt-12 mb-6 text-center">Your Posted Tasks</h3>
+<div class="space-y-4" id="my-posted-tasks">
+<p class="text-center text-gray-600">No tasks posted yet.</p>
+</div>
+</div>
+<!-- Worker View -->
+<div class="hidden bg-white p-8 rounded-xl shadow-lg" id="worker-view">
+<h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Available Tasks</h3>
+<div class="space-y-4" id="available-tasks-list">
+<p class="text-center text-gray-600">Loading tasks...</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Global Message Box -->
+<div class="fixed bottom-4 right-4 bg-gray-800 text-white p-4 rounded-lg shadow-xl hidden z-50" id="message-box">
+<p id="message-content"></p>
+<button class="absolute top-1 right-2 text-white text-lg font-bold" id="message-close-button">×</button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-gray-800 text-gray-300 py-10 px-6 text-center">
+<div class="container mx-auto max-w-5xl">
+<p class="mb-4">© 2025 CampusConnect. All rights reserved.</p>
+<p class="text-sm">
+<a class="hover:text-white mx-2" href="#">Privacy Policy</a> |
+                <a class="hover:text-white mx-2" href="#">Terms of Service</a>
+</p>
+<p class="text-sm mt-4">
+                Contact us: <a class="hover:text-white" href="mailto:info@campusconnect.com">info@campusconnect.com</a>
+<span class="mx-2">|</span> Follow us on <a class="hover:text-white" href="#">Social Media</a> (Coming Soon!)
             </p>
-            <p class="text-sm mt-4">
-                Contact us: <a href="mailto:info@campusconnect.com" class="hover:text-white">info@campusconnect.com</a>
-                <span class="mx-2">|</span> Follow us on <a href="#" class="hover:text-white">Social Media</a> (Coming Soon!)
-            </p>
-        </div>
-    </footer>
-
-    <!-- Firebase SDKs -->
-    <script type="module">
+</div>
+</footer>
+<!-- Firebase SDKs -->
+<script type="module">
         // Firebase SDK imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import {
@@ -623,6 +599,12 @@
                         await createUserWithEmailAndPassword(auth, email, password);
                         if (authMessage) authMessage.textContent = "Signed up successfully! Redirecting...";
                         showMessage("Signed up successfully! Welcome.", "success");
+        setTimeout(() => {
+            if (auth.currentUser) {
+                location.reload(); // fallback in case onIdTokenChanged doesn't fire
+            }
+        }, 1500);
+    
                     } catch (error) {
                         console.error("Email Sign-up Error:", error);
                         if (authMessage) authMessage.textContent = `Error: ${error.message}`;
