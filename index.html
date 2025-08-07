@@ -431,35 +431,37 @@
         }
 
         // --- Global UI Elements ---
-        const landingPage = document.getElementById('landing-page');
-        const authPage = document.getElementById('auth-page');
-        const onboardingPage = document.getElementById('onboarding-page');
-        const dashboardPage = document.getElementById('dashboard-page');
-        const logoutButton = document.getElementById('logout-button');
-        const homeLink = document.getElementById('home-link');
-        const messageBox = document.getElementById('message-box');
-        const messageContent = document.getElementById('message-content');
-        const messageCloseButton = document.getElementById('message-close-button');
+        let landingPage, authPage, onboardingPage, dashboardPage;
+        let logoutButton, homeLink, messageBox, messageContent, messageCloseButton;
+        let googleSignInButton, emailAuthForm, emailInput, passwordInput, signupButton, loginButton, authMessage;
+        let onboardingForm;
+        let dashboardUserName, dashboardUserCollege, dashboardUserRole, dashboardUserId;
+        let roleSelectionView, requesterView, workerView, becomeRequesterButton, becomeWorkerButton;
+        let postTaskForm, postTaskMessage, myPostedTasks, availableTasksList;
 
         // --- Message Box Functions ---
         function showMessage(message, type = "info") {
-            messageContent.textContent = message;
-            messageBox.className = `fixed bottom-4 right-4 p-4 rounded-lg shadow-xl z-50 transition-all duration-300 ease-in-out transform translate-y-0`;
-            if (type === "error") {
-                messageBox.classList.add('bg-red-600', 'text-white');
-            } else if (type === "success") {
-                messageBox.classList.add('bg-green-600', 'text-white');
-            } else {
-                messageBox.classList.add('bg-gray-800', 'text-white');
+            if (messageContent && messageBox) {
+                messageContent.textContent = message;
+                messageBox.className = `fixed bottom-4 right-4 p-4 rounded-lg shadow-xl z-50 transition-all duration-300 ease-in-out transform translate-y-0`;
+                if (type === "error") {
+                    messageBox.classList.add('bg-red-600', 'text-white');
+                } else if (type === "success") {
+                    messageBox.classList.add('bg-green-600', 'text-white');
+                } else {
+                    messageBox.classList.add('bg-gray-800', 'text-white');
+                }
+                messageBox.classList.remove('hidden');
+                setTimeout(() => {
+                    hideMessage();
+                }, 5000);
             }
-            messageBox.classList.remove('hidden');
-            setTimeout(() => {
-                hideMessage();
-            }, 5000);
         }
 
         function hideMessage() {
-            messageBox.classList.add('hidden');
+            if (messageBox) {
+                messageBox.classList.add('hidden');
+            }
         }
 
         // --- Page Navigation Logic ---
@@ -471,77 +473,12 @@
             window.scrollTo(0, 0);
         }
 
-        // --- Authentication Logic ---
-        const googleSignInButton = document.getElementById('google-signin-button');
-        const emailAuthForm = document.getElementById('email-auth-form');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const signupButton = document.getElementById('signup-button');
-        const loginButton = document.getElementById('login-button');
-        const authMessage = document.getElementById('auth-message');
-
-        googleSignInButton.addEventListener('click', async () => {
-            try {
-                const provider = new GoogleAuthProvider();
-                await signInWithPopup(auth, provider);
-            } catch (error) {
-                console.error("Google Sign-in Error:", error);
-                authMessage.textContent = `Error: ${error.message}`;
-                showMessage(`Google Sign-in failed: ${error.message}`, "error");
-            }
-        });
-
-        signupButton.addEventListener('click', async (e) => {
-            e.preventDefault();
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            if (!email || !password) {
-                authMessage.textContent = "Please enter email and password.";
-                return;
-            }
-            try {
-                await createUserWithEmailAndPassword(auth, email, password);
-                authMessage.textContent = "Signed up successfully! Redirecting...";
-                showMessage("Signed up successfully! Welcome.", "success");
-            } catch (error) {
-                console.error("Email Sign-up Error:", error);
-                authMessage.textContent = `Error: ${error.message}`;
-                showMessage(`Sign up failed: ${error.message}`, "error");
-            }
-        });
-
-        loginButton.addEventListener('click', async (e) => {
-            e.preventDefault();
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            if (!email || !password) {
-                authMessage.textContent = "Please enter email and password.";
-                return;
-            }
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                authMessage.textContent = "Logged in successfully! Redirecting...";
-                showMessage("Logged in successfully! Welcome back.", "success");
-            } catch (error) {
-                console.error("Email Login Error:", error);
-                authMessage.textContent = `Error: ${error.message}`;
-                showMessage(`Login failed: ${error.message}`, "error");
-            }
-        });
-
-        logoutButton.addEventListener('click', async () => {
-            try {
-                await signOut(auth);
-                showMessage("Logged out successfully.", "info");
-            } catch (error) {
-                console.error("Logout Error:", error);
-                showMessage(`Logout failed: ${error.message}`, "error");
-            }
-        });
-
+        // --- Firebase Auth State Listener ---
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                logoutButton.classList.remove('hidden');
+                if (logoutButton) {
+                    logoutButton.classList.remove('hidden');
+                }
                 const userDocRef = doc(db, "users", user.uid);
                 try {
                     const userDocSnap = await getDoc(userDocRef);
@@ -557,256 +494,354 @@
                     showMessage(`Error loading profile: ${error.message}`, "error");
                 }
             } else {
-                logoutButton.classList.add('hidden');
+                if (logoutButton) {
+                    logoutButton.classList.add('hidden');
+                }
                 currentUserData = null;
                 showPage('landing-page');
             }
         });
 
-        if (initialAuthToken) {
-            signInWithCustomToken(auth, initialAuthToken).catch((error) => {
-                console.error("Error signing in with custom token:", error);
-            });
-        } else {
-            signInAnonymously(auth).catch((anonError) => {
-                console.error("Error signing in anonymously:", anonError);
-            });
-        }
+        // --- Initial Page Load & Event Listeners ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Assigning global variables to DOM elements
+            landingPage = document.getElementById('landing-page');
+            authPage = document.getElementById('auth-page');
+            onboardingPage = document.getElementById('onboarding-page');
+            dashboardPage = document.getElementById('dashboard-page');
+            logoutButton = document.getElementById('logout-button');
+            homeLink = document.getElementById('home-link');
+            messageBox = document.getElementById('message-box');
+            messageContent = document.getElementById('message-content');
+            messageCloseButton = document.getElementById('message-close-button');
+            googleSignInButton = document.getElementById('google-signin-button');
+            emailAuthForm = document.getElementById('email-auth-form');
+            emailInput = document.getElementById('email');
+            passwordInput = document.getElementById('password');
+            signupButton = document.getElementById('signup-button');
+            loginButton = document.getElementById('login-button');
+            authMessage = document.getElementById('auth-message');
+            onboardingForm = document.getElementById('onboarding-form');
+            dashboardUserName = document.getElementById('dashboard-user-name');
+            dashboardUserCollege = document.getElementById('dashboard-user-college');
+            dashboardUserRole = document.getElementById('dashboard-user-role');
+            dashboardUserId = document.getElementById('dashboard-user-id');
+            roleSelectionView = document.getElementById('role-selection-view');
+            requesterView = document.getElementById('requester-view');
+            workerView = document.getElementById('worker-view');
+            becomeRequesterButton = document.getElementById('become-requester-button');
+            becomeWorkerButton = document.getElementById('become-worker-button');
+            postTaskForm = document.getElementById('post-task-form');
+            postTaskMessage = document.getElementById('post-task-message');
+            myPostedTasks = document.getElementById('my-posted-tasks');
+            availableTasksList = document.getElementById('available-tasks-list');
 
-        const onboardingForm = document.getElementById('onboarding-form');
-        onboardingForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const user = auth.currentUser;
-            if (!user) {
-                showMessage("You must be logged in to complete your profile.", "error");
-                return;
+            // Attach event listeners after DOM is ready
+            if (messageCloseButton) {
+                messageCloseButton.addEventListener('click', hideMessage);
             }
-
-            const fullName = document.getElementById('fullName').value;
-            const collegeName = document.getElementById('collegeName').value;
-            const yearSemester = document.getElementById('yearSemester').value;
-            const branch = document.getElementById('branch').value;
-            const mobileNumber = document.getElementById('mobileNumber').value;
-
-            if (!fullName || !collegeName) {
-                showMessage("Please fill in all required fields (Full Name, College).", "error");
-                return;
+            if (document.getElementById('landing-cta-button')) {
+                document.getElementById('landing-cta-button').addEventListener('click', () => showPage('auth-page'));
             }
-
-            const userProfile = {
-                fullName,
-                college: collegeName,
-                yearSemester,
-                branch,
-                mobile: mobileNumber,
-                createdAt: serverTimestamp(),
-                userId: user.uid
-            };
-
-            try {
-                const userDocRef = doc(db, "users", user.uid);
-                await setDoc(userDocRef, userProfile, { merge: true });
-                currentUserData = userProfile;
-                showMessage("Profile saved successfully! Redirecting to dashboard.", "success");
-                renderDashboard(currentUserData);
-                showPage('dashboard-page');
-            } catch (error) {
-                console.error("Error saving user profile:", error);
-                showMessage(`Error saving profile: ${error.message}`, "error");
+            if (document.getElementById('landing-join-button')) {
+                document.getElementById('landing-join-button').addEventListener('click', () => showPage('auth-page'));
             }
+            if (homeLink) {
+                homeLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (auth.currentUser) {
+                        showPage('dashboard-page');
+                    } else {
+                        showPage('landing-page');
+                    }
+                });
+            }
+            if (googleSignInButton) {
+                googleSignInButton.addEventListener('click', async () => {
+                    try {
+                        const provider = new GoogleAuthProvider();
+                        await signInWithPopup(auth, provider);
+                    } catch (error) {
+                        console.error("Google Sign-in Error:", error);
+                        if (authMessage) authMessage.textContent = `Error: ${error.message}`;
+                        showMessage(`Google Sign-in failed: ${error.message}`, "error");
+                    }
+                });
+            }
+            if (signupButton) {
+                signupButton.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    const email = emailInput.value;
+                    const password = passwordInput.value;
+                    if (!email || !password) {
+                        if (authMessage) authMessage.textContent = "Please enter email and password.";
+                        return;
+                    }
+                    try {
+                        await createUserWithEmailAndPassword(auth, email, password);
+                        if (authMessage) authMessage.textContent = "Signed up successfully! Redirecting...";
+                        showMessage("Signed up successfully! Welcome.", "success");
+                    } catch (error) {
+                        console.error("Email Sign-up Error:", error);
+                        if (authMessage) authMessage.textContent = `Error: ${error.message}`;
+                        showMessage(`Sign up failed: ${error.message}`, "error");
+                    }
+                });
+            }
+            if (loginButton) {
+                loginButton.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    const email = emailInput.value;
+                    const password = passwordInput.value;
+                    if (!email || !password) {
+                        if (authMessage) authMessage.textContent = "Please enter email and password.";
+                        return;
+                    }
+                    try {
+                        await signInWithEmailAndPassword(auth, email, password);
+                        if (authMessage) authMessage.textContent = "Logged in successfully! Redirecting...";
+                        showMessage("Logged in successfully! Welcome back.", "success");
+                    } catch (error) {
+                        console.error("Email Login Error:", error);
+                        if (authMessage) authMessage.textContent = `Error: ${error.message}`;
+                        showMessage(`Login failed: ${error.message}`, "error");
+                    }
+                });
+            }
+            if (logoutButton) {
+                logoutButton.addEventListener('click', async () => {
+                    try {
+                        await signOut(auth);
+                        showMessage("Logged out successfully.", "info");
+                    } catch (error) {
+                        console.error("Logout Error:", error);
+                        showMessage(`Logout failed: ${error.message}`, "error");
+                    }
+                });
+            }
+            if (onboardingForm) {
+                onboardingForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const user = auth.currentUser;
+                    if (!user) {
+                        showMessage("You must be logged in to complete your profile.", "error");
+                        return;
+                    }
+                    const fullName = document.getElementById('fullName').value;
+                    const collegeName = document.getElementById('collegeName').value;
+                    const yearSemester = document.getElementById('yearSemester').value;
+                    const branch = document.getElementById('branch').value;
+                    const mobileNumber = document.getElementById('mobileNumber').value;
+                    if (!fullName || !collegeName) {
+                        showMessage("Please fill in all required fields (Full Name, College).", "error");
+                        return;
+                    }
+                    const userProfile = {
+                        fullName,
+                        college: collegeName,
+                        yearSemester,
+                        branch,
+                        mobile: mobileNumber,
+                        createdAt: serverTimestamp(),
+                        userId: user.uid
+                    };
+                    try {
+                        const userDocRef = doc(db, "users", user.uid);
+                        await setDoc(userDocRef, userProfile, { merge: true });
+                        currentUserData = userProfile;
+                        showMessage("Profile saved successfully! Redirecting to dashboard.", "success");
+                        renderDashboard(currentUserData);
+                        showPage('dashboard-page');
+                    } catch (error) {
+                        console.error("Error saving user profile:", error);
+                        showMessage(`Error saving profile: ${error.message}`, "error");
+                    }
+                });
+            }
+            if (becomeRequesterButton) {
+                becomeRequesterButton.addEventListener('click', async () => {
+                    const user = auth.currentUser;
+                    if (user) {
+                        try {
+                            const userDocRef = doc(db, "users", user.uid);
+                            await setDoc(userDocRef, { role: 'request' }, { merge: true });
+                            currentUserData.role = 'request';
+                            showMessage("You are now a Requester!", "success");
+                            renderDashboard(currentUserData);
+                        } catch (error) {
+                            console.error("Error setting role to requester:", error);
+                            showMessage(`Error: Could not set role.`, "error");
+                        }
+                    }
+                });
+            }
+            if (becomeWorkerButton) {
+                becomeWorkerButton.addEventListener('click', async () => {
+                    const user = auth.currentUser;
+                    if (user) {
+                        try {
+                            const userDocRef = doc(db, "users", user.uid);
+                            await setDoc(userDocRef, { role: 'do' }, { merge: true });
+                            currentUserData.role = 'do';
+                            showMessage("You are now a Worker!", "success");
+                            renderDashboard(currentUserData);
+                        } catch (error) {
+                            console.error("Error setting role to worker:", error);
+                            showMessage(`Error: Could not set role.`, "error");
+                        }
+                    }
+                });
+            }
+            if (postTaskForm) {
+                postTaskForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const user = auth.currentUser;
+                    if (!user || !currentUserData) {
+                        showMessage("You must be logged in and have a profile to post a task.", "error");
+                        return;
+                    }
+                    const taskDescription = document.getElementById('taskDescription').value;
+                    const taskPrice = parseFloat(document.getElementById('taskPrice').value);
+                    const taskFormat = document.getElementById('taskFormat').value;
+                    if (!taskDescription || !taskPrice || !taskFormat) {
+                        showMessage("Please fill in all task details.", "error");
+                        return;
+                    }
+                    const platformFee = 10;
+                    const workerReceives = taskPrice - platformFee;
+                    const taskData = {
+                        postedByUid: user.uid,
+                        college: currentUserData.college,
+                        description: taskDescription,
+                        price: taskPrice,
+                        workerReceives: workerReceives,
+                        format: taskFormat,
+                        status: 'open',
+                        createdAt: serverTimestamp()
+                    };
+                    try {
+                        await addDoc(collection(db, "tasks"), taskData);
+                        postTaskForm.reset();
+                        showMessage("Task posted successfully!", "success");
+                    } catch (error) {
+                        console.error("Error posting task:", error);
+                        showMessage(`Error posting task: ${error.message}`, "error");
+                    }
+                });
+            }
+            // All functions that rely on DOM elements and event listeners are called here, after the DOM is ready.
         });
 
-        const dashboardUserName = document.getElementById('dashboard-user-name');
-        const dashboardUserCollege = document.getElementById('dashboard-user-college');
-        const dashboardUserRole = document.getElementById('dashboard-user-role');
-        const dashboardUserId = document.getElementById('dashboard-user-id');
-        const roleSelectionView = document.getElementById('role-selection-view');
-        const requesterView = document.getElementById('requester-view');
-        const workerView = document.getElementById('worker-view');
-        const becomeRequesterButton = document.getElementById('become-requester-button');
-        const becomeWorkerButton = document.getElementById('become-worker-button');
-        const postTaskForm = document.getElementById('post-task-form');
-        const postTaskMessage = document.getElementById('post-task-message');
-        const myPostedTasks = document.getElementById('my-posted-tasks');
-        const availableTasksList = document.getElementById('available-tasks-list');
-
+        // Functions that do not rely on DOM elements can be declared outside
         function renderDashboard(userData) {
-            dashboardUserName.textContent = userData.fullName || 'Student';
-            dashboardUserCollege.textContent = userData.college || 'N/A';
-            dashboardUserRole.textContent = userData.role ? (userData.role === 'request' ? 'Requester' : 'Worker') : 'Not Set';
-            dashboardUserId.textContent = userData.userId;
+            if (dashboardUserName) {
+                dashboardUserName.textContent = userData.fullName || 'Student';
+                dashboardUserCollege.textContent = userData.college || 'N/A';
+                dashboardUserRole.textContent = userData.role ? (userData.role === 'request' ? 'Requester' : 'Worker') : 'Not Set';
+                dashboardUserId.textContent = userData.userId;
 
-            if (userData.role) {
-                roleSelectionView.classList.add('hidden');
-                if (userData.role === 'request') {
-                    requesterView.classList.remove('hidden');
-                    workerView.classList.add('hidden');
-                    fetchMyPostedTasks(userData.userId);
-                } else if (userData.role === 'do') {
+                if (userData.role) {
+                    roleSelectionView.classList.add('hidden');
+                    if (userData.role === 'request') {
+                        requesterView.classList.remove('hidden');
+                        workerView.classList.add('hidden');
+                        fetchMyPostedTasks(userData.userId);
+                    } else if (userData.role === 'do') {
+                        requesterView.classList.add('hidden');
+                        workerView.classList.remove('hidden');
+                        fetchAvailableTasks(userData.college);
+                    }
+                } else {
+                    roleSelectionView.classList.remove('hidden');
                     requesterView.classList.add('hidden');
-                    workerView.classList.remove('hidden');
-                    fetchAvailableTasks(userData.college);
+                    workerView.classList.add('hidden');
                 }
-            } else {
-                roleSelectionView.classList.remove('hidden');
-                requesterView.classList.add('hidden');
-                workerView.classList.add('hidden');
             }
         }
-
-        becomeRequesterButton.addEventListener('click', async () => {
-            const user = auth.currentUser;
-            if (user) {
-                try {
-                    const userDocRef = doc(db, "users", user.uid);
-                    await setDoc(userDocRef, { role: 'request' }, { merge: true });
-                    currentUserData.role = 'request';
-                    showMessage("You are now a Requester!", "success");
-                    renderDashboard(currentUserData);
-                } catch (error) {
-                    console.error("Error setting role to requester:", error);
-                    showMessage(`Error: Could not set role.`, "error");
-                }
-            }
-        });
-
-        becomeWorkerButton.addEventListener('click', async () => {
-            const user = auth.currentUser;
-            if (user) {
-                try {
-                    const userDocRef = doc(db, "users", user.uid);
-                    await setDoc(userDocRef, { role: 'do' }, { merge: true });
-                    currentUserData.role = 'do';
-                    showMessage("You are now a Worker!", "success");
-                    renderDashboard(currentUserData);
-                } catch (error) {
-                    console.error("Error setting role to worker:", error);
-                    showMessage(`Error: Could not set role.`, "error");
-                }
-            }
-        });
-
-        postTaskForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const user = auth.currentUser;
-            if (!user || !currentUserData) {
-                showMessage("You must be logged in and have a profile to post a task.", "error");
-                return;
-            }
-
-            const taskDescription = document.getElementById('taskDescription').value;
-            const taskPrice = parseFloat(document.getElementById('taskPrice').value);
-            const taskFormat = document.getElementById('taskFormat').value;
-
-            if (!taskDescription || !taskPrice || !taskFormat) {
-                showMessage("Please fill in all task details.", "error");
-                return;
-            }
-
-            const platformFee = 10;
-            const workerReceives = taskPrice - platformFee;
-
-            const taskData = {
-                postedByUid: user.uid,
-                college: currentUserData.college,
-                description: taskDescription,
-                price: taskPrice,
-                workerReceives: workerReceives,
-                format: taskFormat,
-                status: 'open',
-                createdAt: serverTimestamp()
-            };
-
-            try {
-                await addDoc(collection(db, "tasks"), taskData);
-                postTaskForm.reset();
-                showMessage("Task posted successfully!", "success");
-            } catch (error) {
-                console.error("Error posting task:", error);
-                showMessage(`Error posting task: ${error.message}`, "error");
-            }
-        });
-
         function fetchMyPostedTasks(userId) {
             const q = query(collection(db, "tasks"), where("postedByUid", "==", userId));
             onSnapshot(q, (snapshot) => {
                 if (snapshot.empty) {
-                    myPostedTasks.innerHTML = '<p class="text-center text-gray-600">No tasks posted yet.</p>';
+                    if (myPostedTasks) {
+                        myPostedTasks.innerHTML = '<p class="text-center text-gray-600">No tasks posted yet.</p>';
+                    }
                     return;
                 }
-                myPostedTasks.innerHTML = '';
-                snapshot.forEach((doc) => {
-                    const task = doc.data();
-                    const taskId = doc.id;
-                    const taskCard = `
-                        <div class="bg-gray-50 p-6 rounded-lg shadow-sm border-l-4 border-indigo-400">
-                            <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
-                            <p class="text-gray-600">Format: ${task.format}</p>
-                            <p class="text-gray-600">Offer: ₹${task.price} (Worker gets ₹${task.workerReceives})</p>
-                            <p class="text-gray-600">Status: <span class="font-medium text-blue-700">${task.status.toUpperCase()}</span></p>
-                            <p class="text-gray-500 text-sm mt-2">Posted on: ${task.createdAt ? new Date(task.createdAt.toDate()).toLocaleDateString() : 'N/A'}</p>
-                        </div>
-                    `;
-                    myPostedTasks.innerHTML += taskCard;
-                });
+                if (myPostedTasks) {
+                    myPostedTasks.innerHTML = '';
+                    snapshot.forEach((doc) => {
+                        const task = doc.data();
+                        const taskCard = `
+                            <div class="bg-gray-50 p-6 rounded-lg shadow-sm border-l-4 border-indigo-400">
+                                <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
+                                <p class="text-gray-600">Format: ${task.format}</p>
+                                <p class="text-gray-600">Offer: ₹${task.price} (Worker gets ₹${task.workerReceives})</p>
+                                <p class="text-gray-600">Status: <span class="font-medium text-blue-700">${task.status.toUpperCase()}</span></p>
+                                <p class="text-gray-500 text-sm mt-2">Posted on: ${task.createdAt ? new Date(task.createdAt.toDate()).toLocaleDateString() : 'N/A'}</p>
+                            </div>
+                        `;
+                        myPostedTasks.innerHTML += taskCard;
+                    });
+                }
             }, (error) => {
                 console.error("Error fetching my posted tasks:", error);
                 showMessage(`Error loading your tasks: ${error.message}`, "error");
             });
         }
-
         function fetchAvailableTasks(college) {
             const q = query(
                 collection(db, "tasks"),
                 where("status", "==", "open"),
                 where("college", "==", college)
             );
-
             onSnapshot(q, async (snapshot) => {
                 if (snapshot.empty) {
-                    availableTasksList.innerHTML = '<p class="text-center text-gray-600">No open tasks available in your college.</p>';
+                    if (availableTasksList) {
+                        availableTasksList.innerHTML = '<p class="text-center text-gray-600">No open tasks available in your college.</p>';
+                    }
                     return;
                 }
-                availableTasksList.innerHTML = '';
-                for (const docSnapshot of snapshot.docs) {
-                    const task = docSnapshot.data();
-                    const taskId = docSnapshot.id;
-                    let posterName = "Unknown";
-                    try {
-                        const posterDocRef = doc(db, "users", task.postedByUid);
-                        const posterDocSnap = await getDoc(posterDocRef);
-                        if (posterDocSnap.exists()) {
-                            posterName = posterDocSnap.data().fullName || "A student";
+                if (availableTasksList) {
+                    availableTasksList.innerHTML = '';
+                    for (const docSnapshot of snapshot.docs) {
+                        const task = docSnapshot.data();
+                        const taskId = docSnapshot.id;
+                        let posterName = "Unknown";
+                        try {
+                            const posterDocRef = doc(db, "users", task.postedByUid);
+                            const posterDocSnap = await getDoc(posterDocRef);
+                            if (posterDocSnap.exists()) {
+                                posterName = posterDocSnap.data().fullName || "A student";
+                            }
+                        } catch (error) {
+                            console.error("Error fetching poster name:", error);
                         }
-                    } catch (error) {
-                        console.error("Error fetching poster name:", error);
+                        const taskCard = `
+                            <div class="bg-blue-50 p-6 rounded-lg shadow-sm border-l-4 border-purple-400">
+                                <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
+                                <p class="text-gray-600">Format: ${task.format}</p>
+                                <p class="text-gray-600">You earn: <span class="font-bold text-green-700">₹${task.workerReceives}</span> (Offer: ₹${task.price})</p>
+                                <p class="text-gray-600">Posted by: ${posterName} from ${task.college}</p>
+                                <p class="text-gray-500 text-sm mt-2">Posted on: ${task.createdAt ? new Date(task.createdAt.toDate()).toLocaleDateString() : 'N/A'}</p>
+                                <button data-task-id="${taskId}" class="accept-task-button mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+                                    Accept Task
+                                </button>
+                            </div>
+                        `;
+                        availableTasksList.innerHTML += taskCard;
                     }
-                    const taskCard = `
-                        <div class="bg-blue-50 p-6 rounded-lg shadow-sm border-l-4 border-purple-400">
-                            <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
-                            <p class="text-gray-600">Format: ${task.format}</p>
-                            <p class="text-gray-600">You earn: <span class="font-bold text-green-700">₹${task.workerReceives}</span> (Offer: ₹${task.price})</p>
-                            <p class="text-gray-600">Posted by: ${posterName} from ${task.college}</p>
-                            <p class="text-gray-500 text-sm mt-2">Posted on: ${task.createdAt ? new Date(task.createdAt.toDate()).toLocaleDateString() : 'N/A'}</p>
-                            <button data-task-id="${taskId}" class="accept-task-button mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
-                                Accept Task
-                            </button>
-                        </div>
-                    `;
-                    availableTasksList.innerHTML += taskCard;
-                }
-                document.querySelectorAll('.accept-task-button').forEach(button => {
-                    button.addEventListener('click', async (event) => {
-                        const taskId = event.target.dataset.taskId;
-                        await acceptTask(taskId);
+                    document.querySelectorAll('.accept-task-button').forEach(button => {
+                        button.addEventListener('click', async (event) => {
+                            const taskId = event.target.dataset.taskId;
+                            await acceptTask(taskId);
+                        });
                     });
-                });
+                }
             }, (error) => {
                 console.error("Error fetching available tasks:", error);
                 showMessage(`Error loading available tasks: ${error.message}`, "error");
             });
         }
-
         async function acceptTask(taskId) {
             const user = auth.currentUser;
             if (!user) {
@@ -831,21 +866,6 @@
                 showMessage(`Error accepting task: ${error.message}`, "error");
             }
         }
-
-        // --- Initial Page Load & Event Listeners ---
-        document.addEventListener('DOMContentLoaded', () => {
-            messageCloseButton.addEventListener('click', hideMessage);
-            document.getElementById('landing-cta-button').addEventListener('click', () => showPage('auth-page'));
-            document.getElementById('landing-join-button').addEventListener('click', () => showPage('auth-page'));
-            document.getElementById('home-link').addEventListener('click', (e) => {
-                e.preventDefault();
-                if (auth.currentUser) {
-                    showPage('dashboard-page');
-                } else {
-                    showPage('landing-page');
-                }
-            });
-        });
     </script>
 </body>
 </html>
