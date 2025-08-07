@@ -120,6 +120,23 @@
                 </div>
             </div>
 
+            <!-- Creator Section (Adharv S Ravi) -->
+            <div id="creator-section" class="py-16 px-6 bg-gray-100">
+                <div class="container mx-auto max-w-5xl text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">Meet the Creator</h2>
+                    <div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-indigo-500 max-w-xl mx-auto">
+                        <img src="https://lh3.googleusercontent.com/pw/ABLV6GBD2jB1T7d_rV2w_4K2kK5fK_jG7zN9G7Q-C_W6P5tH1YgW8gB8e-Q-Q-fA8pG7J9z7D9yC7K8tL9kG8bA-rW_1T_A=w200-h200-s-no" alt="Adharv S Ravi" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-indigo-500 object-cover">
+                        <h3 class="text-2xl font-semibold text-gray-700 mb-2">Adharv S Ravi</h3>
+                        <p class="text-gray-600 mb-4">
+                            Sapthagiri NPS University student, 2nd Year (2025)
+                        </p>
+                        <p class="text-gray-500 italic">
+                            "Driven by a passion to build tools that empower the student community, I created CampusConnect to bridge the gap between students needing help and those ready to provide it."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Benefits Section -->
             <div class="py-16 px-6 bg-gray-50">
                 <div class="container mx-auto max-w-5xl text-center">
@@ -427,7 +444,7 @@
             console.log("Firebase initialized successfully.");
         } catch (error) {
             console.error("Error initializing Firebase:", error);
-            showMessage("Error initializing Firebase. Check console for details.", "error");
+            // We can't show a message box here yet because the DOM might not be ready
         }
 
         // --- Global UI Elements ---
@@ -475,7 +492,8 @@
 
         // --- Firebase Auth State Listener ---
         onAuthStateChanged(auth, async (user) => {
-            if (user) {
+            // Check if user is null or if uid is not yet available to avoid errors
+            if (user && user.uid) {
                 if (logoutButton) {
                     logoutButton.classList.remove('hidden');
                 }
@@ -502,7 +520,7 @@
             }
         });
 
-        // --- Initial Page Load & Event Listeners ---
+        // --- Initial Auth & Event Listeners ---
         document.addEventListener('DOMContentLoaded', () => {
             // Assigning global variables to DOM elements
             landingPage = document.getElementById('landing-page');
@@ -535,6 +553,21 @@
             postTaskMessage = document.getElementById('post-task-message');
             myPostedTasks = document.getElementById('my-posted-tasks');
             availableTasksList = document.getElementById('available-tasks-list');
+        
+            // Initial sign-in with custom token if available (for Canvas environment)
+            if (initialAuthToken) {
+                signInWithCustomToken(auth, initialAuthToken).catch((error) => {
+                    console.error("Error signing in with custom token:", error);
+                    // Fallback to anonymous or public view if custom token fails
+                    signInAnonymously(auth).catch((anonError) => {
+                        console.error("Error signing in anonymously:", anonError);
+                    });
+                });
+            } else {
+                signInAnonymously(auth).catch((anonError) => {
+                    console.error("Error signing in anonymously:", anonError);
+                });
+            }
 
             // Attach event listeners after DOM is ready
             if (messageCloseButton) {
@@ -740,20 +773,20 @@
                 dashboardUserId.textContent = userData.userId;
 
                 if (userData.role) {
-                    roleSelectionView.classList.add('hidden');
+                    if (roleSelectionView) roleSelectionView.classList.add('hidden');
                     if (userData.role === 'request') {
-                        requesterView.classList.remove('hidden');
-                        workerView.classList.add('hidden');
+                        if (requesterView) requesterView.classList.remove('hidden');
+                        if (workerView) workerView.classList.add('hidden');
                         fetchMyPostedTasks(userData.userId);
                     } else if (userData.role === 'do') {
-                        requesterView.classList.add('hidden');
-                        workerView.classList.remove('hidden');
+                        if (requesterView) requesterView.classList.add('hidden');
+                        if (workerView) workerView.classList.remove('hidden');
                         fetchAvailableTasks(userData.college);
                     }
                 } else {
-                    roleSelectionView.classList.remove('hidden');
-                    requesterView.classList.add('hidden');
-                    workerView.classList.add('hidden');
+                    if (roleSelectionView) roleSelectionView.classList.remove('hidden');
+                    if (requesterView) requesterView.classList.add('hidden');
+                    if (workerView) workerView.classList.add('hidden');
                 }
             }
         }
