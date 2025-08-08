@@ -328,6 +328,7 @@
                     <h2 class="text-2xl font-bold text-indigo-600">Dashboard</h2>
                     <nav class="space-y-2">
                         <a href="#" id="sidebar-link-home" class="sidebar-link block text-gray-700 font-medium hover:bg-gray-100 p-2 rounded transition-colors duration-200 ease-in-out active">🏠 Home</a>
+                        <a href="#" id="sidebar-link-profile" class="sidebar-link block text-gray-700 font-medium hover:bg-gray-100 p-2 rounded transition-colors duration-200 ease-in-out">👤 My Profile</a>
                         <a href="#" id="sidebar-link-earnings" class="sidebar-link block text-gray-700 font-medium hover:bg-gray-100 p-2 rounded transition-colors duration-200 ease-in-out">💰 Your Journey / Earnings</a>
                         <a href="#" id="sidebar-link-available-tasks" class="sidebar-link block text-gray-700 font-medium hover:bg-gray-100 p-2 rounded transition-colors duration-200 ease-in-out">📋 Tasks Available</a>
                         <a href="#" id="sidebar-link-give-task" class="sidebar-link block text-gray-700 font-medium hover:bg-gray-100 p-2 rounded transition-colors duration-200 ease-in-out">📝 Give Task</a>
@@ -353,6 +354,39 @@
                             <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Welcome to Your Dashboard</h3>
                             <p class="text-gray-600 text-center">Use the sidebar on the left to navigate the app.</p>
                         </div>
+
+                        <!-- My Profile View -->
+                        <div id="dashboard-profile-view" class="dashboard-view hidden">
+                            <div class="flex items-center justify-between mb-6">
+                                <button onclick="showDashboardView('dashboard-home-view')" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-full transition-colors duration-200 ease-in-out">← Back</button>
+                                <h3 class="text-2xl font-bold text-gray-800 text-center flex-grow">My Profile</h3>
+                                <div></div>
+                            </div>
+                            <div class="bg-white p-8 rounded-xl shadow-sm space-y-6">
+                                <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8">
+                                    <img id="profile-pic" src="https://placehold.co/128x128/9CA3AF/ffffff?text=User" alt="Profile Picture" class="w-32 h-32 rounded-full object-cover border-4 border-indigo-400">
+                                    <div class="text-center md:text-left">
+                                        <h4 class="text-xl font-bold text-gray-800"><span id="profile-full-name"></span></h4>
+                                        <p class="text-gray-600"><span id="profile-email"></span></p>
+                                        <p class="text-gray-600">College: <span id="profile-college-name"></span></p>
+                                        <p class="text-gray-600">Year/Branch: <span id="profile-year-branch"></span></p>
+                                        <p class="text-gray-600">User ID: <span id="profile-user-id" class="font-mono text-sm"></span></p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <h4 class="text-xl font-bold text-gray-800 text-center">Your Work History</h4>
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                    <div class="p-4 bg-indigo-50 rounded-xl shadow-sm">
+                                        <h5 class="font-semibold text-gray-700">Posted Tasks</h5>
+                                        <div id="profile-posted-tasks" class="mt-2 space-y-2 text-sm text-gray-600"></div>
+                                    </div>
+                                    <div class="p-4 bg-green-50 rounded-xl shadow-sm">
+                                        <h5 class="font-semibold text-gray-700">Completed Tasks</h5>
+                                        <div id="profile-completed-tasks" class="mt-2 space-y-2 text-sm text-gray-600"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         
                         <!-- Your Journey / Earnings View -->
                         <div id="dashboard-earnings-view" class="dashboard-view hidden">
@@ -363,7 +397,7 @@
                             </div>
                             <div class="bg-white p-6 rounded-xl shadow-sm">
                                 <p class="text-gray-600 text-center">Here you can see tasks you have completed and your total earnings.</p>
-                                <p class="text-gray-600 font-bold mt-4 text-center">Current Balance: <span id="user-balance" class="text-green-600">$0.00</span></p>
+                                <p class="text-gray-600 font-bold mt-4 text-center">Current Balance: <span id="user-balance" class="text-green-600">₹0.00</span></p>
                                 <div id="completed-tasks-list" class="mt-6 space-y-4">
                                     <p class="text-center text-gray-500">No completed tasks yet.</p>
                                 </div>
@@ -376,6 +410,12 @@
                                 <button onclick="showDashboardView('dashboard-home-view')" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-full transition-colors duration-200 ease-in-out">← Back</button>
                                 <h3 class="text-2xl font-bold text-gray-800 text-center flex-grow">Available Tasks</h3>
                                 <div></div>
+                            </div>
+                             <div class="flex items-center justify-end mb-4">
+                                <div class="flex items-center space-x-2">
+                                    <label for="all-college-filter" class="text-gray-700 font-medium">Show All Colleges</label>
+                                    <input type="checkbox" id="all-college-filter" class="form-checkbox h-5 w-5 text-indigo-600 rounded">
+                                </div>
                             </div>
                             <div id="available-tasks-list" class="space-y-4">
                                 <p class="text-center text-gray-600">Loading tasks...</p>
@@ -448,17 +488,24 @@
                             </div>
                             <div class="bg-white p-6 rounded-xl shadow-sm">
                                 <p class="text-gray-600 text-center">Here you would manage your payment methods and withdraw your earnings.</p>
-                                <p class="text-center text-gray-800 font-bold mt-4">Current Balance: <span id="payment-balance" class="text-green-600">$0.00</span></p>
+                                <p class="text-center text-gray-800 font-bold mt-4">Current Balance: <span id="payment-balance" class="text-green-600">₹0.00</span></p>
                                 
                                 <div class="mt-6 upi-container">
                                     <p class="text-sm font-semibold text-gray-700">Simulated UPI Gateway</p>
-                                    <p class="text-sm text-gray-600">Withdrawal will be transferred to this UPI ID.</p>
-                                    <div class="mt-2 flex justify-between items-center bg-white p-3 rounded-md shadow-sm">
-                                        <span class="font-mono text-gray-900">adharvravi@oksbi</span>
-                                        <button id="withdraw-button" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-transform transform hover:scale-105">Withdraw All</button>
+                                    <p class="text-sm text-gray-600">Click on an app below to initiate a withdrawal of your balance.</p>
+                                    <div class="mt-4 flex justify-around items-center">
+                                        <a href="#" class="upi-link" data-app="gpay">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b3/Google_Pay_icon_%282020%29.svg" alt="Google Pay" class="w-16 h-16">
+                                        </a>
+                                        <a href="#" class="upi-link" data-app="phonepe">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/PhonePe_Logo.svg" alt="PhonePe" class="w-16 h-16">
+                                        </a>
+                                        <a href="#" class="upi-link" data-app="paytm">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Paytm_Logo.png" alt="Paytm" class="w-16 h-16">
+                                        </a>
                                     </div>
+                                    <p class="text-xs text-red-500 mt-4 text-center">**Disclaimer:** This is a **simulated** payment. In a real application, this would be a secure backend process.</p>
                                 </div>
-                                <p class="text-sm text-red-500 mt-4 text-center">**Disclaimer:** This is a **simulated** payment. In a real application, this would be a secure backend process.</p>
                             </div>
                         </div>
                         
@@ -570,6 +617,7 @@
         let dashboardUserName, dashboardUserCollege, dashboardUserRole, dashboardUserId;
         let postTaskForm, myPostedTasks, availableTasksList, completedTasksList;
         let userBalanceSpan, paymentBalanceSpan;
+        let allCollegeFilter, profileFullName, profileEmail, profileCollege, profileYearBranch, profileUserId, profilePostedTasks, profileCompletedTasks;
 
         // --- Message Box Functions ---
         function showMessage(message, type = "info") {
@@ -624,7 +672,7 @@
             // Update the balance in payments view whenever we show it
             if (viewId === 'dashboard-payments-view') {
                  if (paymentBalanceSpan && currentUserData) {
-                    paymentBalanceSpan.textContent = `$${(currentUserData.balance || 0).toFixed(2)}`;
+                    paymentBalanceSpan.textContent = `₹${(currentUserData.balance || 0).toFixed(2)}`;
                 }
             }
         }
@@ -684,15 +732,59 @@
             completedTasksList = document.getElementById('completed-tasks-list');
             userBalanceSpan = document.getElementById('user-balance');
             paymentBalanceSpan = document.getElementById('payment-balance');
+            allCollegeFilter = document.getElementById('all-college-filter');
+            profileFullName = document.getElementById('profile-full-name');
+            profileEmail = document.getElementById('profile-email');
+            profileCollege = document.getElementById('profile-college-name');
+            profileYearBranch = document.getElementById('profile-year-branch');
+            profileUserId = document.getElementById('profile-user-id');
+            profilePostedTasks = document.getElementById('profile-posted-tasks');
+            profileCompletedTasks = document.getElementById('profile-completed-tasks');
             
             // Sidebar link event listeners
             document.getElementById('sidebar-link-home').addEventListener('click', () => showDashboardView('dashboard-home-view'));
+            document.getElementById('sidebar-link-profile').addEventListener('click', () => showDashboardView('dashboard-profile-view'));
             document.getElementById('sidebar-link-earnings').addEventListener('click', () => showDashboardView('dashboard-earnings-view'));
             document.getElementById('sidebar-link-available-tasks').addEventListener('click', () => showDashboardView('dashboard-available-tasks-view'));
             document.getElementById('sidebar-link-give-task').addEventListener('click', () => showDashboardView('dashboard-give-task-view'));
             document.getElementById('sidebar-link-rewards').addEventListener('click', () => showDashboardView('dashboard-rewards-view'));
             document.getElementById('sidebar-link-payments').addEventListener('click', () => showDashboardView('dashboard-payments-view'));
             document.getElementById('sidebar-link-notifications').addEventListener('click', () => showDashboardView('dashboard-notifications-view'));
+
+            // Filter toggle listener
+            if (allCollegeFilter) {
+                allCollegeFilter.addEventListener('change', () => {
+                    if (currentUserData) {
+                        fetchAvailableTasks(currentUserData.college);
+                    }
+                });
+            }
+
+            // UPI link click handler
+            document.querySelectorAll('.upi-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (currentUserData && currentUserData.balance > 0) {
+                        // This is a simulated UPI deep link
+                        const upiId = "adharvravi@oksbi";
+                        const amount = currentUserData.balance.toFixed(2);
+                        const transactionId = `T${Date.now()}`;
+                        const upiLink = `upi://pay?pa=${upiId}&pn=Adharv%20S%20Ravi&mc=0000&tid=${transactionId}&tr=${transactionId}&am=${amount}&cu=INR&url=https://www.campusconnect.com`;
+                        
+                        // Open the link to simulate payment app
+                        window.open(upiLink, '_blank');
+                        
+                        // Simulate withdrawal from balance
+                        // Note: In a real app, this would happen after a successful transaction notification from the payment gateway
+                        const userDocRef = doc(db, "users", currentUserData.userId);
+                        updateDoc(userDocRef, { balance: 0 });
+                        
+                        showMessage("Simulated withdrawal initiated. Check your payment app!", "success");
+                    } else {
+                        showMessage("Your balance is ₹0.00. No funds to withdraw.", "info");
+                    }
+                });
+            });
 
             // Initial sign-in with custom token if available
             if (initialAuthToken) {
@@ -864,29 +956,6 @@
                     }
                 });
             }
-            
-            // Add event listener for the simulated withdraw button
-            const withdrawButton = document.getElementById('withdraw-button');
-            if (withdrawButton) {
-                withdrawButton.addEventListener('click', async () => {
-                    if (currentUserData) {
-                        const currentBalance = currentUserData.balance || 0;
-                        if (currentBalance > 0) {
-                            try {
-                                const userDocRef = doc(db, "users", currentUserData.userId);
-                                await updateDoc(userDocRef, {
-                                    balance: 0
-                                });
-                                showMessage(`Simulated withdrawal of $${currentBalance.toFixed(2)} processed to adharvravi@oksbi.`, "success");
-                            } catch (error) {
-                                showMessage(`Error during simulated withdrawal: ${error.message}`, "error");
-                            }
-                        } else {
-                            showMessage("Your balance is $0.00. No funds to withdraw.", "info");
-                        }
-                    }
-                });
-            }
         });
 
         function renderDashboard(userData) {
@@ -907,6 +976,49 @@
             // Show the default home view
             showDashboardView('dashboard-home-view');
         }
+
+        // Function to render user profile data
+        function renderProfile(userData) {
+            if (profileFullName) {
+                profileFullName.textContent = userData.fullName || 'Student';
+                profileEmail.textContent = auth.currentUser.email || 'N/A';
+                profileCollege.textContent = userData.college || 'N/A';
+                profileYearBranch.textContent = `${userData.yearSemester || 'N/A'} / ${userData.branch || 'N/A'}`;
+                profileUserId.textContent = userData.userId;
+            }
+            
+            // Fetch and render posted tasks for profile view
+            const postedQuery = query(collection(db, "tasks"), where("postedByUid", "==", userData.userId));
+            onSnapshot(postedQuery, (snapshot) => {
+                if (profilePostedTasks) {
+                    profilePostedTasks.innerHTML = '';
+                    if (snapshot.empty) {
+                         profilePostedTasks.innerHTML = '<p>No tasks posted.</p>';
+                    } else {
+                        snapshot.forEach(doc => {
+                            const task = doc.data();
+                            profilePostedTasks.innerHTML += `<p class="text-gray-700 font-medium">${task.description} <span class="text-sm font-normal text-gray-500">(${task.status})</span></p>`;
+                        });
+                    }
+                }
+            });
+
+            // Fetch and render completed tasks for profile view
+            const completedQuery = query(collection(db, "tasks"), where("acceptedByUid", "==", userData.userId), where("status", "==", "completed"));
+            onSnapshot(completedQuery, (snapshot) => {
+                if (profileCompletedTasks) {
+                    profileCompletedTasks.innerHTML = '';
+                    if (snapshot.empty) {
+                        profileCompletedTasks.innerHTML = '<p>No tasks completed.</p>';
+                    } else {
+                        snapshot.forEach(doc => {
+                            const task = doc.data();
+                            profileCompletedTasks.innerHTML += `<p class="text-gray-700 font-medium">${task.description} <span class="text-sm font-normal text-gray-500">(Earned ₹${task.workerReceives})</span></p>`;
+                        });
+                    }
+                }
+            });
+        }
         
         function fetchUserBalance(userId) {
             const userDocRef = doc(db, "users", userId);
@@ -914,7 +1026,7 @@
                 if (docSnap.exists() && userBalanceSpan) {
                     const data = docSnap.data();
                     const balance = data.balance || 0;
-                    userBalanceSpan.textContent = `$${balance.toFixed(2)}`;
+                    userBalanceSpan.textContent = `₹${balance.toFixed(2)}`;
                     currentUserData.balance = balance; // Update global user data
                 }
             }, (error) => {
@@ -1018,15 +1130,22 @@
         }
         
         function fetchAvailableTasks(college) {
-            const q = query(
-                collection(db, "tasks"),
-                where("status", "==", "open"),
-                where("college", "==", college)
-            );
+            const showAll = allCollegeFilter ? allCollegeFilter.checked : false;
+            let q;
+            if (showAll) {
+                q = query(collection(db, "tasks"), where("status", "==", "open"));
+            } else {
+                q = query(
+                    collection(db, "tasks"),
+                    where("status", "==", "open"),
+                    where("college", "==", college)
+                );
+            }
+
             onSnapshot(q, async (snapshot) => {
                 if (snapshot.empty) {
                     if (availableTasksList) {
-                        availableTasksList.innerHTML = '<p class="text-center text-gray-600">No open tasks available in your college.</p>';
+                        availableTasksList.innerHTML = '<p class="text-center text-gray-600">No open tasks available.</p>';
                     }
                     return;
                 }
