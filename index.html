@@ -57,6 +57,15 @@
             color: #4f46e5;
             font-weight: 700;
         }
+        .dashboard-view.hidden {
+            display: none;
+        }
+        .upi-container {
+            border: 2px dashed #4f46e5;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: #eef2ff;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -318,7 +327,7 @@
                 <aside class="w-full md:w-64 bg-white shadow-md px-6 py-8 space-y-6 flex-shrink-0 mb-8 md:mb-0">
                     <h2 class="text-2xl font-bold text-indigo-600">Dashboard</h2>
                     <nav class="space-y-2">
-                        <a href="#" id="sidebar-link-home" class="sidebar-link block text-gray-700 font-medium hover:bg-gray-100 p-2 rounded transition-colors duration-200 ease-in-out">🏠 Home</a>
+                        <a href="#" id="sidebar-link-home" class="sidebar-link block text-gray-700 font-medium hover:bg-gray-100 p-2 rounded transition-colors duration-200 ease-in-out active">🏠 Home</a>
                         <a href="#" id="sidebar-link-earnings" class="sidebar-link block text-gray-700 font-medium hover:bg-gray-100 p-2 rounded transition-colors duration-200 ease-in-out">💰 Your Journey / Earnings</a>
                         <a href="#" id="sidebar-link-available-tasks" class="sidebar-link block text-gray-700 font-medium hover:bg-gray-100 p-2 rounded transition-colors duration-200 ease-in-out">📋 Tasks Available</a>
                         <a href="#" id="sidebar-link-give-task" class="sidebar-link block text-gray-700 font-medium hover:bg-gray-100 p-2 rounded transition-colors duration-200 ease-in-out">📝 Give Task</a>
@@ -347,7 +356,11 @@
                         
                         <!-- Your Journey / Earnings View -->
                         <div id="dashboard-earnings-view" class="dashboard-view hidden">
-                            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Your Journey / Earnings</h3>
+                            <div class="flex items-center justify-between mb-6">
+                                <button onclick="showDashboardView('dashboard-home-view')" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-full transition-colors duration-200 ease-in-out">← Back</button>
+                                <h3 class="text-2xl font-bold text-gray-800 text-center flex-grow">Your Journey / Earnings</h3>
+                                <div></div> <!-- Spacer for alignment -->
+                            </div>
                             <div class="bg-white p-6 rounded-xl shadow-sm">
                                 <p class="text-gray-600 text-center">Here you can see tasks you have completed and your total earnings.</p>
                                 <p class="text-gray-600 font-bold mt-4 text-center">Current Balance: <span id="user-balance" class="text-green-600">$0.00</span></p>
@@ -359,7 +372,11 @@
 
                         <!-- Tasks Available View -->
                         <div id="dashboard-available-tasks-view" class="dashboard-view hidden">
-                            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Available Tasks</h3>
+                            <div class="flex items-center justify-between mb-6">
+                                <button onclick="showDashboardView('dashboard-home-view')" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-full transition-colors duration-200 ease-in-out">← Back</button>
+                                <h3 class="text-2xl font-bold text-gray-800 text-center flex-grow">Available Tasks</h3>
+                                <div></div>
+                            </div>
                             <div id="available-tasks-list" class="space-y-4">
                                 <p class="text-center text-gray-600">Loading tasks...</p>
                             </div>
@@ -367,7 +384,11 @@
                         
                         <!-- Give Task View -->
                         <div id="dashboard-give-task-view" class="dashboard-view hidden">
-                            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Post a New Task</h3>
+                            <div class="flex items-center justify-between mb-6">
+                                <button onclick="showDashboardView('dashboard-home-view')" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-full transition-colors duration-200 ease-in-out">← Back</button>
+                                <h3 class="text-2xl font-bold text-gray-800 text-center flex-grow">Post a New Task</h3>
+                                <div></div>
+                            </div>
                             <form id="post-task-form" class="space-y-4 bg-white p-6 rounded-xl shadow-sm">
                                 <div>
                                     <label for="taskDescription" class="block text-sm font-medium text-gray-700">Task Description</label>
@@ -405,23 +426,49 @@
 
                         <!-- Rewards View -->
                         <div id="dashboard-rewards-view" class="dashboard-view hidden">
-                            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Rewards</h3>
+                             <div class="flex items-center justify-between mb-6">
+                                <button onclick="showDashboardView('dashboard-home-view')" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-full transition-colors duration-200 ease-in-out">← Back</button>
+                                <h3 class="text-2xl font-bold text-gray-800 text-center flex-grow">Rewards</h3>
+                                <div></div>
+                            </div>
                             <div class="bg-white p-6 rounded-xl shadow-sm">
-                                <p class="text-gray-600 text-center">This section would show available rewards or a points system. It is currently under development.</p>
+                                <p class="text-gray-600 text-center">This section displays your special rewards and coupons.</p>
+                                <div id="rewards-content" class="mt-6">
+                                    <!-- This will be dynamically populated -->
+                                </div>
                             </div>
                         </div>
 
                         <!-- Payment Management View -->
                         <div id="dashboard-payments-view" class="dashboard-view hidden">
-                            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Payment Management</h3>
+                            <div class="flex items-center justify-between mb-6">
+                                <button onclick="showDashboardView('dashboard-home-view')" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-full transition-colors duration-200 ease-in-out">← Back</button>
+                                <h3 class="text-2xl font-bold text-gray-800 text-center flex-grow">Payment Management</h3>
+                                <div></div>
+                            </div>
                             <div class="bg-white p-6 rounded-xl shadow-sm">
-                                <p class="text-gray-600 text-center">Here you would manage your payment methods and withdraw your earnings. This feature is coming soon!</p>
+                                <p class="text-gray-600 text-center">Here you would manage your payment methods and withdraw your earnings.</p>
+                                <p class="text-center text-gray-800 font-bold mt-4">Current Balance: <span id="payment-balance" class="text-green-600">$0.00</span></p>
+                                
+                                <div class="mt-6 upi-container">
+                                    <p class="text-sm font-semibold text-gray-700">Simulated UPI Gateway</p>
+                                    <p class="text-sm text-gray-600">Withdrawal will be transferred to this UPI ID.</p>
+                                    <div class="mt-2 flex justify-between items-center bg-white p-3 rounded-md shadow-sm">
+                                        <span class="font-mono text-gray-900">adharvravi@oksbi</span>
+                                        <button id="withdraw-button" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-transform transform hover:scale-105">Withdraw All</button>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-red-500 mt-4 text-center">**Disclaimer:** This is a **simulated** payment. In a real application, this would be a secure backend process.</p>
                             </div>
                         </div>
                         
                         <!-- Notifications View -->
                         <div id="dashboard-notifications-view" class="dashboard-view hidden">
-                             <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Notifications</h3>
+                             <div class="flex items-center justify-between mb-6">
+                                <button onclick="showDashboardView('dashboard-home-view')" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-full transition-colors duration-200 ease-in-out">← Back</button>
+                                <h3 class="text-2xl font-bold text-gray-800 text-center flex-grow">Notifications</h3>
+                                <div></div>
+                            </div>
                             <div class="bg-white p-6 rounded-xl shadow-sm">
                                 <p class="text-gray-600 text-center">You have no new notifications.</p>
                             </div>
@@ -522,7 +569,7 @@
         let onboardingForm;
         let dashboardUserName, dashboardUserCollege, dashboardUserRole, dashboardUserId;
         let postTaskForm, myPostedTasks, availableTasksList, completedTasksList;
-        let userBalanceSpan;
+        let userBalanceSpan, paymentBalanceSpan;
 
         // --- Message Box Functions ---
         function showMessage(message, type = "info") {
@@ -573,6 +620,12 @@
             const activeLink = document.getElementById(linkId);
             if (activeLink) {
                 activeLink.classList.add('active');
+            }
+            // Update the balance in payments view whenever we show it
+            if (viewId === 'dashboard-payments-view') {
+                 if (paymentBalanceSpan && currentUserData) {
+                    paymentBalanceSpan.textContent = `$${(currentUserData.balance || 0).toFixed(2)}`;
+                }
             }
         }
 
@@ -630,6 +683,7 @@
             availableTasksList = document.getElementById('available-tasks-list');
             completedTasksList = document.getElementById('completed-tasks-list');
             userBalanceSpan = document.getElementById('user-balance');
+            paymentBalanceSpan = document.getElementById('payment-balance');
             
             // Sidebar link event listeners
             document.getElementById('sidebar-link-home').addEventListener('click', () => showDashboardView('dashboard-home-view'));
@@ -810,6 +864,29 @@
                     }
                 });
             }
+            
+            // Add event listener for the simulated withdraw button
+            const withdrawButton = document.getElementById('withdraw-button');
+            if (withdrawButton) {
+                withdrawButton.addEventListener('click', async () => {
+                    if (currentUserData) {
+                        const currentBalance = currentUserData.balance || 0;
+                        if (currentBalance > 0) {
+                            try {
+                                const userDocRef = doc(db, "users", currentUserData.userId);
+                                await updateDoc(userDocRef, {
+                                    balance: 0
+                                });
+                                showMessage(`Simulated withdrawal of $${currentBalance.toFixed(2)} processed to adharvravi@oksbi.`, "success");
+                            } catch (error) {
+                                showMessage(`Error during simulated withdrawal: ${error.message}`, "error");
+                            }
+                        } else {
+                            showMessage("Your balance is $0.00. No funds to withdraw.", "info");
+                        }
+                    }
+                });
+            }
         });
 
         function renderDashboard(userData) {
@@ -825,6 +902,7 @@
             fetchAvailableTasks(userData.college);
             fetchUserBalance(userData.userId);
             fetchMyCompletedTasks(userData.userId);
+            fetchRewards(userData.createdAt);
             
             // Show the default home view
             showDashboardView('dashboard-home-view');
@@ -834,12 +912,38 @@
             const userDocRef = doc(db, "users", userId);
             onSnapshot(userDocRef, (docSnap) => {
                 if (docSnap.exists() && userBalanceSpan) {
-                    const balance = docSnap.data().balance || 0;
+                    const data = docSnap.data();
+                    const balance = data.balance || 0;
                     userBalanceSpan.textContent = `$${balance.toFixed(2)}`;
+                    currentUserData.balance = balance; // Update global user data
                 }
             }, (error) => {
                 console.error("Error fetching user balance:", error);
             });
+        }
+        
+        function fetchRewards(createdAt) {
+            const rewardsContent = document.getElementById('rewards-content');
+            if (!rewardsContent) return;
+
+            rewardsContent.innerHTML = ''; // Clear previous content
+            
+            const now = new Date();
+            const createdDate = createdAt.toDate();
+            const daysSinceJoined = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
+
+            if (daysSinceJoined <= 7) {
+                rewardsContent.innerHTML += `
+                    <div class="bg-green-100 p-4 rounded-lg shadow-sm border-2 border-green-300">
+                        <h4 class="text-xl font-bold text-green-700">🎉 Welcome Coupon! 🎉</h4>
+                        <p class="text-green-800 mt-2">As a new user, you get a special <strong>15% coupon</strong> on your first task!</p>
+                        <p class="text-green-800 mt-2 font-mono bg-green-200 p-2 rounded-md">NEWUSER15</p>
+                        <p class="text-sm text-gray-600 mt-2">Valid for 7 days from your sign-up date.</p>
+                    </div>
+                `;
+            } else {
+                rewardsContent.innerHTML += `<p class="text-center text-gray-600">No active coupons at this time. Check back later!</p>`;
+            }
         }
         
         function fetchMyCompletedTasks(userId) {
@@ -884,7 +988,7 @@
                     return;
                 }
                 if (myPostedTasks) {
-                    myPostedTasks.innerHTML = '';
+                        myPostedTasks.innerHTML = '';
                     snapshot.forEach((doc) => {
                         const task = doc.data();
                         const taskCard = `
