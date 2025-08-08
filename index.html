@@ -296,8 +296,12 @@
                             <option value="BMS College of Engineering">BMS College of Engineering</option>
                             <option value="Christ University">Christ University</option>
                             <option value="MS Ramaiah Institute of Technology">MS Ramaiah Institute of Technology</option>
-                            <option value="Other">Other (Please specify in mobile number field)</option>
+                            <option value="Other">Other</option>
                         </select>
+                    </div>
+                    <div id="other-college-field" class="hidden">
+                        <label for="otherCollegeName" class="block text-sm font-medium text-gray-700">Please specify your college</label>
+                        <input type="text" id="otherCollegeName" name="otherCollegeName" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
@@ -341,21 +345,18 @@
 
                 <!-- Main Content -->
                 <div class="flex-1 p-8 overflow-y-auto bg-gray-50 rounded-xl shadow-lg">
-                    <!-- Image above welcome section as requested -->
-                    <div class="flex justify-center mb-6">
-                         <img src="https://i.ibb.co/tf3M9Qg/home-banner-img.jpg" alt="College India Placeholder" class="w-full h-auto object-contain rounded-xl shadow-md">
-                    </div>
-                    
-                    <div id="user-info-display" class="bg-indigo-50 p-4 rounded-lg shadow-md mb-8 text-center">
-                        <p class="text-indigo-800 text-lg">Welcome, <span class="font-semibold" id="dashboard-user-name"></span>!</p>
-                        <p class="text-indigo-700 text-sm">College: <span id="dashboard-user-college"></span> | Role: <span id="dashboard-user-role"></span></p>
-                        <p class="text-indigo-700 text-sm">Your User ID: <span class="font-mono text-xs" id="dashboard-user-id"></span></p>
-                    </div>
-
                     <!-- Dashboard Content Views -->
                     <div id="dashboard-content-views">
                         <!-- Home View -->
                         <div id="dashboard-home-view" class="dashboard-view">
+                            <div class="flex justify-center mb-6">
+                                <img src="https://i.ibb.co/tf3M9Qg/home-banner-img.jpg" alt="College India Placeholder" class="w-full h-auto object-contain rounded-xl shadow-md">
+                            </div>
+                            <div id="user-info-display" class="bg-indigo-50 p-4 rounded-lg shadow-md mb-8 text-center">
+                                <p class="text-indigo-800 text-lg">Welcome, <span class="font-semibold" id="dashboard-user-name"></span>!</p>
+                                <p class="text-indigo-700 text-sm">College: <span id="dashboard-user-college"></span> | Role: <span id="dashboard-user-role"></span></p>
+                                <p class="text-indigo-700 text-sm">Your User ID: <span class="font-mono text-xs" id="dashboard-user-id"></span></p>
+                            </div>
                             <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Welcome to Your Dashboard</h3>
                             <p class="text-gray-600 text-center">Use the sidebar on the left to navigate the app.</p>
                         </div>
@@ -402,8 +403,9 @@
                             </div>
                             <div class="bg-white p-6 rounded-xl shadow-sm">
                                 <p class="text-gray-600 font-bold mt-4 text-center">Current Balance: <span id="user-balance" class="text-green-600">₹0.00</span></p>
-                                <div id="completed-tasks-list" class="mt-6 space-y-4">
-                                    <p class="text-center text-gray-500">No completed tasks yet.</p>
+                                <h4 class="text-xl font-bold text-gray-800 mt-6">Your Accepted & Completed Tasks</h4>
+                                <div id="accepted-and-completed-tasks" class="mt-4 space-y-4">
+                                    <p class="text-center text-gray-500">No accepted or completed tasks yet.</p>
                                 </div>
                             </div>
                         </div>
@@ -617,10 +619,10 @@
         let landingPage, authPage, onboardingPage, dashboardPage;
         let logoutButton, homeLink, messageBox, messageContent, messageCloseButton;
         let googleSignInButton, emailAuthForm, emailInput, passwordInput, signupButton, loginButton, authMessage;
-        let onboardingForm;
+        let onboardingForm, collegeNameSelect, otherCollegeField, otherCollegeNameInput;
         let dashboardUserName, dashboardUserCollege, dashboardUserRole, dashboardUserId;
-        let postTaskForm, myPostedTasks, availableTasksList, completedTasksList;
-        let userBalanceSpan, paymentBalanceSpan;
+        let postTaskForm, myPostedTasks, availableTasksList;
+        let userBalanceSpan, paymentBalanceSpan, acceptedAndCompletedTasksList;
         let allCollegeFilter, profileFullName, profileEmail, profileCollege, profileYearBranch, profileUserId, profilePostedTasks, profileCompletedTasks;
 
         // --- Message Box Functions ---
@@ -674,9 +676,11 @@
                 activeLink.classList.add('active');
             }
             // Update the balance in payments view whenever we show it
-            if (viewId === 'dashboard-payments-view') {
-                 if (paymentBalanceSpan && currentUserData) {
-                    paymentBalanceSpan.textContent = `₹${(currentUserData.balance || 0).toFixed(2)}`;
+            if (viewId === 'dashboard-payments-view' || viewId === 'dashboard-earnings-view') {
+                 if (paymentBalanceSpan && userBalanceSpan && currentUserData) {
+                    const balance = (currentUserData.balance || 0).toFixed(2);
+                    userBalanceSpan.textContent = `₹${balance}`;
+                    paymentBalanceSpan.textContent = `₹${balance}`;
                 }
             }
             if (viewId === 'dashboard-profile-view') {
@@ -731,6 +735,9 @@
             loginButton = document.getElementById('login-button');
             authMessage = document.getElementById('auth-message');
             onboardingForm = document.getElementById('onboarding-form');
+            collegeNameSelect = document.getElementById('collegeName');
+            otherCollegeField = document.getElementById('other-college-field');
+            otherCollegeNameInput = document.getElementById('otherCollegeName');
             dashboardUserName = document.getElementById('dashboard-user-name');
             dashboardUserCollege = document.getElementById('dashboard-user-college');
             dashboardUserRole = document.getElementById('dashboard-user-role');
@@ -738,7 +745,7 @@
             postTaskForm = document.getElementById('post-task-form');
             myPostedTasks = document.getElementById('my-posted-tasks');
             availableTasksList = document.getElementById('available-tasks-list');
-            completedTasksList = document.getElementById('completed-tasks-list');
+            acceptedAndCompletedTasksList = document.getElementById('accepted-and-completed-tasks');
             userBalanceSpan = document.getElementById('user-balance');
             paymentBalanceSpan = document.getElementById('payment-balance');
             allCollegeFilter = document.getElementById('all-college-filter');
@@ -760,6 +767,18 @@
             document.getElementById('sidebar-link-payments').addEventListener('click', () => showDashboardView('dashboard-payments-view'));
             document.getElementById('sidebar-link-notifications').addEventListener('click', () => showDashboardView('dashboard-notifications-view'));
 
+            // Onboarding form conditional field
+            if (collegeNameSelect) {
+                collegeNameSelect.addEventListener('change', () => {
+                    if (collegeNameSelect.value === 'Other') {
+                        otherCollegeField.classList.remove('hidden');
+                        otherCollegeNameInput.setAttribute('required', 'true');
+                    } else {
+                        otherCollegeField.classList.add('hidden');
+                        otherCollegeNameInput.removeAttribute('required');
+                    }
+                });
+            }
             // Filter toggle listener
             if (allCollegeFilter) {
                 allCollegeFilter.addEventListener('change', () => {
@@ -897,10 +916,16 @@
                         return;
                     }
                     const fullName = document.getElementById('fullName').value;
-                    const collegeName = document.getElementById('collegeName').value;
+                    let collegeName = collegeNameSelect.value;
                     const yearSemester = document.getElementById('yearSemester').value;
                     const branch = document.getElementById('branch').value;
                     const mobileNumber = document.getElementById('mobileNumber').value;
+
+                    // Use the 'other' college name if specified
+                    if (collegeName === 'Other') {
+                        collegeName = otherCollegeNameInput.value;
+                    }
+
                     if (!fullName || !collegeName) {
                         showMessage("Please fill in all required fields (Full Name, College).", "error");
                         return;
@@ -979,7 +1004,7 @@
             fetchMyPostedTasks(userData.userId);
             fetchAvailableTasks(userData.college);
             fetchUserBalance(userData.userId);
-            fetchMyAcceptedTasks(userData.userId); // Corrected to fetch accepted tasks
+            fetchMyAcceptedTasks(userData.userId); 
             fetchRewards(userData.createdAt);
 
             // Show the default home view
@@ -1072,15 +1097,15 @@
         }
         
         function fetchMyAcceptedTasks(userId) {
-             const q = query(
+            const q = query(
                 collection(db, "tasks"),
                 where("acceptedByUid", "==", userId)
             );
             onSnapshot(q, (snapshot) => {
-                if (completedTasksList) {
-                    completedTasksList.innerHTML = '';
+                if (acceptedAndCompletedTasksList) {
+                    acceptedAndCompletedTasksList.innerHTML = '';
                     if (snapshot.empty) {
-                        completedTasksList.innerHTML = '<p class="text-center text-gray-500">You have no accepted or completed tasks yet.</p>';
+                        acceptedAndCompletedTasksList.innerHTML = '<p class="text-center text-gray-500">You have no accepted or completed tasks yet.</p>';
                     } else {
                          snapshot.forEach((doc) => {
                             const task = doc.data();
@@ -1092,7 +1117,7 @@
                                 <p class="text-gray-600">Status: <span class="font-medium text-blue-700">${task.status.toUpperCase()}</span></p>
                                 <p class="text-gray-500 text-sm mt-2">Accepted on: ${task.acceptedAt ? new Date(task.acceptedAt.toDate()).toLocaleDateString() : 'N/A'}</p>
                             `;
-                            completedTasksList.appendChild(taskCard);
+                            acceptedAndCompletedTasksList.appendChild(taskCard);
                         });
                     }
                 }
