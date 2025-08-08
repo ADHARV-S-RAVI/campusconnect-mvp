@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>College Connect - Your Academic Task Marketplace</title>
-    <meta content="College Connect: The ultimate platform for college students to get academic help and earn money by completing tasks like assignments, notes, reports, and PPTs within their college community." name="description"/>
-    <meta content="college students, academic help, assignments, notes, reports, PPTs, earn money, student jobs, campus tasks, peer help, university, student platform, PES College, Sapthagiri NPS University, KSIT" name="keywords"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusConnect - Your Academic Task Marketplace</title>
+    <meta name="description" content="CampusConnect: The ultimate platform for college students to get academic help and earn money by completing tasks like assignments, notes, reports, and PPTs within their college community.">
+    <meta name="keywords" content="college students, academic help, assignments, notes, reports, PPTs, earn money, student jobs, campus tasks, peer help, university, student platform">
+
     <!-- Open Graph / Facebook -->
-    <meta content="website" property="og:type"/>
-    <meta content="https://www.yourstartup.com/" property="og:url"/>
-    <meta content="College Connect - Your Academic Task Marketplace" property="og:title"/>
-    <meta content="College Connect: The ultimate platform for college students to get academic help and earn money by completing tasks like assignments, notes, reports, and PPTs within their college community." property="og:description"/>
-    <meta content="https://placehold.co/1200x630/60A5FA/FFFFFF?text=College+Connect" property="og:image"/>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.yourstartup.com/"> <!-- Replace with your actual URL -->
+    <meta property="og:title" content="CampusConnect - Your Academic Task Marketplace">
+    <meta property="og:description" content="CampusConnect: The ultimate platform for college students to get academic help and earn money by completing tasks like assignments, notes, reports, and PPTs within their college community.">
+    <meta property="og:image" content="https://placehold.co/1200x630/60A5FA/FFFFFF?text=CampusConnect"> <!-- Replace with your actual logo/image -->
+
     <!-- Twitter -->
-    <meta content="summary_large_image" property="twitter:card"/>
-    <meta content="https://www.yourstartup.com/" property="twitter:url"/>
-    <meta content="College Connect - Your Academic Task Marketplace" property="twitter:title"/>
-    <meta content="College Connect: The ultimate platform for college students to get academic help and earn money by completing tasks like assignments, notes, reports, and PPTs within their college community." property="twitter:description"/>
-    <meta content="https://placehold.co/1200x630/60A5FA/FFFFFF?text=College+Connect" property="twitter:image"/>
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.yourstartup.com/"> <!-- Replace with your actual URL -->
+    <meta property="twitter:title" content="CampusConnect - Your Academic Task Marketplace">
+    <meta property="twitter:description" content="CampusConnect: The ultimate platform for college students to get academic help and earn money by completing tasks like assignments, notes, reports, and PPTs within their college community.">
+    <meta property="twitter:image" content="https://placehold.co/1200x630/60A5FA/FFFFFF?text=CampusConnect"> <!-- Replace with your actual logo/image -->
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -53,20 +56,21 @@
     </style>
 </head>
 <body class="antialiased">
+
     <!-- Header/Navigation -->
     <header class="bg-white shadow-sm py-4 px-6 fixed w-full z-10">
         <div class="container mx-auto flex justify-between items-center">
-            <a class="text-2xl font-bold text-indigo-600" href="#" id="home-link">College Connect</a>
-            <nav class="flex items-center space-x-4">
-                <button class="hidden text-gray-600 hover:text-indigo-600 font-medium transition duration-300 ease-in-out" id="profile-link">My Profile</button>
-                <button class="hidden text-gray-600 hover:text-indigo-600 font-medium transition duration-300 ease-in-out" id="chat-link">Help/Chatbot</button>
-                <button class="hidden bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out" id="logout-button">Logout</button>
+            <a href="#" id="home-link" class="text-2xl font-bold text-indigo-600">CampusConnect</a>
+            <nav>
+                <button id="logout-button" class="hidden bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out">Logout</button>
             </nav>
         </div>
     </header>
-    <main class="pt-20">
+
+    <main class="pt-20"> <!-- Padding top to account for fixed header -->
+
         <!-- Landing Page Section -->
-        <section class="page-section active" id="landing-page">
+        <section id="landing-page" class="page-section active">
             <!-- Hero Section -->
             <div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-20 px-6 text-center rounded-b-3xl shadow-lg">
                 <div class="container mx-auto max-w-4xl">
@@ -74,23 +78,24 @@
                         Unlock Your Campus Potential: Get Help, Get Paid!
                     </h1>
                     <p class="text-lg md:text-xl mb-8 opacity-90">
-                        College Connect is your peer-to-peer marketplace for academic tasks.
+                        CampusConnect is your peer-to-peer marketplace for academic tasks.
                         Request assignments, notes, PPTs, or offer your skills to earn money, all within your college!
                     </p>
-                    <button class="bg-white text-indigo-700 hover:bg-indigo-100 font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105" id="landing-cta-button">
-                        Join College Connect Now!
+                    <button id="landing-cta-button" class="bg-white text-indigo-700 hover:bg-indigo-100 font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                        Join CampusConnect Now!
                     </button>
                 </div>
             </div>
+
             <!-- How It Works Section -->
-            <div class="py-16 px-6 bg-white" id="how-it-works">
+            <div id="how-it-works" class="py-16 px-6 bg-white">
                 <div class="container mx-auto max-w-5xl text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">How College Connect Works</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">How CampusConnect Works</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                         <!-- Step 1 -->
                         <div class="bg-blue-50 p-8 rounded-xl shadow-md transform hover:scale-105 transition duration-300 ease-in-out">
                             <div class="text-indigo-500 mb-4">
-                                <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                                <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                             </div>
                             <h3 class="text-xl font-semibold text-gray-700 mb-3">1. Post a Task</h3>
                             <p class="text-gray-600">Need help with an assignment, notes, report, or PPT? Post your task with details and your offer price. Even handwritten assignments are welcome!</p>
@@ -98,15 +103,15 @@
                         <!-- Step 2 -->
                         <div class="bg-green-50 p-8 rounded-xl shadow-md transform hover:scale-105 transition duration-300 ease-in-out">
                             <div class="text-green-500 mb-4">
-                                <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                                <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </div>
-                            <h3 class="text-xl font-semibold text-gray-700 mb-3">2. Accept &amp; Complete</h3>
+                            <h3 class="text-xl font-semibold text-gray-700 mb-3">2. Accept & Complete</h3>
                             <p class="text-gray-600">Students from your college can browse tasks, accept what they can do, and complete the work. Payments are held securely until completion.</p>
                         </div>
                         <!-- Step 3 -->
                         <div class="bg-purple-50 p-8 rounded-xl shadow-md transform hover:scale-105 transition duration-300 ease-in-out">
                             <div class="text-purple-500 mb-4">
-                                <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                                <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                             </div>
                             <h3 class="text-xl font-semibold text-gray-700 mb-3">3. Get Paid / Get Done</h3>
                             <p class="text-gray-600">Once the task is confirmed, the payment is released to the task-taker. Get your academic work done efficiently, or earn extra cash!</p>
@@ -114,42 +119,44 @@
                     </div>
                 </div>
             </div>
+
             <!-- Creator Section (Adharv S Ravi) -->
-            <div class="py-16 px-6 bg-gray-100" id="creator-section">
+            <div id="creator-section" class="py-16 px-6 bg-gray-100">
                 <div class="container mx-auto max-w-5xl text-center">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">Meet the Creator</h2>
                     <div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-indigo-500 max-w-xl mx-auto">
                         <!-- Correctly linked public image URL -->
-                        <img alt="Adharv S Ravi" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-indigo-500 object-cover" onerror="this.src='https://via.placeholder.com/150?text=Adharv';" src="https://i.ibb.co/rGr1xtPn/Whats-App-Image-2025-08-07-at-12-59-07-f5ec3f42.jpg"/>
+                        <img src="https://i.ibb.co/rGr1xtPn/Whats-App-Image-2025-08-07-at-12-59-07-f5ec3f42.jpg" alt="Adharv S Ravi" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-indigo-500 object-cover">
                         <h3 class="text-2xl font-semibold text-gray-700 mb-2">Adharv S Ravi</h3>
                         <p class="text-gray-600 mb-4">
                             Sapthagiri NPS University student, 2nd Year (2025)
                         </p>
                         <p class="text-gray-500 italic">
-                            "Driven by a passion to build tools that empower the student community, I created College Connect to bridge the gap between students needing help and those ready to provide it."
+                            "Driven by a passion to build tools that empower the student community, I created CampusConnect to bridge the gap between students needing help and those ready to provide it."
                         </p>
                     </div>
                 </div>
             </div>
+
             <!-- Benefits Section -->
             <div class="py-16 px-6 bg-gray-50">
                 <div class="container mx-auto max-w-5xl text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">Why College Connect?</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">Why CampusConnect?</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                         <!-- Benefit 1: For Requesters -->
                         <div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-indigo-500">
                             <h3 class="text-2xl font-semibold text-gray-700 mb-4">For Students Needing Help</h3>
                             <ul class="text-left text-gray-600 space-y-3">
                                 <li class="flex items-start">
-                                    <svg class="w-6 h-6 text-indigo-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
-                                    <p><strong>Save Time &amp; Stress:</strong> Delegate academic tasks and focus on what matters most.</p>
+                                    <svg class="w-6 h-6 text-indigo-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    <p><strong>Save Time & Stress:</strong> Delegate academic tasks and focus on what matters most.</p>
                                 </li>
                                 <li class="flex items-start">
-                                    <svg class="w-6 h-6 text-indigo-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
+                                    <svg class="w-6 h-6 text-indigo-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
                                     <p><strong>Reliable Help:</strong> Get assistance from verified students within your own college.</p>
                                 </li>
                                 <li class="flex items-start">
-                                    <svg class="w-6 h-6 text-indigo-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
+                                    <svg class="w-6 h-6 text-indigo-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
                                     <p><strong>Secure Payments:</strong> Your payment is held until you confirm the work is complete.</p>
                                 </li>
                             </ul>
@@ -159,15 +166,15 @@
                             <h3 class="text-2xl font-semibold text-gray-700 mb-4">For Students Who Want to Earn</h3>
                             <ul class="text-left text-gray-600 space-y-3">
                                 <li class="flex items-start">
-                                    <svg class="w-6 h-6 text-purple-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
+                                    <svg class="w-6 h-6 text-purple-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
                                     <p><strong>Earn Extra Cash:</strong> Utilize your skills to help peers and get paid for it.</p>
                                 </li>
                                 <li class="flex items-start">
-                                    <svg class="w-6 h-6 text-purple-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
+                                    <svg class="w-6 h-6 text-purple-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
                                     <p><strong>Flexible Work:</strong> Choose tasks that fit your schedule and expertise.</p>
                                 </li>
                                 <li class="flex items-start">
-                                    <svg class="w-6 h-6 text-purple-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
+                                    <svg class="w-6 h-6 text-purple-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
                                     <p><strong>Build Your Network:</strong> Connect with other students and seniors in your college.</p>
                                 </li>
                             </ul>
@@ -175,13 +182,14 @@
                     </div>
                 </div>
             </div>
+
             <!-- Testimonials Section (Placeholder) -->
             <div class="py-16 px-6 bg-blue-50">
                 <div class="container mx-auto max-w-5xl text-center">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12">What Students Are Saying</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         <div class="bg-white p-6 rounded-lg shadow-md">
-                            <p class="italic text-gray-700 mb-4">"College Connect saved my semester! Got my report done perfectly and on time."</p>
+                            <p class="italic text-gray-700 mb-4">"CampusConnect saved my semester! Got my report done perfectly and on time."</p>
                             <p class="font-semibold text-indigo-600">- Priya S., Engineering Student</p>
                         </div>
                         <div class="bg-white p-6 rounded-lg shadow-md">
@@ -195,282 +203,218 @@
                     </div>
                 </div>
             </div>
+
             <!-- Contact/Join Now Section -->
             <div class="py-20 px-6 bg-gradient-to-r from-purple-600 to-indigo-500 text-white text-center rounded-t-3xl shadow-lg">
                 <div class="container mx-auto max-w-3xl">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Connect &amp; Conquer Academics?</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Connect & Conquer Academics?</h2>
                     <p class="text-lg md:text-xl mb-8 opacity-90">
-                        Join College Connect today and transform your academic journey.
+                        Join CampusConnect today and transform your academic journey.
                     </p>
-                    <button class="bg-white text-purple-700 hover:bg-purple-100 font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105" id="landing-join-button">
+                    <button id="landing-join-button" class="bg-white text-purple-700 hover:bg-purple-100 font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
                         Get Started Now!
                     </button>
                 </div>
             </div>
         </section>
+
         <!-- Login/Signup Page Section -->
-        <section class="page-section py-20 px-6" id="auth-page">
+        <section id="auth-page" class="page-section py-20 px-6">
             <div class="container mx-auto max-w-md bg-white p-8 rounded-xl shadow-lg">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Welcome to College Connect</h2>
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Welcome to CampusConnect</h2>
+
                 <!-- Google Sign-in -->
-                <button class="w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 mb-6" id="google-signin-button">
-                    <svg class="w-6 h-6 mr-3" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M44.5 20H24V28.5H35.5C34.05 32.5 30.5 35.5 24 35.5C17.5 35.5 12 30 12 23.5C12 17 17.5 11.5 24 11.5C27.5 11.5 30.5 13 32.5 15L38 10C35 7 30 5 24 5C13 5 4 14 4 23.5C4 33 13 42 24 42C35 42 44 33 44.5 23.5V20Z" fill="#4285F4"></path>
-                        <path d="M24 42C13 42 4 33 4 23.5C4 14 13 5 24 5V11.5C17.5 11.5 12 17 12 23.5C12 30 17.5 35.5 24 35.5C30.5 35.5 34.05 32.5 35.5 28.5H44.5C44 33 35 42 24 42Z" fill="#34A853"></path>
-                        <path d="M44.5 20H24V28.5H35.5C34.05 32.5 30.5 35.5 24 35.5C17.5 35.5 12 30 12 23.5C12 17 17.5 11.5 24 11.5C27.5 11.5 30.5 13 32.5 15L38 10C35 7 30 5 24 5C13 5 4 14 4 23.5C4 33 13 42 24 42Z" fill="#FBBC05"></path>
-                        <path d="M44.5 20H24V28.5H35.5C34.05 32.5 30.5 35.5 24 35.5C17.5 35.5 12 30 12 23.5C12 17 17.5 11.5 24 11.5C27.5 11.5 30.5 13 32.5 15L38 10C35 7 30 5 24 5C13 5 4 14 4 23.5C4 33 13 42 24 42Z" fill="#EA4335"></path>
+                <button id="google-signin-button" class="w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 mb-6">
+                    <svg class="w-6 h-6 mr-3" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M44.5 20H24V28.5H35.5C34.05 32.5 30.5 35.5 24 35.5C17.5 35.5 12 30 12 23.5C12 17 17.5 11.5 24 11.5C27.5 11.5 30.5 13 32.5 15L38 10C35 7 30 5 24 5C13 5 4 14 4 23.5C4 33 13 42 24 42C35 42 44 33 44.5 23.5V20Z" fill="#4285F4"/>
+                        <path d="M24 42C13 42 4 33 4 23.5C4 14 13 5 24 5V11.5C17.5 11.5 12 17 12 23.5C12 30 17.5 35.5 24 35.5C30.5 35.5 34.05 32.5 35.5 28.5H44.5C44 33 35 42 24 42Z" fill="#34A853"/>
+                        <path d="M44.5 20H24V28.5H35.5C34.05 32.5 30.5 35.5 24 35.5C17.5 35.5 12 30 12 23.5C12 17 17.5 11.5 24 11.5C27.5 11.5 30.5 13 32.5 15L38 10C35 7 30 5 24 5C13 5 4 14 4 23.5C4 33 13 42 24 42Z" fill="#FBBC05"/>
+                        <path d="M44.5 20H24V28.5H35.5C34.05 32.5 30.5 35.5 24 35.5C17.5 35.5 12 30 12 23.5C12 17 17.5 11.5 24 11.5C27.5 11.5 30.5 13 32.5 15L38 10C35 7 30 5 24 5C13 5 4 14 4 23.5C4 33 13 42 24 42Z" fill="#EA4335"/>
                     </svg>
                     Sign in with Google
                 </button>
+
                 <div class="relative flex py-5 items-center">
                     <div class="flex-grow border-t border-gray-300"></div>
                     <span class="flex-shrink mx-4 text-gray-500">OR</span>
                     <div class="flex-grow border-t border-gray-300"></div>
                 </div>
+
                 <!-- Email/Password Form -->
-                <form class="space-y-4" id="email-auth-form">
+                <form id="email-auth-form" class="space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700" for="email">Email Address</label>
-                        <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="email" name="email" required="" type="email"/>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                        <input type="email" id="email" name="email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700" for="password">Password</label>
-                        <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="password" name="password" required="" type="password"/>
+                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" id="password" name="password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     </div>
-                    <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105" id="signup-button" type="submit">
+                    <button type="submit" id="signup-button" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
                         Sign Up
                     </button>
-                    <button class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 mt-2" id="login-button" type="button">
+                    <button type="button" id="login-button" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 mt-2">
                         Already have an account? Log In
                     </button>
                 </form>
-                <p class="text-center text-sm mt-4 text-red-600" id="auth-message"></p>
+                <p id="auth-message" class="text-center text-sm mt-4 text-red-600"></p>
             </div>
         </section>
+
         <!-- User Onboarding Page Section -->
-        <section class="page-section py-20 px-6" id="onboarding-page">
+        <section id="onboarding-page" class="page-section py-20 px-6">
             <div class="container mx-auto max-w-md bg-white p-8 rounded-xl shadow-lg">
                 <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Tell Us About Yourself</h2>
-                <form class="space-y-6" id="onboarding-form">
+                <form id="onboarding-form" class="space-y-6">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700" for="fullName">Full Name</label>
-                        <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="fullName" name="fullName" required="" type="text"/>
+                        <label for="fullName" class="block text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700" for="collegeName">College Name</label>
-                        <select class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="collegeName" name="collegeName" required="">
+                        <label for="collegeName" class="block text-sm font-medium text-gray-700">College Name</label>
+                        <select id="collegeName" name="collegeName" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             <option value="">Select your college</option>
                             <option value="RV College of Engineering">RV College of Engineering</option>
                             <option value="PES University">PES University</option>
                             <option value="BMS College of Engineering">BMS College of Engineering</option>
                             <option value="Christ University">Christ University</option>
                             <option value="MS Ramaiah Institute of Technology">MS Ramaiah Institute of Technology</option>
-                            <option value="PES College">PES College</option>
-                            <option value="Sapthagiri NPS University">Sapthagiri NPS University</option>
-                            <option value="KSIT">KSIT</option>
-                            <option value="Other">Other</option>
+                            <option value="Other">Other (Please specify in mobile number field)</option>
                         </select>
-                    </div>
-                    <div id="other-college-field" class="hidden">
-                        <label class="block text-sm font-medium text-gray-700" for="otherCollegeName">Specify Other College</label>
-                        <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="otherCollegeName" name="otherCollegeName" type="text" placeholder="e.g., Your College Name"/>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700" for="yearSemester">Year/Semester</label>
-                            <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="yearSemester" name="yearSemester" placeholder="e.g., 3rd Year / 5th Sem" type="text"/>
+                            <label for="yearSemester" class="block text-sm font-medium text-gray-700">Year/Semester</label>
+                            <input type="text" id="yearSemester" name="yearSemester" placeholder="e.g., 3rd Year / 5th Sem" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700" for="branch">Branch</label>
-                            <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="branch" name="branch" placeholder="e.g., Computer Science" type="text"/>
+                            <label for="branch" class="block text-sm font-medium text-gray-700">Branch</label>
+                            <input type="text" id="branch" name="branch" placeholder="e.g., Computer Science" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         </div>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700" for="mobileNumber">Mobile Number (Required)</label>
-                        <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="mobileNumber" name="mobileNumber" placeholder="e.g., +91 9876543210" type="tel" required=""/>
+                        <label for="mobileNumber" class="block text-sm font-medium text-gray-700">Mobile Number (Optional)</label>
+                        <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="e.g., +91 9876543210" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     </div>
-                    <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105" type="submit">
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
                         Complete Profile
                     </button>
                 </form>
             </div>
         </section>
+
         <!-- Dashboard Page Section -->
-        <section class="page-section py-20 px-6" id="dashboard-page">
-            <div class="container mx-auto max-w-5xl">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Your College Connect Dashboard</h2>
-                <div class="bg-indigo-50 p-4 rounded-lg shadow-md mb-8 text-center" id="user-info-display">
-                    <p class="text-indigo-800 text-lg">Welcome, <span class="font-semibold" id="dashboard-user-name"></span>!</p>
-                    <p class="text-indigo-700 text-sm">College: <span id="dashboard-user-college"></span> | Role: <span id="dashboard-user-role"></span></p>
-                    <p class="text-indigo-700 text-sm">Your User ID: <span class="font-mono text-xs" id="dashboard-user-id"></span></p>
-                </div>
-                <!-- Role Selection View (new) -->
-                <div class="hidden text-center bg-white p-8 rounded-xl shadow-lg mb-8" id="role-selection-view">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-6">What would you like to do?</h3>
-                    <p class="text-gray-600 mb-6">Choose your path to get started. You can change this anytime.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-xl mx-auto">
-                        <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105" id="become-requester-button">
-                            Post a New Task
-                        </button>
-                        <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105" id="become-worker-button">
-                            View Available Tasks
-                        </button>
+        <section id="dashboard-page" class="page-section py-20 px-6">
+            <div class="flex h-screen mt-10">
+                <!-- Sidebar -->
+                <aside class="w-64 bg-white shadow-md px-6 py-8 space-y-6">
+                    <h2 class="text-2xl font-bold text-indigo-600">CampusConnect</h2>
+                    <nav class="space-y-4">
+                        <a href="#" class="block text-gray-700 font-medium hover:text-indigo-600">🏠 Home</a>
+                        <a href="#" class="block text-gray-700 font-medium hover:text-indigo-600">💰 Your Journey / Earnings</a>
+                        <a href="#" class="block text-gray-700 font-medium hover:text-indigo-600">📋 Tasks Available</a>
+                        <a href="#" class="block text-gray-700 font-medium hover:text-indigo-600">📝 Give Task</a>
+                        <a href="#" class="block text-gray-700 font-medium hover:text-indigo-600">🎁 Rewards</a>
+                        <a href="#" class="block text-gray-700 font-medium hover:text-indigo-600">💳 Payment Management</a>
+                        <hr />
+                        <a href="#" class="block text-gray-500 text-sm hover:text-indigo-500">🔔 Notifications</a>
+                    </nav>
+                </aside>
+
+                <!-- Main Content -->
+                <div class="flex-1 p-8 overflow-y-auto">
+                    <div id="user-info-display" class="bg-indigo-50 p-4 rounded-lg shadow-md mb-8 text-center">
+                        <p class="text-indigo-800 text-lg">Welcome, <span class="font-semibold" id="dashboard-user-name"></span>!</p>
+                        <p class="text-indigo-700 text-sm">College: <span id="dashboard-user-college"></span> | Role: <span id="dashboard-user-role"></span></p>
+                        <p class="text-indigo-700 text-sm">Your User ID: <span class="font-mono text-xs" id="dashboard-user-id"></span></p>
                     </div>
-                </div>
-                <!-- Requester View -->
-                <div class="hidden bg-white p-8 rounded-xl shadow-lg mb-8" id="requester-view">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Post a New Task</h3>
-                    <form class="space-y-4" id="post-task-form">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700" for="taskDescription">Task Description</label>
-                            <textarea class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="taskDescription" name="taskDescription" placeholder="e.g., Need help with a 10-page report on 'Sustainable Energy', due next week." required="" rows="4"></textarea>
+
+                    <!-- Role Selection View (new) -->
+                    <div id="role-selection-view" class="hidden text-center bg-white p-8 rounded-xl shadow-lg mb-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">What would you like to do?</h3>
+                        <p class="text-gray-600 mb-6">Choose your path to get started. You can change this anytime.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-xl mx-auto">
+                            <button id="become-requester-button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                                Post a New Task
+                            </button>
+                            <button id="become-worker-button" class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                                View Available Tasks
+                            </button>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    </div>
+
+                    <!-- Requester View -->
+                    <div id="requester-view" class="hidden bg-white p-8 rounded-xl shadow-lg mb-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Post a New Task</h3>
+                        <form id="post-task-form" class="space-y-4">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700" for="taskPrice">Your Offer Price (₹)</label>
-                                <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="taskPrice" min="50" name="taskPrice" placeholder="e.g., 250" required="" type="number"/>
+                                <label for="taskDescription" class="block text-sm font-medium text-gray-700">Task Description</label>
+                                <textarea id="taskDescription" name="taskDescription" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., Need help with a 10-page report on 'Sustainable Energy', due next week."></textarea>
                             </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700" for="taskFormat">Format</label>
-                                <select class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="taskFormat" name="taskFormat" required="">
-                                    <option value="">Select Format</option>
-                                    <option value="Assignment">Assignment</option>
-                                    <option value="Notes">Notes</option>
-                                    <option value="Report">Report</option>
-                                    <option value="PPT">PPT (Presentation)</option>
-                                    <option value="Senior Guidance">Senior Guidance</option>
-                                    <option value="Other">Other</option>
-                                </select>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="taskPrice" class="block text-sm font-medium text-gray-700">Your Offer Price (₹)</label>
+                                    <input type="number" id="taskPrice" name="taskPrice" min="50" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., 250">
+                                </div>
+                                <div>
+                                    <label for="taskFormat" class="block text-sm font-medium text-gray-700">Format</label>
+                                    <select id="taskFormat" name="taskFormat" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                        <option value="">Select Format</option>
+                                        <option value="Assignment">Assignment</option>
+                                        <option value="Notes">Notes</option>
+                                        <option value="Report">Report</option>
+                                        <option value="PPT">PPT (Presentation)</option>
+                                        <option value="Senior Guidance">Senior Guidance</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700" for="taskImage">Attach Work Image (Optional)</label>
-                            <input class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100" id="taskImage" name="taskImage" type="file" accept="image/*"/>
-                            <img id="image-preview" src="#" alt="Image Preview" class="mt-2 hidden w-full h-auto object-cover rounded-lg shadow-sm"/>
-                        </div>
-                        <button class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105" type="submit">
-                            Post Task
-                        </button>
-                        <p class="text-center text-sm mt-4 text-green-600" id="post-task-message"></p>
-                    </form>
-                    <h3 class="text-2xl font-bold text-gray-800 mt-12 mb-6 text-center">Your Posted Tasks</h3>
-                    <div class="space-y-4" id="my-posted-tasks">
-                        <p class="text-center text-gray-600">No tasks posted yet.</p>
-                    </div>
-                </div>
-                <!-- Worker View -->
-                <div class="hidden bg-white p-8 rounded-xl shadow-lg" id="worker-view">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Available Tasks</h3>
-                    <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-6">
-                        <div class="w-full sm:w-auto">
-                            <label for="college-filter" class="block text-sm font-medium text-gray-700">Filter by College:</label>
-                            <select id="college-filter" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                <option value="all">All Colleges</option>
-                                <option value="RV College of Engineering">RV College of Engineering</option>
-                                <option value="PES University">PES University</option>
-                                <option value="BMS College of Engineering">BMS College of Engineering</option>
-                                <option value="Christ University">Christ University</option>
-                                <option value="MS Ramaiah Institute of Technology">MS Ramaiah Institute of Technology</option>
-                                <option value="PES College">PES College</option>
-                                <option value="Sapthagiri NPS University">Sapthagiri NPS University</option>
-                                <option value="KSIT">KSIT</option>
-                            </select>
-                        </div>
-                        <div class="w-full sm:w-auto">
-                            <label for="senior-search" class="block text-sm font-medium text-gray-700">Search Seniors:</label>
-                            <input type="text" id="senior-search" placeholder="Search by name..." class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        </div>
-                    </div>
-                    <div class="space-y-4" id="available-tasks-list">
-                        <p class="text-center text-gray-600">Loading tasks...</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Profile Page Section -->
-        <section class="page-section py-20 px-6" id="profile-page">
-            <div class="container mx-auto max-w-5xl">
-                <div class="flex items-center mb-6">
-                    <button id="profile-back-button" class="text-gray-500 hover:text-gray-700 transition duration-300 ease-in-out mr-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                        </svg>
-                    </button>
-                    <h2 class="text-3xl font-bold text-gray-800">My Profile</h2>
-                </div>
-                <div class="bg-white p-8 rounded-xl shadow-lg mb-8 space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <h3 class="text-xl font-semibold text-gray-700 mb-2">Personal Details</h3>
-                            <p class="text-gray-600"><strong>Full Name:</strong> <span id="profile-full-name"></span></p>
-                            <p class="text-gray-600"><strong>College:</strong> <span id="profile-college"></span></p>
-                            <p class="text-gray-600"><strong>Year/Semester:</strong> <span id="profile-year-semester"></span></p>
-                            <p class="text-gray-600"><strong>Branch:</strong> <span id="profile-branch"></span></p>
-                            <p class="text-gray-600"><strong>Mobile Number:</strong> <span id="profile-mobile"></span></p>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-semibold text-gray-700 mb-2">My Stats</h3>
-                            <p class="text-gray-600"><strong>Tasks Posted:</strong> <span id="stat-posted-count">0</span></p>
-                            <p class="text-gray-600"><strong>Tasks Accepted:</strong> <span id="stat-accepted-count">0</span></p>
-                            <p class="text-gray-600"><strong>Total Earnings:</strong> <span id="stat-earnings">₹0</span></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">My Posted Tasks</h3>
-                        <div class="space-y-4" id="profile-my-posted-tasks">
+                            <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                                Post Task
+                            </button>
+                            <p id="post-task-message" class="text-center text-sm mt-4 text-green-600"></p>
+                        </form>
+
+                        <h3 class="text-2xl font-bold text-gray-800 mt-12 mb-6 text-center">Your Posted Tasks</h3>
+                        <div id="my-posted-tasks" class="space-y-4">
                             <p class="text-center text-gray-600">No tasks posted yet.</p>
                         </div>
                     </div>
-                    <div>
-                        <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">My Accepted Tasks</h3>
-                        <div class="space-y-4" id="profile-my-accepted-tasks">
-                            <p class="text-center text-gray-600">No tasks accepted yet.</p>
+
+                    <!-- Worker View -->
+                    <div id="worker-view" class="hidden bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Available Tasks</h3>
+                        <div id="available-tasks-list" class="space-y-4">
+                            <p class="text-center text-gray-600">Loading tasks...</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- Chatbot Page Section -->
-        <section class="page-section py-20 px-6" id="chat-page">
-            <div class="container mx-auto max-w-2xl bg-white p-8 rounded-xl shadow-lg flex flex-col h-full md:h-[70vh]">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center">College Connect Bot</h2>
-                <div class="flex-grow overflow-y-auto p-4 bg-gray-50 rounded-lg mb-4 space-y-4" id="chat-box">
-                    <div class="flex justify-start">
-                        <div class="bg-gray-200 text-gray-800 p-3 rounded-xl rounded-bl-none max-w-[80%]">
-                            <p>Hi there! I'm your College Connect assistant. How can I help you today?</p>
-                        </div>
-                    </div>
-                </div>
-                <form id="chat-form" class="flex">
-                    <input type="text" id="chat-input" placeholder="Type your message..." class="flex-grow px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-r-lg transition duration-300 ease-in-out">
-                        Send
-                    </button>
-                </form>
-            </div>
-        </section>
+
         <!-- Global Message Box -->
-        <div class="fixed bottom-4 right-4 bg-gray-800 text-white p-4 rounded-lg shadow-xl hidden z-50" id="message-box">
+        <div id="message-box" class="fixed bottom-4 right-4 bg-gray-800 text-white p-4 rounded-lg shadow-xl hidden z-50">
             <p id="message-content"></p>
-            <button class="absolute top-1 right-2 text-white text-lg font-bold" id="message-close-button">×</button>
+            <button id="message-close-button" class="absolute top-1 right-2 text-white text-lg font-bold">&times;</button>
         </div>
+
     </main>
+
     <!-- Footer -->
     <footer class="bg-gray-800 text-gray-300 py-10 px-6 text-center">
         <div class="container mx-auto max-w-5xl">
-            <p class="mb-4">© 2025 College Connect. All rights reserved.</p>
+            <p class="mb-4">&copy; 2025 CampusConnect. All rights reserved.</p>
             <p class="text-sm">
-                <a class="hover:text-white mx-2" href="#">Privacy Policy</a> |
-                <a class="hover:text-white mx-2" href="#">Terms of Service</a>
+                <a href="#" class="hover:text-white mx-2">Privacy Policy</a> |
+                <a href="#" class="hover:text-white mx-2">Terms of Service</a>
             </p>
             <p class="text-sm mt-4">
-                Contact us: <a class="hover:text-white" href="mailto:info@collegeconnect.com">info@collegeconnect.com</a>
-                <span class="mx-2">|</span> Follow us on <a class="hover:text-white" href="#">Social Media</a> (Coming Soon!)
+                Contact us: <a href="mailto:info@campusconnect.com" class="hover:text-white">info@campusconnect.com</a>
+                <span class="mx-2">|</span> Follow us on <a href="#" class="hover:text-white">Social Media</a> (Coming Soon!)
             </p>
         </div>
     </footer>
+
     <!-- Firebase SDKs -->
     <script type="module">
         // Firebase SDK imports
@@ -496,20 +440,13 @@
             query,
             where,
             onSnapshot,
-            serverTimestamp
+            serverTimestamp,
+            getDocs
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- Firebase Configuration & Initialization ---
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = {
-            apiKey: "AIzaSyCiH_Oa7hzN0WL2e3391M-1LaIf0jzmPDA",
-            authDomain: "clglink-37e05.firebaseapp.com",
-            projectId: "clglink-37e05",
-            storageBucket: "clglink-37e05.firebasestorage.app",
-            messagingSenderId: "150826464811",
-            appId: "1:150826464811:web:ab87ebcdba820f98ca1c6e",
-            measurementId: "G-E3FL29DWML"
-        };
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
         let app;
@@ -528,20 +465,14 @@
         }
 
         // --- Global UI Elements ---
-        let landingPage, authPage, onboardingPage, dashboardPage, profilePage, chatPage;
-        let logoutButton, homeLink, profileLink, chatLink, messageBox, messageContent, messageCloseButton;
+        let landingPage, authPage, onboardingPage, dashboardPage;
+        let logoutButton, homeLink, messageBox, messageContent, messageCloseButton;
         let googleSignInButton, emailAuthForm, emailInput, passwordInput, signupButton, loginButton, authMessage;
-        let onboardingForm, otherCollegeField, collegeSelect;
+        let onboardingForm;
         let dashboardUserName, dashboardUserCollege, dashboardUserRole, dashboardUserId;
         let roleSelectionView, requesterView, workerView, becomeRequesterButton, becomeWorkerButton;
         let postTaskForm, postTaskMessage, myPostedTasks, availableTasksList;
-        let taskImageInput, imagePreview;
-        let collegeFilterSelect, seniorSearchInput;
-        let profileFullName, profileCollege, profileYearSemester, profileBranch, profileMobile, profilePostedTasks, profileAcceptedTasks;
-        let profileBackButton;
-        let chatBox, chatForm, chatInput;
-        let statPostedCount, statAcceptedCount, statEarnings;
-        
+
         // --- Message Box Functions ---
         function showMessage(message, type = "info") {
             if (messageContent && messageBox) {
@@ -583,9 +514,9 @@
                 if (!isAuthReady) {
                     isAuthReady = true;
                     console.log("ID token ready for user:", user.uid);
-                    if (logoutButton) logoutButton.classList.remove('hidden');
-                    if (profileLink) profileLink.classList.remove('hidden');
-                    if (chatLink) chatLink.classList.remove('hidden');
+                    if (logoutButton) {
+                        logoutButton.classList.remove('hidden');
+                    }
                     const userDocRef = doc(db, "users", user.uid);
                     try {
                         const userDocSnap = await getDoc(userDocRef);
@@ -603,9 +534,9 @@
                 }
             } else {
                 isAuthReady = false;
-                if (logoutButton) logoutButton.classList.add('hidden');
-                if (profileLink) profileLink.classList.add('hidden');
-                if (chatLink) chatLink.classList.add('hidden');
+                if (logoutButton) {
+                    logoutButton.classList.add('hidden');
+                }
                 currentUserData = null;
                 showPage('landing-page');
             }
@@ -618,12 +549,8 @@
             authPage = document.getElementById('auth-page');
             onboardingPage = document.getElementById('onboarding-page');
             dashboardPage = document.getElementById('dashboard-page');
-            profilePage = document.getElementById('profile-page');
-            chatPage = document.getElementById('chat-page');
             logoutButton = document.getElementById('logout-button');
             homeLink = document.getElementById('home-link');
-            profileLink = document.getElementById('profile-link');
-            chatLink = document.getElementById('chat-link');
             messageBox = document.getElementById('message-box');
             messageContent = document.getElementById('message-content');
             messageCloseButton = document.getElementById('message-close-button');
@@ -635,8 +562,6 @@
             loginButton = document.getElementById('login-button');
             authMessage = document.getElementById('auth-message');
             onboardingForm = document.getElementById('onboarding-form');
-            collegeSelect = document.getElementById('collegeName');
-            otherCollegeField = document.getElementById('other-college-field');
             dashboardUserName = document.getElementById('dashboard-user-name');
             dashboardUserCollege = document.getElementById('dashboard-user-college');
             dashboardUserRole = document.getElementById('dashboard-user-role');
@@ -650,32 +575,16 @@
             postTaskMessage = document.getElementById('post-task-message');
             myPostedTasks = document.getElementById('my-posted-tasks');
             availableTasksList = document.getElementById('available-tasks-list');
-            taskImageInput = document.getElementById('taskImage');
-            imagePreview = document.getElementById('image-preview');
-            collegeFilterSelect = document.getElementById('college-filter');
-            seniorSearchInput = document.getElementById('senior-search');
-            profileFullName = document.getElementById('profile-full-name');
-            profileCollege = document.getElementById('profile-college');
-            profileYearSemester = document.getElementById('profile-year-semester');
-            profileBranch = document.getElementById('profile-branch');
-            profileMobile = document.getElementById('profile-mobile');
-            profilePostedTasks = document.getElementById('profile-my-posted-tasks');
-            profileAcceptedTasks = document.getElementById('profile-my-accepted-tasks');
-            profileBackButton = document.getElementById('profile-back-button');
-            chatBox = document.getElementById('chat-box');
-            chatForm = document.getElementById('chat-form');
-            chatInput = document.getElementById('chat-input');
-            statPostedCount = document.getElementById('stat-posted-count');
-            statAcceptedCount = document.getElementById('stat-accepted-count');
-            statEarnings = document.getElementById('stat-earnings');
-
+        
             // Initial sign-in with custom token if available (for Canvas environment)
             if (initialAuthToken) {
                 signInWithCustomToken(auth, initialAuthToken).catch((error) => {
                     console.error("Error signing in with custom token:", error);
                 });
             } else {
-                
+                signInAnonymously(auth).catch((anonError) => {
+                    console.error("Error signing in anonymously:", anonError);
+                });
             }
 
             // Attach event listeners after DOM is ready
@@ -696,28 +605,6 @@
                     } else {
                         showPage('landing-page');
                     }
-                });
-            }
-            if (profileLink) {
-                profileLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (auth.currentUser && currentUserData) {
-                        renderProfilePage(currentUserData);
-                        showPage('profile-page');
-                    }
-                });
-            }
-            if (chatLink) {
-                chatLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (auth.currentUser) {
-                        showPage('chat-page');
-                    }
-                });
-            }
-            if(profileBackButton){
-                profileBackButton.addEventListener('click', () => {
-                    showPage('dashboard-page');
                 });
             }
             if (googleSignInButton) {
@@ -745,20 +632,10 @@
                         await createUserWithEmailAndPassword(auth, email, password);
                         if (authMessage) authMessage.textContent = "Signed up successfully! Redirecting...";
                         showMessage("Signed up successfully! Welcome.", "success");
-                        setTimeout(() => {
-                            if (auth.currentUser) {
-                                location.reload();
-                            }
-                        }, 1500);
                     } catch (error) {
                         console.error("Email Sign-up Error:", error);
-                        if (error.code === "auth/email-already-in-use") {
-                            if (authMessage) authMessage.textContent = "Email already exists. Please log in instead.";
-                            showMessage("Email already exists. Try logging in.", "error");
-                        } else {
-                            if (authMessage) authMessage.textContent = `Error: ${error.message}`;
-                            showMessage(`Sign up failed: ${error.message}`, "error");
-                        }
+                        if (authMessage) authMessage.textContent = `Error: ${error.message}`;
+                        showMessage(`Sign up failed: ${error.message}`, "error");
                     }
                 });
             }
@@ -793,16 +670,6 @@
                     }
                 });
             }
-            if(collegeSelect){
-                collegeSelect.addEventListener('change', (e) => {
-                    if (e.target.value === 'Other') {
-                        otherCollegeField.classList.remove('hidden');
-                    } else {
-                        otherCollegeField.classList.add('hidden');
-                        document.getElementById('otherCollegeName').value = '';
-                    }
-                });
-            }
             if (onboardingForm) {
                 onboardingForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
@@ -812,15 +679,12 @@
                         return;
                     }
                     const fullName = document.getElementById('fullName').value;
-                    let collegeName = collegeSelect.value;
-                    if (collegeName === 'Other') {
-                        collegeName = document.getElementById('otherCollegeName').value;
-                    }
+                    const collegeName = document.getElementById('collegeName').value;
                     const yearSemester = document.getElementById('yearSemester').value;
                     const branch = document.getElementById('branch').value;
                     const mobileNumber = document.getElementById('mobileNumber').value;
-                    if (!fullName || !collegeName || !mobileNumber) {
-                        showMessage("Please fill in all required fields.", "error");
+                    if (!fullName || !collegeName) {
+                        showMessage("Please fill in all required fields (Full Name, College).", "error");
                         return;
                     }
                     const userProfile = {
@@ -879,21 +743,6 @@
                     }
                 });
             }
-            if(taskImageInput){
-                taskImageInput.addEventListener('change', (event) => {
-                    const file = event.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            imagePreview.src = e.target.result;
-                            imagePreview.classList.remove('hidden');
-                        };
-                        reader.readAsDataURL(file);
-                    } else {
-                        imagePreview.classList.add('hidden');
-                    }
-                });
-            }
             if (postTaskForm) {
                 postTaskForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
@@ -905,73 +754,34 @@
                     const taskDescription = document.getElementById('taskDescription').value;
                     const taskPrice = parseFloat(document.getElementById('taskPrice').value);
                     const taskFormat = document.getElementById('taskFormat').value;
-                    const taskImageFile = taskImageInput.files[0];
-                    let taskImageData = null;
-
-                    if (taskImageFile) {
-                        // For a real-world app, you would upload this to Firebase Storage.
-                        // Here we are just converting it to a data URL for a simple demo.
-                        const reader = new FileReader();
-                        reader.onload = async function(e) {
-                            taskImageData = e.target.result;
-                            await postTaskToFirestore(user, currentUserData, taskDescription, taskPrice, taskFormat, taskImageData);
-                        };
-                        reader.readAsDataURL(taskImageFile);
-                    } else {
-                        await postTaskToFirestore(user, currentUserData, taskDescription, taskPrice, taskFormat, taskImageData);
+                    if (!taskDescription || !taskPrice || !taskFormat) {
+                        showMessage("Please fill in all task details.", "error");
+                        return;
                     }
-                });
-            }
-            if(collegeFilterSelect){
-                collegeFilterSelect.addEventListener('change', (e) => {
-                    const selectedCollege = e.target.value;
-                    fetchAvailableTasks(selectedCollege, seniorSearchInput.value);
-                });
-            }
-            if(seniorSearchInput){
-                seniorSearchInput.addEventListener('input', (e) => {
-                    const searchTerm = e.target.value;
-                    fetchAvailableTasks(collegeFilterSelect.value, searchTerm);
-                });
-            }
-            if(chatForm){
-                chatForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    const message = chatInput.value.trim();
-                    if (message) {
-                        appendMessage('user', message);
-                        chatInput.value = '';
-                        await getChatbotResponse(message);
+                    const platformFee = 10;
+                    const workerReceives = taskPrice - platformFee;
+                    const taskData = {
+                        postedByUid: user.uid,
+                        college: currentUserData.college,
+                        description: taskDescription,
+                        price: taskPrice,
+                        workerReceives: workerReceives,
+                        format: taskFormat,
+                        status: 'open',
+                        createdAt: serverTimestamp()
+                    };
+                    try {
+                        await addDoc(collection(db, "tasks"), taskData);
+                        postTaskForm.reset();
+                        showMessage("Task posted successfully!", "success");
+                    } catch (error) {
+                        console.error("Error posting task:", error);
+                        showMessage(`Error posting task: ${error.message}`, "error");
                     }
                 });
             }
         });
-        
-        async function postTaskToFirestore(user, userData, description, price, format, imageData) {
-            const platformFee = 10;
-            const workerReceives = price - platformFee;
-            const taskData = {
-                postedByUid: user.uid,
-                college: userData.college,
-                description: description,
-                price: price,
-                workerReceives: workerReceives,
-                format: format,
-                status: 'open',
-                imageData: imageData, // Storing image data as a base64 string
-                createdAt: serverTimestamp()
-            };
-            try {
-                await addDoc(collection(db, "tasks"), taskData);
-                postTaskForm.reset();
-                if(imagePreview) imagePreview.classList.add('hidden');
-                showMessage("Task posted successfully!", "success");
-            } catch (error) {
-                console.error("Error posting task:", error);
-                showMessage(`Error posting task: ${error.message}`, "error");
-            }
-        }
-        
+
         // Functions that do not rely on DOM elements can be declared outside
         function renderDashboard(userData) {
             if (dashboardUserName) {
@@ -985,12 +795,11 @@
                     if (userData.role === 'request') {
                         if (requesterView) requesterView.classList.remove('hidden');
                         if (workerView) workerView.classList.add('hidden');
-                        fetchMyPostedTasks(userData.userId, 'my-posted-tasks');
+                        fetchMyPostedTasks(userData.userId);
                     } else if (userData.role === 'do') {
                         if (requesterView) requesterView.classList.add('hidden');
                         if (workerView) workerView.classList.remove('hidden');
-                        // Trigger the initial fetch with the default filter (All Colleges)
-                        fetchAvailableTasks('all', '');
+                        fetchAvailableTasks(userData.college);
                     }
                 } else {
                     if (roleSelectionView) roleSelectionView.classList.remove('hidden');
@@ -999,156 +808,78 @@
                 }
             }
         }
-        
-        function renderProfilePage(userData) {
-            if (profileFullName) {
-                profileFullName.textContent = userData.fullName || 'N/A';
-                profileCollege.textContent = userData.college || 'N/A';
-                profileYearSemester.textContent = userData.yearSemester || 'N/A';
-                profileBranch.textContent = userData.branch || 'N/A';
-                profileMobile.textContent = userData.mobile || 'N/A';
-
-                fetchMyPostedTasks(userData.userId, 'profile-my-posted-tasks');
-                fetchMyAcceptedTasks(userData.userId);
-            }
-        }
-
-        async function fetchMyAcceptedTasks(userId) {
-            const q = query(collection(db, "tasks"), where("acceptedByUid", "==", userId));
-            onSnapshot(q, (snapshot) => {
-                let totalEarnings = 0;
-                if (snapshot.empty) {
-                    if (profileAcceptedTasks) {
-                        profileAcceptedTasks.innerHTML = '<p class="text-center text-gray-600">No tasks accepted yet.</p>';
-                    }
-                } else {
-                    if (profileAcceptedTasks) {
-                        profileAcceptedTasks.innerHTML = '';
-                        snapshot.forEach((doc) => {
-                            const task = doc.data();
-                            totalEarnings += task.workerReceives;
-                            const taskCard = `
-                                <div class="bg-gray-50 p-6 rounded-lg shadow-sm border-l-4 border-green-400">
-                                    <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
-                                    <p class="text-gray-600">Format: ${task.format}</p>
-                                    <p class="text-gray-600">You earned: <span class="font-bold text-green-700">₹${task.workerReceives}</span></p>
-                                    <p class="text-gray-600">Status: <span class="font-medium text-green-700">${task.status.toUpperCase()}</span></p>
-                                    <p class="text-gray-500 text-sm mt-2">Accepted on: ${task.acceptedAt ? new Date(task.acceptedAt.toDate()).toLocaleDateString() : 'N/A'}</p>
-                                </div>
-                            `;
-                            profileAcceptedTasks.innerHTML += taskCard;
-                        });
-                    }
-                }
-                if (statAcceptedCount) statAcceptedCount.textContent = snapshot.size;
-                if (statEarnings) statEarnings.textContent = `₹${totalEarnings}`;
-            }, (error) => {
-                console.error("Error fetching accepted tasks:", error);
-                showMessage(`Error loading your accepted tasks: ${error.message}`, "error");
-            });
-        }
-        
-        function fetchMyPostedTasks(userId, containerId) {
-            const container = document.getElementById(containerId);
+        function fetchMyPostedTasks(userId) {
             const q = query(collection(db, "tasks"), where("postedByUid", "==", userId));
             onSnapshot(q, (snapshot) => {
                 if (snapshot.empty) {
-                    if (container) {
-                        container.innerHTML = '<p class="text-center text-gray-600">No tasks posted yet.</p>';
-                    }
-                    if (containerId === 'profile-my-posted-tasks' && statPostedCount) {
-                        statPostedCount.textContent = 0;
+                    if (myPostedTasks) {
+                        myPostedTasks.innerHTML = '<p class="text-center text-gray-600">No tasks posted yet.</p>';
                     }
                     return;
                 }
-                if (container) {
-                    container.innerHTML = '';
+                if (myPostedTasks) {
+                    myPostedTasks.innerHTML = '';
                     snapshot.forEach((doc) => {
                         const task = doc.data();
                         const taskCard = `
-                            <div class="bg-gray-50 p-6 rounded-lg shadow-sm border-l-4 border-indigo-400 text-left">
+                            <div class="bg-gray-50 p-6 rounded-lg shadow-sm border-l-4 border-indigo-400">
                                 <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
                                 <p class="text-gray-600">Format: ${task.format}</p>
                                 <p class="text-gray-600">Offer: ₹${task.price} (Worker gets ₹${task.workerReceives})</p>
                                 <p class="text-gray-600">Status: <span class="font-medium text-blue-700">${task.status.toUpperCase()}</span></p>
-                                ${task.imageData ? `<img src="${task.imageData}" alt="Task Image" class="mt-4 max-h-48 w-full object-cover rounded-lg"/>` : ''}
                                 <p class="text-gray-500 text-sm mt-2">Posted on: ${task.createdAt ? new Date(task.createdAt.toDate()).toLocaleDateString() : 'N/A'}</p>
                             </div>
                         `;
-                        container.innerHTML += taskCard;
+                        myPostedTasks.innerHTML += taskCard;
                     });
-                }
-                if (containerId === 'profile-my-posted-tasks' && statPostedCount) {
-                    statPostedCount.textContent = snapshot.size;
                 }
             }, (error) => {
                 console.error("Error fetching my posted tasks:", error);
                 showMessage(`Error loading your tasks: ${error.message}`, "error");
             });
         }
-        
-        function fetchAvailableTasks(college, searchTerm) {
-            let q;
-            if (college === 'all') {
-                q = query(collection(db, "tasks"), where("status", "==", "open"));
-            } else {
-                q = query(
-                    collection(db, "tasks"),
-                    where("status", "==", "open"),
-                    where("college", "==", college)
-                );
-            }
-
+        function fetchAvailableTasks(college) {
+            const q = query(
+                collection(db, "tasks"),
+                where("status", "==", "open"),
+                where("college", "==", college)
+            );
             onSnapshot(q, async (snapshot) => {
+                if (snapshot.empty) {
+                    if (availableTasksList) {
+                        availableTasksList.innerHTML = '<p class="text-center text-gray-600">No open tasks available in your college.</p>';
+                    }
+                    return;
+                }
                 if (availableTasksList) {
                     availableTasksList.innerHTML = '';
-                    const tasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                    const filteredTasks = tasks.filter(task => {
-                        if (!searchTerm) return true;
-                        const poster = task.postedByUid;
-                        // Fetch poster's full name to filter
-                        return db.doc(`users/${poster}`).get().then(posterDocSnap => {
-                            if (posterDocSnap.exists()) {
-                                const posterData = posterDocSnap.data();
-                                return posterData.fullName.toLowerCase().includes(searchTerm.toLowerCase());
-                            }
-                            return false;
-                        });
-                    });
-                    
-                    const promises = filteredTasks.map(async task => {
+                    for (const docSnapshot of snapshot.docs) {
+                        const task = docSnapshot.data();
+                        const taskId = docSnapshot.id;
                         let posterName = "Unknown";
-                        let posterContact = "N/A";
-                        let posterDocSnap = await getDoc(doc(db, "users", task.postedByUid));
-                        if (posterDocSnap.exists()) {
-                            const posterData = posterDocSnap.data();
-                            posterName = posterData.fullName || "A student";
-                            posterContact = posterData.mobile || "N/A";
+                        try {
+                            const posterDocRef = doc(db, "users", task.postedByUid);
+                            const posterDocSnap = await getDoc(posterDocRef);
+                            if (posterDocSnap.exists()) {
+                                posterName = posterDocSnap.data().fullName || "A student";
+                            }
+                        } catch (error) {
+                            console.error("Error fetching poster name:", error);
                         }
                         const taskCard = `
-                            <div class="bg-blue-50 p-6 rounded-lg shadow-sm border-l-4 border-purple-400 text-left">
+                            <div class="bg-blue-50 p-6 rounded-lg shadow-sm border-l-4 border-purple-400">
                                 <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
                                 <p class="text-gray-600">Format: ${task.format}</p>
                                 <p class="text-gray-600">You earn: <span class="font-bold text-green-700">₹${task.workerReceives}</span> (Offer: ₹${task.price})</p>
                                 <p class="text-gray-600">Posted by: ${posterName} from ${task.college}</p>
-                                <p class="text-gray-600">Contact: ${posterContact}</p>
-                                ${task.imageData ? `<img src="${task.imageData}" alt="Task Image" class="mt-4 max-h-48 w-full object-cover rounded-lg"/>` : ''}
                                 <p class="text-gray-500 text-sm mt-2">Posted on: ${task.createdAt ? new Date(task.createdAt.toDate()).toLocaleDateString() : 'N/A'}</p>
-                                <button data-task-id="${task.id}" class="accept-task-button mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+                                <button data-task-id="${taskId}" class="accept-task-button mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
                                     Accept Task
                                 </button>
                             </div>
                         `;
-                        return taskCard;
-                    });
-                    
-                    const taskCards = await Promise.all(promises);
-                    if (taskCards.length > 0) {
-                        availableTasksList.innerHTML = taskCards.join('');
-                    } else {
-                        availableTasksList.innerHTML = '<p class="text-center text-gray-600">No open tasks available.</p>';
+                        availableTasksList.innerHTML += taskCard;
                     }
-                    
                     document.querySelectorAll('.accept-task-button').forEach(button => {
                         button.addEventListener('click', async (event) => {
                             const taskId = event.target.dataset.taskId;
@@ -1161,7 +892,6 @@
                 showMessage(`Error loading available tasks: ${error.message}`, "error");
             });
         }
-        
         async function acceptTask(taskId) {
             const user = auth.currentUser;
             if (!user) {
@@ -1184,49 +914,6 @@
             } catch (error) {
                 console.error("Error accepting task:", error);
                 showMessage(`Error accepting task: ${error.message}`, "error");
-            }
-        }
-
-        function appendMessage(sender, text) {
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('flex');
-            if (sender === 'user') {
-                messageDiv.classList.add('justify-end');
-                messageDiv.innerHTML = `<div class="bg-indigo-500 text-white p-3 rounded-xl rounded-br-none max-w-[80%]">${text}</div>`;
-            } else {
-                messageDiv.classList.add('justify-start');
-                messageDiv.innerHTML = `<div class="bg-gray-200 text-gray-800 p-3 rounded-xl rounded-bl-none max-w-[80%]">${text}</div>`;
-            }
-            chatBox.appendChild(messageDiv);
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-
-        async function getChatbotResponse(prompt) {
-            appendMessage('bot', 'Typing...');
-            let chatHistory = [];
-            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-            const payload = { contents: chatHistory };
-            const apiKey = ""
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const result = await response.json();
-                let botMessage = "Sorry, I couldn't get a response. Please try again.";
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    botMessage = result.candidates[0].content.parts[0].text;
-                }
-                chatBox.lastChild.remove(); // Remove "Typing..."
-                appendMessage('bot', botMessage);
-            } catch (error) {
-                console.error("Error fetching chatbot response:", error);
-                chatBox.lastChild.remove();
-                appendMessage('bot', 'I apologize, something went wrong. Please try again.');
             }
         }
     </script>
