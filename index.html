@@ -9,29 +9,28 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.yourstartup.com/"> <!-- Replace with your actual URL -->
+    <meta property="og:url" content="https://www.yourstartup.com/">
     <meta property="og:title" content="CampusConnect - Your Academic Task Marketplace">
     <meta property="og:description" content="CampusConnect: The ultimate platform for college students to get academic help and earn money by completing tasks like assignments, notes, reports, and PPTs within their college community.">
-    <meta property="og:image" content="https://placehold.co/1200x630/60A5FA/FFFFFF?text=CampusConnect"> <!-- Replace with your actual logo/image -->
+    <meta property="og:image" content="https://placehold.co/1200x630/60A5FA/FFFFFF?text=CampusConnect">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.yourstartup.com/"> <!-- Replace with your actual URL -->
+    <meta property="twitter:url" content="https://www.yourstartup.com/">
     <meta property="twitter:title" content="CampusConnect - Your Academic Task Marketplace">
     <meta property="twitter:description" content="CampusConnect: The ultimate platform for college students to get academic help and earn money by completing tasks like assignments, notes, reports, and PPTs within their college community.">
-    <meta property="twitter:image" content="https://placehold.co/1200x630/60A5FA/FFFFFF?text=CampusConnect"> <!-- Replace with your actual logo/image -->
+    <meta property="twitter:image" content="https://placehold.co/1200x630/60A5FA/FFFFFF?text=CampusConnect">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom CSS for Inter font and general body styling */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* Light blue-gray background */
-            color: #334155; /* Darker text for readability */
+            background-color: #f8fafc;
+            color: #334155;
             line-height: 1.6;
         }
-        /* Custom scrollbar for a cleaner look */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -46,12 +45,17 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #64748b;
         }
-        /* Hide all sections by default, show only the active one via JS */
         .page-section {
             display: none;
         }
         .page-section.active {
             display: block;
+        }
+        .sidebar-link.active {
+            background-color: #e2e8f0;
+            border-left: 4px solid #4f46e5;
+            color: #4f46e5;
+            font-weight: 700;
         }
     </style>
 </head>
@@ -309,88 +313,120 @@
 
         <!-- Dashboard Page Section -->
         <section id="dashboard-page" class="page-section py-20 px-6">
-            <div class="flex h-screen mt-10">
+            <div class="flex flex-col md:flex-row h-full md:h-screen mt-10">
                 <!-- Sidebar -->
-                <aside class="w-64 bg-white shadow-md px-6 py-8 space-y-6">
-                    <h2 class="text-2xl font-bold text-indigo-600">CampusConnect</h2>
-                    <nav class="space-y-4">
-                        <a href="#" class="block text-gray-700 font-medium hover:text-indigo-600">🏠 Home</a>
-                        <a href="#" class="block text-gray-700 font-medium hover:text-indigo-600">💰 Your Journey / Earnings</a>
-                        <a href="#" class="block text-gray-700 font-medium hover:text-indigo-600">📋 Tasks Available</a>
-                        <a href="#" class="block text-gray-700 font-medium hover:text-indigo-600">📝 Give Task</a>
-                        <a href="#" class="block text-gray-700 font-medium hover:text-indigo-600">🎁 Rewards</a>
-                        <a href="#" class="block text-gray-700 font-medium hover:text-indigo-600">💳 Payment Management</a>
+                <aside class="w-full md:w-64 bg-white shadow-md px-6 py-8 space-y-6 flex-shrink-0 mb-8 md:mb-0">
+                    <h2 class="text-2xl font-bold text-indigo-600">Dashboard</h2>
+                    <nav class="space-y-2">
+                        <a href="#" id="sidebar-link-home" class="sidebar-link block text-gray-700 font-medium hover:bg-gray-100 p-2 rounded transition-colors duration-200 ease-in-out">🏠 Home</a>
+                        <a href="#" id="sidebar-link-earnings" class="sidebar-link block text-gray-700 font-medium hover:bg-gray-100 p-2 rounded transition-colors duration-200 ease-in-out">💰 Your Journey / Earnings</a>
+                        <a href="#" id="sidebar-link-available-tasks" class="sidebar-link block text-gray-700 font-medium hover:bg-gray-100 p-2 rounded transition-colors duration-200 ease-in-out">📋 Tasks Available</a>
+                        <a href="#" id="sidebar-link-give-task" class="sidebar-link block text-gray-700 font-medium hover:bg-gray-100 p-2 rounded transition-colors duration-200 ease-in-out">📝 Give Task</a>
+                        <a href="#" id="sidebar-link-rewards" class="sidebar-link block text-gray-700 font-medium hover:bg-gray-100 p-2 rounded transition-colors duration-200 ease-in-out">🎁 Rewards</a>
+                        <a href="#" id="sidebar-link-payments" class="sidebar-link block text-gray-700 font-medium hover:bg-gray-100 p-2 rounded transition-colors duration-200 ease-in-out">💳 Payment Management</a>
                         <hr />
-                        <a href="#" class="block text-gray-500 text-sm hover:text-indigo-500">🔔 Notifications</a>
+                        <a href="#" id="sidebar-link-notifications" class="sidebar-link block text-gray-500 text-sm hover:bg-gray-100 p-2 rounded transition-colors duration-200 ease-in-out">🔔 Notifications</a>
                     </nav>
                 </aside>
 
                 <!-- Main Content -->
-                <div class="flex-1 p-8 overflow-y-auto">
+                <div class="flex-1 p-8 overflow-y-auto bg-gray-50 rounded-xl shadow-lg">
                     <div id="user-info-display" class="bg-indigo-50 p-4 rounded-lg shadow-md mb-8 text-center">
                         <p class="text-indigo-800 text-lg">Welcome, <span class="font-semibold" id="dashboard-user-name"></span>!</p>
                         <p class="text-indigo-700 text-sm">College: <span id="dashboard-user-college"></span> | Role: <span id="dashboard-user-role"></span></p>
                         <p class="text-indigo-700 text-sm">Your User ID: <span class="font-mono text-xs" id="dashboard-user-id"></span></p>
                     </div>
 
-                    <!-- Role Selection View (new) -->
-                    <div id="role-selection-view" class="hidden text-center bg-white p-8 rounded-xl shadow-lg mb-8">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-6">What would you like to do?</h3>
-                        <p class="text-gray-600 mb-6">Choose your path to get started. You can change this anytime.</p>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-xl mx-auto">
-                            <button id="become-requester-button" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
-                                Post a New Task
-                            </button>
-                            <button id="become-worker-button" class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
-                                View Available Tasks
-                            </button>
+                    <!-- Dashboard Content Views -->
+                    <div id="dashboard-content-views">
+                        <!-- Home View -->
+                        <div id="dashboard-home-view" class="dashboard-view">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Welcome to Your Dashboard</h3>
+                            <p class="text-gray-600 text-center">Use the sidebar on the left to navigate the app.</p>
                         </div>
-                    </div>
-
-                    <!-- Requester View -->
-                    <div id="requester-view" class="hidden bg-white p-8 rounded-xl shadow-lg mb-8">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Post a New Task</h3>
-                        <form id="post-task-form" class="space-y-4">
-                            <div>
-                                <label for="taskDescription" class="block text-sm font-medium text-gray-700">Task Description</label>
-                                <textarea id="taskDescription" name="taskDescription" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., Need help with a 10-page report on 'Sustainable Energy', due next week."></textarea>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label for="taskPrice" class="block text-sm font-medium text-gray-700">Your Offer Price (₹)</label>
-                                    <input type="number" id="taskPrice" name="taskPrice" min="50" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., 250">
-                                </div>
-                                <div>
-                                    <label for="taskFormat" class="block text-sm font-medium text-gray-700">Format</label>
-                                    <select id="taskFormat" name="taskFormat" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                        <option value="">Select Format</option>
-                                        <option value="Assignment">Assignment</option>
-                                        <option value="Notes">Notes</option>
-                                        <option value="Report">Report</option>
-                                        <option value="PPT">PPT (Presentation)</option>
-                                        <option value="Senior Guidance">Senior Guidance</option>
-                                        <option value="Other">Other</option>
-                                    </select>
+                        
+                        <!-- Your Journey / Earnings View -->
+                        <div id="dashboard-earnings-view" class="dashboard-view hidden">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Your Journey / Earnings</h3>
+                            <div class="bg-white p-6 rounded-xl shadow-sm">
+                                <p class="text-gray-600 text-center">Here you can see tasks you have completed and your total earnings.</p>
+                                <p class="text-gray-600 font-bold mt-4 text-center">Current Balance: <span id="user-balance" class="text-green-600">$0.00</span></p>
+                                <div id="completed-tasks-list" class="mt-6 space-y-4">
+                                    <p class="text-center text-gray-500">No completed tasks yet.</p>
                                 </div>
                             </div>
-                            <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
-                                Post Task
-                            </button>
-                            <p id="post-task-message" class="text-center text-sm mt-4 text-green-600"></p>
-                        </form>
-
-                        <h3 class="text-2xl font-bold text-gray-800 mt-12 mb-6 text-center">Your Posted Tasks</h3>
-                        <div id="my-posted-tasks" class="space-y-4">
-                            <p class="text-center text-gray-600">No tasks posted yet.</p>
                         </div>
-                    </div>
 
-                    <!-- Worker View -->
-                    <div id="worker-view" class="hidden bg-white p-8 rounded-xl shadow-lg">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Available Tasks</h3>
-                        <div id="available-tasks-list" class="space-y-4">
-                            <p class="text-center text-gray-600">Loading tasks...</p>
+                        <!-- Tasks Available View -->
+                        <div id="dashboard-available-tasks-view" class="dashboard-view hidden">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Available Tasks</h3>
+                            <div id="available-tasks-list" class="space-y-4">
+                                <p class="text-center text-gray-600">Loading tasks...</p>
+                            </div>
                         </div>
+                        
+                        <!-- Give Task View -->
+                        <div id="dashboard-give-task-view" class="dashboard-view hidden">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Post a New Task</h3>
+                            <form id="post-task-form" class="space-y-4 bg-white p-6 rounded-xl shadow-sm">
+                                <div>
+                                    <label for="taskDescription" class="block text-sm font-medium text-gray-700">Task Description</label>
+                                    <textarea id="taskDescription" name="taskDescription" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., Need help with a 10-page report on 'Sustainable Energy', due next week."></textarea>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="taskPrice" class="block text-sm font-medium text-gray-700">Your Offer Price (₹)</label>
+                                        <input type="number" id="taskPrice" name="taskPrice" min="50" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="e.g., 250">
+                                    </div>
+                                    <div>
+                                        <label for="taskFormat" class="block text-sm font-medium text-gray-700">Format</label>
+                                        <select id="taskFormat" name="taskFormat" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                            <option value="">Select Format</option>
+                                            <option value="Assignment">Assignment</option>
+                                            <option value="Notes">Notes</option>
+                                            <option value="Report">Report</option>
+                                            <option value="PPT">PPT (Presentation)</option>
+                                            <option value="Senior Guidance">Senior Guidance</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                                    Post Task
+                                </button>
+                                <p id="post-task-message" class="text-center text-sm mt-4 text-green-600"></p>
+                            </form>
+                            
+                            <h3 class="text-2xl font-bold text-gray-800 mt-12 mb-6 text-center">Your Posted Tasks</h3>
+                            <div id="my-posted-tasks" class="space-y-4">
+                                <p class="text-center text-gray-600">No tasks posted yet.</p>
+                            </div>
+                        </div>
+
+                        <!-- Rewards View -->
+                        <div id="dashboard-rewards-view" class="dashboard-view hidden">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Rewards</h3>
+                            <div class="bg-white p-6 rounded-xl shadow-sm">
+                                <p class="text-gray-600 text-center">This section would show available rewards or a points system. It is currently under development.</p>
+                            </div>
+                        </div>
+
+                        <!-- Payment Management View -->
+                        <div id="dashboard-payments-view" class="dashboard-view hidden">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Payment Management</h3>
+                            <div class="bg-white p-6 rounded-xl shadow-sm">
+                                <p class="text-gray-600 text-center">Here you would manage your payment methods and withdraw your earnings. This feature is coming soon!</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Notifications View -->
+                        <div id="dashboard-notifications-view" class="dashboard-view hidden">
+                             <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Notifications</h3>
+                            <div class="bg-white p-6 rounded-xl shadow-sm">
+                                <p class="text-gray-600 text-center">You have no new notifications.</p>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -420,7 +456,6 @@
     </footer>
 
     <!-- Firebase SDKs -->
-    
 <script>
   const __firebase_config = JSON.stringify({
     apiKey: "AIzaSyCiH_Oa7hzN0WL2e3391M-1LaIf0jzmPDA",
@@ -458,7 +493,7 @@
             where,
             onSnapshot,
             serverTimestamp,
-            getDocs
+            updateDoc
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- Firebase Configuration & Initialization ---
@@ -471,7 +506,6 @@
         let db;
         let currentUserData = null;
 
-        // Initialize Firebase
         try {
             app = initializeApp(firebaseConfig);
             auth = getAuth(app);
@@ -487,8 +521,8 @@
         let googleSignInButton, emailAuthForm, emailInput, passwordInput, signupButton, loginButton, authMessage;
         let onboardingForm;
         let dashboardUserName, dashboardUserCollege, dashboardUserRole, dashboardUserId;
-        let roleSelectionView, requesterView, workerView, becomeRequesterButton, becomeWorkerButton;
-        let postTaskForm, postTaskMessage, myPostedTasks, availableTasksList;
+        let postTaskForm, myPostedTasks, availableTasksList, completedTasksList;
+        let userBalanceSpan;
 
         // --- Message Box Functions ---
         function showMessage(message, type = "info") {
@@ -508,7 +542,6 @@
                 }, 5000);
             }
         }
-
         function hideMessage() {
             if (messageBox) {
                 messageBox.classList.add('hidden');
@@ -524,13 +557,30 @@
             window.scrollTo(0, 0);
         }
 
-        // --- Firebase Auth State Listener (Changed to onIdTokenChanged for robustness) ---
+        // --- Dashboard View Switching Logic ---
+        function showDashboardView(viewId) {
+            document.querySelectorAll('.dashboard-view').forEach(view => {
+                view.classList.add('hidden');
+            });
+            document.getElementById(viewId).classList.remove('hidden');
+            
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Add active class to the corresponding sidebar link
+            const linkId = `sidebar-link-${viewId.replace('dashboard-', '').replace('-view', '')}`;
+            const activeLink = document.getElementById(linkId);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+
+        // --- Firebase Auth State Listener ---
         onIdTokenChanged(auth, async (user) => {
             if (user && user.uid) {
                 console.log("ID token ready for user:", user.uid);
-                if (logoutButton) {
-                    logoutButton.classList.remove('hidden');
-                }
+                if (logoutButton) logoutButton.classList.remove('hidden');
                 const userDocRef = doc(db, "users", user.uid);
                 try {
                     const userDocSnap = await getDoc(userDocRef);
@@ -546,9 +596,7 @@
                     showMessage(`Error loading profile: ${error.message}`, "error");
                 }
             } else {
-                if (logoutButton) {
-                    logoutButton.classList.add('hidden');
-                }
+                if (logoutButton) logoutButton.classList.add('hidden');
                 currentUserData = null;
                 showPage('landing-page');
             }
@@ -556,7 +604,6 @@
 
         // --- Initial Auth & Event Listeners ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Assigning global variables to DOM elements
             landingPage = document.getElementById('landing-page');
             authPage = document.getElementById('auth-page');
             onboardingPage = document.getElementById('onboarding-page');
@@ -578,17 +625,22 @@
             dashboardUserCollege = document.getElementById('dashboard-user-college');
             dashboardUserRole = document.getElementById('dashboard-user-role');
             dashboardUserId = document.getElementById('dashboard-user-id');
-            roleSelectionView = document.getElementById('role-selection-view');
-            requesterView = document.getElementById('requester-view');
-            workerView = document.getElementById('worker-view');
-            becomeRequesterButton = document.getElementById('become-requester-button');
-            becomeWorkerButton = document.getElementById('become-worker-button');
             postTaskForm = document.getElementById('post-task-form');
-            postTaskMessage = document.getElementById('post-task-message');
             myPostedTasks = document.getElementById('my-posted-tasks');
             availableTasksList = document.getElementById('available-tasks-list');
-        
-            // Initial sign-in with custom token if available (for Canvas environment)
+            completedTasksList = document.getElementById('completed-tasks-list');
+            userBalanceSpan = document.getElementById('user-balance');
+            
+            // Sidebar link event listeners
+            document.getElementById('sidebar-link-home').addEventListener('click', () => showDashboardView('dashboard-home-view'));
+            document.getElementById('sidebar-link-earnings').addEventListener('click', () => showDashboardView('dashboard-earnings-view'));
+            document.getElementById('sidebar-link-available-tasks').addEventListener('click', () => showDashboardView('dashboard-available-tasks-view'));
+            document.getElementById('sidebar-link-give-task').addEventListener('click', () => showDashboardView('dashboard-give-task-view'));
+            document.getElementById('sidebar-link-rewards').addEventListener('click', () => showDashboardView('dashboard-rewards-view'));
+            document.getElementById('sidebar-link-payments').addEventListener('click', () => showDashboardView('dashboard-payments-view'));
+            document.getElementById('sidebar-link-notifications').addEventListener('click', () => showDashboardView('dashboard-notifications-view'));
+
+            // Initial sign-in with custom token if available
             if (initialAuthToken) {
                 signInWithCustomToken(auth, initialAuthToken).catch((error) => {
                     console.error("Error signing in with custom token:", error);
@@ -598,8 +650,6 @@
                     console.error("Error signing in anonymously:", anonError);
                 });
             }
-
-            // Attach event listeners after DOM is ready
             if (messageCloseButton) {
                 messageCloseButton.addEventListener('click', hideMessage);
             }
@@ -614,6 +664,7 @@
                     e.preventDefault();
                     if (auth.currentUser) {
                         showPage('dashboard-page');
+                        showDashboardView('dashboard-home-view');
                     } else {
                         showPage('landing-page');
                     }
@@ -705,6 +756,7 @@
                         yearSemester,
                         branch,
                         mobile: mobileNumber,
+                        balance: 0,
                         createdAt: serverTimestamp(),
                         userId: user.uid
                     };
@@ -718,40 +770,6 @@
                     } catch (error) {
                         console.error("Error saving user profile:", error);
                         showMessage(`Error saving profile: ${error.message}`, "error");
-                    }
-                });
-            }
-            if (becomeRequesterButton) {
-                becomeRequesterButton.addEventListener('click', async () => {
-                    const user = auth.currentUser;
-                    if (user) {
-                        try {
-                            const userDocRef = doc(db, "users", user.uid);
-                            await setDoc(userDocRef, { role: 'request' }, { merge: true });
-                            currentUserData.role = 'request';
-                            showMessage("You are now a Requester!", "success");
-                            renderDashboard(currentUserData);
-                        } catch (error) {
-                            console.error("Error setting role to requester:", error);
-                            showMessage(`Error: Could not set role.`, "error");
-                        }
-                    }
-                });
-            }
-            if (becomeWorkerButton) {
-                becomeWorkerButton.addEventListener('click', async () => {
-                    const user = auth.currentUser;
-                    if (user) {
-                        try {
-                            const userDocRef = doc(db, "users", user.uid);
-                            await setDoc(userDocRef, { role: 'do' }, { merge: true });
-                            currentUserData.role = 'do';
-                            showMessage("You are now a Worker!", "success");
-                            renderDashboard(currentUserData);
-                        } catch (error) {
-                            console.error("Error setting role to worker:", error);
-                            showMessage(`Error: Could not set role.`, "error");
-                        }
                     }
                 });
             }
@@ -794,32 +812,68 @@
             }
         });
 
-        // Functions that do not rely on DOM elements can be declared outside
         function renderDashboard(userData) {
             if (dashboardUserName) {
                 dashboardUserName.textContent = userData.fullName || 'Student';
                 dashboardUserCollege.textContent = userData.college || 'N/A';
                 dashboardUserRole.textContent = userData.role ? (userData.role === 'request' ? 'Requester' : 'Worker') : 'Not Set';
                 dashboardUserId.textContent = userData.userId;
-
-                if (userData.role) {
-                    if (roleSelectionView) roleSelectionView.classList.add('hidden');
-                    if (userData.role === 'request') {
-                        if (requesterView) requesterView.classList.remove('hidden');
-                        if (workerView) workerView.classList.add('hidden');
-                        fetchMyPostedTasks(userData.userId);
-                    } else if (userData.role === 'do') {
-                        if (requesterView) requesterView.classList.add('hidden');
-                        if (workerView) workerView.classList.remove('hidden');
-                        fetchAvailableTasks(userData.college);
-                    }
-                } else {
-                    if (roleSelectionView) roleSelectionView.classList.remove('hidden');
-                    if (requesterView) requesterView.classList.add('hidden');
-                    if (workerView) workerView.classList.add('hidden');
-                }
             }
+
+            // Set up real-time listeners for dashboard views
+            fetchMyPostedTasks(userData.userId);
+            fetchAvailableTasks(userData.college);
+            fetchUserBalance(userData.userId);
+            fetchMyCompletedTasks(userData.userId);
+            
+            // Show the default home view
+            showDashboardView('dashboard-home-view');
         }
+        
+        function fetchUserBalance(userId) {
+            const userDocRef = doc(db, "users", userId);
+            onSnapshot(userDocRef, (docSnap) => {
+                if (docSnap.exists() && userBalanceSpan) {
+                    const balance = docSnap.data().balance || 0;
+                    userBalanceSpan.textContent = `$${balance.toFixed(2)}`;
+                }
+            }, (error) => {
+                console.error("Error fetching user balance:", error);
+            });
+        }
+        
+        function fetchMyCompletedTasks(userId) {
+             const q = query(
+                collection(db, "tasks"),
+                where("acceptedByUid", "==", userId),
+                where("status", "==", "completed")
+            );
+            onSnapshot(q, (snapshot) => {
+                if (snapshot.empty) {
+                    if (completedTasksList) {
+                        completedTasksList.innerHTML = '<p class="text-center text-gray-500">No completed tasks yet.</p>';
+                    }
+                    return;
+                }
+                if (completedTasksList) {
+                    completedTasksList.innerHTML = '';
+                     snapshot.forEach((doc) => {
+                        const task = doc.data();
+                        const taskCard = `
+                            <div class="bg-green-50 p-6 rounded-lg shadow-sm border-l-4 border-green-400">
+                                <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
+                                <p class="text-gray-600">You earned: <span class="font-bold text-green-700">₹${task.workerReceives}</span></p>
+                                <p class="text-gray-500 text-sm mt-2">Completed on: ${task.completedAt ? new Date(task.completedAt.toDate()).toLocaleDateString() : 'N/A'}</p>
+                            </div>
+                        `;
+                        completedTasksList.innerHTML += taskCard;
+                    });
+                }
+            }, (error) => {
+                console.error("Error fetching completed tasks:", error);
+            });
+        }
+        
         function fetchMyPostedTasks(userId) {
             const q = query(collection(db, "tasks"), where("postedByUid", "==", userId));
             onSnapshot(q, (snapshot) => {
@@ -840,9 +894,17 @@
                                 <p class="text-gray-600">Offer: ₹${task.price} (Worker gets ₹${task.workerReceives})</p>
                                 <p class="text-gray-600">Status: <span class="font-medium text-blue-700">${task.status.toUpperCase()}</span></p>
                                 <p class="text-gray-500 text-sm mt-2">Posted on: ${task.createdAt ? new Date(task.createdAt.toDate()).toLocaleDateString() : 'N/A'}</p>
+                                ${task.status === 'accepted' ? `<button data-task-id="${doc.id}" class="complete-task-button mt-4 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out">Mark as Complete</button>` : ''}
                             </div>
                         `;
                         myPostedTasks.innerHTML += taskCard;
+                    });
+                    
+                    document.querySelectorAll('.complete-task-button').forEach(button => {
+                        button.addEventListener('click', async (event) => {
+                            const taskId = event.target.dataset.taskId;
+                            await completeTask(taskId);
+                        });
                     });
                 }
             }, (error) => {
@@ -850,6 +912,7 @@
                 showMessage(`Error loading your tasks: ${error.message}`, "error");
             });
         }
+        
         function fetchAvailableTasks(college) {
             const q = query(
                 collection(db, "tasks"),
@@ -904,6 +967,7 @@
                 showMessage(`Error loading available tasks: ${error.message}`, "error");
             });
         }
+        
         async function acceptTask(taskId) {
             const user = auth.currentUser;
             if (!user) {
@@ -917,15 +981,60 @@
                     showMessage("This task is no longer available or has been accepted.", "error");
                     return;
                 }
-                await setDoc(taskDocRef, {
+                
+                // Do not let a user accept their own task
+                if (taskDocSnap.data().postedByUid === user.uid) {
+                     showMessage("You cannot accept your own task.", "error");
+                     return;
+                }
+
+                await updateDoc(taskDocRef, {
                     status: 'accepted',
                     acceptedByUid: user.uid,
                     acceptedAt: serverTimestamp()
-                }, { merge: true });
-                showMessage("Task accepted successfully! It now appears in your accepted tasks (feature to be built).", "success");
+                });
+                showMessage("Task accepted successfully! It now appears in your accepted tasks (under Your Journey / Earnings).", "success");
             } catch (error) {
                 console.error("Error accepting task:", error);
                 showMessage(`Error accepting task: ${error.message}`, "error");
+            }
+        }
+        
+        async function completeTask(taskId) {
+            const user = auth.currentUser;
+            if (!user) {
+                showMessage("You must be logged in to complete a task.", "error");
+                return;
+            }
+            const taskDocRef = doc(db, "tasks", taskId);
+            
+            try {
+                const taskDocSnap = await getDoc(taskDocRef);
+                const taskData = taskDocSnap.data();
+
+                if (!taskDocSnap.exists() || taskData.status !== 'accepted' || taskData.acceptedByUid !== user.uid) {
+                    showMessage("You cannot mark this task as complete.", "error");
+                    return;
+                }
+
+                await updateDoc(taskDocRef, {
+                    status: 'completed',
+                    completedAt: serverTimestamp()
+                });
+                
+                // Process payment to the worker
+                const workerUserRef = doc(db, "users", taskData.acceptedByUid);
+                const workerDocSnap = await getDoc(workerUserRef);
+                if (workerDocSnap.exists()) {
+                    const currentBalance = workerDocSnap.data().balance || 0;
+                    await updateDoc(workerUserRef, {
+                        balance: currentBalance + taskData.workerReceives
+                    });
+                    showMessage(`Payment of ₹${taskData.workerReceives} processed successfully!`, "success");
+                }
+            } catch (error) {
+                console.error("Error completing task:", error);
+                showMessage(`Error completing task: ${error.message}`, "error");
             }
         }
     </script>
