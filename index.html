@@ -343,7 +343,7 @@
                 <div class="flex-1 p-8 overflow-y-auto bg-gray-50 rounded-xl shadow-lg">
                     <!-- Image above welcome section as requested -->
                     <div class="flex justify-center mb-6">
-                        <img src="https://placehold.co/600x150/FFF/374151?text=College+India+Placeholder+Image" alt="College India Placeholder" class="w-full md:w-2/3 h-auto object-contain rounded-xl shadow-md">
+                         <img src="https://i.ibb.co/tf3M9Qg/home-banner-img.jpg" alt="College India Placeholder" class="w-full h-auto object-contain rounded-xl shadow-md">
                     </div>
                     
                     <div id="user-info-display" class="bg-indigo-50 p-4 rounded-lg shadow-md mb-8 text-center">
@@ -401,7 +401,6 @@
                                 <div></div> <!-- Spacer for alignment -->
                             </div>
                             <div class="bg-white p-6 rounded-xl shadow-sm">
-                                <p class="text-gray-600 text-center">Here you can see tasks you have completed and your total earnings.</p>
                                 <p class="text-gray-600 font-bold mt-4 text-center">Current Balance: <span id="user-balance" class="text-green-600">₹0.00</span></p>
                                 <div id="completed-tasks-list" class="mt-6 space-y-4">
                                     <p class="text-center text-gray-500">No completed tasks yet.</p>
@@ -980,11 +979,53 @@
             fetchMyPostedTasks(userData.userId);
             fetchAvailableTasks(userData.college);
             fetchUserBalance(userData.userId);
-            fetchMyCompletedTasks(userData.userId);
+            fetchMyAcceptedTasks(userData.userId); // Corrected to fetch accepted tasks
             fetchRewards(userData.createdAt);
 
             // Show the default home view
             showDashboardView('dashboard-home-view');
+        }
+        
+        function renderProfile(userData) {
+            if (profileFullName) {
+                profileFullName.textContent = userData.fullName || 'Student';
+                profileEmail.textContent = auth.currentUser.email || 'N/A';
+                profileCollege.textContent = userData.college || 'N/A';
+                profileYearBranch.textContent = `${userData.yearSemester || 'N/A'} / ${userData.branch || 'N/A'}`;
+                profileUserId.textContent = userData.userId;
+            }
+            
+            // Fetch and render posted tasks for profile view
+            const postedQuery = query(collection(db, "tasks"), where("postedByUid", "==", userData.userId));
+            onSnapshot(postedQuery, (snapshot) => {
+                if (profilePostedTasks) {
+                    profilePostedTasks.innerHTML = '';
+                    if (snapshot.empty) {
+                         profilePostedTasks.innerHTML = '<p>No tasks posted.</p>';
+                    } else {
+                        snapshot.forEach(doc => {
+                            const task = doc.data();
+                            profilePostedTasks.innerHTML += `<p class="text-gray-700 font-medium">${task.description} <span class="text-sm font-normal text-gray-500">(${task.status})</span></p>`;
+                        });
+                    }
+                }
+            });
+
+            // Fetch and render completed tasks for profile view
+            const completedQuery = query(collection(db, "tasks"), where("acceptedByUid", "==", userData.userId), where("status", "==", "completed"));
+            onSnapshot(completedQuery, (snapshot) => {
+                if (profileCompletedTasks) {
+                    profileCompletedTasks.innerHTML = '';
+                    if (snapshot.empty) {
+                        profileCompletedTasks.innerHTML = '<p>No tasks completed.</p>';
+                    } else {
+                        snapshot.forEach(doc => {
+                            const task = doc.data();
+                            profileCompletedTasks.innerHTML += `<p class="text-gray-700 font-medium">${task.description} <span class="text-sm font-normal text-gray-500">(Earned ₹${task.workerReceives})</span></p>`;
+                        });
+                    }
+                }
+            });
         }
         
         function fetchUserBalance(userId) {
@@ -1008,76 +1049,94 @@
 
             rewardsContent.innerHTML = ''; // Clear previous content
             
-            const now = new Date();
-            const createdDate = createdAt.toDate();
-            const daysSinceJoined = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
+            if (createdAt) {
+                const now = new Date();
+                const createdDate = createdAt.toDate();
+                const daysSinceJoined = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
 
-            if (daysSinceJoined <= 7) {
-                rewardsContent.innerHTML += `
-                    <div class="bg-green-100 p-4 rounded-lg shadow-sm border-2 border-green-300">
-                        <h4 class="text-xl font-bold text-green-700">🎉 Welcome Coupon! 🎉</h4>
-                        <p class="text-green-800 mt-2">As a new user, you get a special <strong>15% coupon</strong> on your first task!</p>
-                        <p class="text-green-800 mt-2 font-mono bg-green-200 p-2 rounded-md">NEWUSER15</p>
-                        <p class="text-sm text-gray-600 mt-2">Valid for 7 days from your sign-up date.</p>
-                    </div>
-                `;
+                if (daysSinceJoined <= 7) {
+                    rewardsContent.innerHTML += `
+                        <div class="bg-green-100 p-4 rounded-lg shadow-sm border-2 border-green-300">
+                            <h4 class="text-xl font-bold text-green-700">🎉 Welcome Coupon! 🎉</h4>
+                            <p class="text-green-800 mt-2">As a new user, you get a special <strong>15% coupon</strong> on your first task!</p>
+                            <p class="text-green-800 mt-2 font-mono bg-green-200 p-2 rounded-md">NEWUSER15</p>
+                            <p class="text-sm text-gray-600 mt-2">Valid for 7 days from your sign-up date.</p>
+                        </div>
+                    `;
+                } else {
+                    rewardsContent.innerHTML += `<p class="text-center text-gray-600">No active coupons at this time. Check back later!</p>`;
+                }
             } else {
-                rewardsContent.innerHTML += `<p class="text-center text-gray-600">No active coupons at this time. Check back later!</p>`;
+                rewardsContent.innerHTML += `<p class="text-center text-gray-600">User data not available.</p>`;
             }
         }
         
-        function fetchMyCompletedTasks(userId) {
+        function fetchMyAcceptedTasks(userId) {
              const q = query(
                 collection(db, "tasks"),
-                where("acceptedByUid", "==", userId),
-                where("status", "==", "completed")
+                where("acceptedByUid", "==", userId)
             );
             onSnapshot(q, (snapshot) => {
                 if (completedTasksList) {
                     completedTasksList.innerHTML = '';
                     if (snapshot.empty) {
-                        completedTasksList.innerHTML = '<p class="text-center text-gray-500">No completed tasks yet.</p>';
+                        completedTasksList.innerHTML = '<p class="text-center text-gray-500">You have no accepted or completed tasks yet.</p>';
                     } else {
                          snapshot.forEach((doc) => {
                             const task = doc.data();
-                            const taskCard = `
-                                <div class="bg-green-50 p-6 rounded-lg shadow-sm border-l-4 border-green-400">
-                                    <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
-                                    <p class="text-gray-600">You earned: <span class="font-bold text-green-700">₹${task.workerReceives}</span></p>
-                                    <p class="text-gray-500 text-sm mt-2">Completed on: ${task.completedAt ? new Date(task.completedAt.toDate()).toLocaleDateString() : 'N/A'}</p>
-                                </div>
+                            const taskCard = document.createElement('div');
+                            taskCard.className = `p-6 rounded-lg shadow-sm border-l-4 mb-4 ${task.status === 'completed' ? 'bg-green-50 border-green-400' : 'bg-yellow-50 border-yellow-400'}`;
+                            taskCard.innerHTML = `
+                                <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
+                                <p class="text-gray-600">You will earn: <span class="font-bold text-green-700">₹${task.workerReceives}</span></p>
+                                <p class="text-gray-600">Status: <span class="font-medium text-blue-700">${task.status.toUpperCase()}</span></p>
+                                <p class="text-gray-500 text-sm mt-2">Accepted on: ${task.acceptedAt ? new Date(task.acceptedAt.toDate()).toLocaleDateString() : 'N/A'}</p>
                             `;
-                            completedTasksList.innerHTML += taskCard;
+                            completedTasksList.appendChild(taskCard);
                         });
                     }
                 }
             }, (error) => {
-                console.error("Error fetching completed tasks:", error);
+                console.error("Error fetching accepted/completed tasks:", error);
             });
         }
         
         function fetchMyPostedTasks(userId) {
             const q = query(collection(db, "tasks"), where("postedByUid", "==", userId));
-            onSnapshot(q, (snapshot) => {
+            onSnapshot(q, async (snapshot) => {
                 if (myPostedTasks) {
                     myPostedTasks.innerHTML = '';
                     if (snapshot.empty) {
                         myPostedTasks.innerHTML = '<p class="text-center text-gray-600">No tasks posted yet.</p>';
                     } else {
-                        snapshot.forEach((doc) => {
-                            const task = doc.data();
+                        for (const docSnapshot of snapshot.docs) {
+                            const task = docSnapshot.data();
+                            const taskId = docSnapshot.id;
+                            let acceptedByName = "N/A";
+                            if (task.acceptedByUid) {
+                                try {
+                                    const acceptedUserDoc = await getDoc(doc(db, "users", task.acceptedByUid));
+                                    if (acceptedUserDoc.exists()) {
+                                        acceptedByName = acceptedUserDoc.data().fullName || "A student";
+                                    }
+                                } catch (error) {
+                                    console.error("Error fetching accepted user name:", error);
+                                }
+                            }
+
                             const taskCard = `
                                 <div class="bg-gray-50 p-6 rounded-lg shadow-sm border-l-4 ${task.status === 'open' ? 'border-indigo-400' : 'border-green-400'}">
                                     <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
                                     <p class="text-gray-600">Format: ${task.format}</p>
                                     <p class="text-gray-600">Offer: ₹${task.price} (Worker gets ₹${task.workerReceives})</p>
                                     <p class="text-gray-600">Status: <span class="font-medium text-blue-700">${task.status.toUpperCase()}</span></p>
+                                    ${task.status !== 'open' ? `<p class="text-gray-600">Accepted by: ${acceptedByName}</p>` : ''}
                                     <p class="text-gray-500 text-sm mt-2">Posted on: ${task.createdAt ? new Date(task.createdAt.toDate()).toLocaleDateString() : 'N/A'}</p>
-                                    ${task.status === 'accepted' ? `<button data-task-id="${doc.id}" class="complete-task-button mt-4 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out">Mark as Complete</button>` : ''}
+                                    ${task.status === 'accepted' ? `<button data-task-id="${taskId}" class="complete-task-button mt-4 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out">Mark as Complete</button>` : ''}
                                 </div>
                             `;
                             myPostedTasks.innerHTML += taskCard;
-                        });
+                        }
                         
                         document.querySelectorAll('.complete-task-button').forEach(button => {
                             button.addEventListener('click', async (event) => {
