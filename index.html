@@ -341,6 +341,11 @@
 
                 <!-- Main Content -->
                 <div class="flex-1 p-8 overflow-y-auto bg-gray-50 rounded-xl shadow-lg">
+                    <!-- Image above welcome section as requested -->
+                    <div class="flex justify-center mb-6">
+                        <img src="https://placehold.co/600x150/FFF/374151?text=College+India+Placeholder+Image" alt="College India Placeholder" class="w-full md:w-2/3 h-auto object-contain rounded-xl shadow-md">
+                    </div>
+                    
                     <div id="user-info-display" class="bg-indigo-50 p-4 rounded-lg shadow-md mb-8 text-center">
                         <p class="text-indigo-800 text-lg">Welcome, <span class="font-semibold" id="dashboard-user-name"></span>!</p>
                         <p class="text-indigo-700 text-sm">College: <span id="dashboard-user-college"></span> | Role: <span id="dashboard-user-role"></span></p>
@@ -675,6 +680,11 @@
                     paymentBalanceSpan.textContent = `₹${(currentUserData.balance || 0).toFixed(2)}`;
                 }
             }
+            if (viewId === 'dashboard-profile-view') {
+                if (currentUserData) {
+                    renderProfile(currentUserData);
+                }
+            }
         }
 
         // --- Firebase Auth State Listener ---
@@ -965,69 +975,27 @@
                 dashboardUserRole.textContent = userData.role ? (userData.role === 'request' ? 'Requester' : 'Worker') : 'Not Set';
                 dashboardUserId.textContent = userData.userId;
             }
-
+            
             // Set up real-time listeners for dashboard views
             fetchMyPostedTasks(userData.userId);
             fetchAvailableTasks(userData.college);
             fetchUserBalance(userData.userId);
             fetchMyCompletedTasks(userData.userId);
             fetchRewards(userData.createdAt);
-            
+
             // Show the default home view
             showDashboardView('dashboard-home-view');
-        }
-
-        // Function to render user profile data
-        function renderProfile(userData) {
-            if (profileFullName) {
-                profileFullName.textContent = userData.fullName || 'Student';
-                profileEmail.textContent = auth.currentUser.email || 'N/A';
-                profileCollege.textContent = userData.college || 'N/A';
-                profileYearBranch.textContent = `${userData.yearSemester || 'N/A'} / ${userData.branch || 'N/A'}`;
-                profileUserId.textContent = userData.userId;
-            }
-            
-            // Fetch and render posted tasks for profile view
-            const postedQuery = query(collection(db, "tasks"), where("postedByUid", "==", userData.userId));
-            onSnapshot(postedQuery, (snapshot) => {
-                if (profilePostedTasks) {
-                    profilePostedTasks.innerHTML = '';
-                    if (snapshot.empty) {
-                         profilePostedTasks.innerHTML = '<p>No tasks posted.</p>';
-                    } else {
-                        snapshot.forEach(doc => {
-                            const task = doc.data();
-                            profilePostedTasks.innerHTML += `<p class="text-gray-700 font-medium">${task.description} <span class="text-sm font-normal text-gray-500">(${task.status})</span></p>`;
-                        });
-                    }
-                }
-            });
-
-            // Fetch and render completed tasks for profile view
-            const completedQuery = query(collection(db, "tasks"), where("acceptedByUid", "==", userData.userId), where("status", "==", "completed"));
-            onSnapshot(completedQuery, (snapshot) => {
-                if (profileCompletedTasks) {
-                    profileCompletedTasks.innerHTML = '';
-                    if (snapshot.empty) {
-                        profileCompletedTasks.innerHTML = '<p>No tasks completed.</p>';
-                    } else {
-                        snapshot.forEach(doc => {
-                            const task = doc.data();
-                            profileCompletedTasks.innerHTML += `<p class="text-gray-700 font-medium">${task.description} <span class="text-sm font-normal text-gray-500">(Earned ₹${task.workerReceives})</span></p>`;
-                        });
-                    }
-                }
-            });
         }
         
         function fetchUserBalance(userId) {
             const userDocRef = doc(db, "users", userId);
             onSnapshot(userDocRef, (docSnap) => {
-                if (docSnap.exists() && userBalanceSpan) {
+                if (docSnap.exists()) {
                     const data = docSnap.data();
                     const balance = data.balance || 0;
-                    userBalanceSpan.textContent = `₹${balance.toFixed(2)}`;
-                    currentUserData.balance = balance; // Update global user data
+                    if (userBalanceSpan) userBalanceSpan.textContent = `₹${balance.toFixed(2)}`;
+                    if (paymentBalanceSpan) paymentBalanceSpan.textContent = `₹${balance.toFixed(2)}`;
+                    currentUserData.balance = balance;
                 }
             }, (error) => {
                 console.error("Error fetching user balance:", error);
@@ -1065,25 +1033,23 @@
                 where("status", "==", "completed")
             );
             onSnapshot(q, (snapshot) => {
-                if (snapshot.empty) {
-                    if (completedTasksList) {
-                        completedTasksList.innerHTML = '<p class="text-center text-gray-500">No completed tasks yet.</p>';
-                    }
-                    return;
-                }
                 if (completedTasksList) {
                     completedTasksList.innerHTML = '';
-                     snapshot.forEach((doc) => {
-                        const task = doc.data();
-                        const taskCard = `
-                            <div class="bg-green-50 p-6 rounded-lg shadow-sm border-l-4 border-green-400">
-                                <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
-                                <p class="text-gray-600">You earned: <span class="font-bold text-green-700">₹${task.workerReceives}</span></p>
-                                <p class="text-gray-500 text-sm mt-2">Completed on: ${task.completedAt ? new Date(task.completedAt.toDate()).toLocaleDateString() : 'N/A'}</p>
-                            </div>
-                        `;
-                        completedTasksList.innerHTML += taskCard;
-                    });
+                    if (snapshot.empty) {
+                        completedTasksList.innerHTML = '<p class="text-center text-gray-500">No completed tasks yet.</p>';
+                    } else {
+                         snapshot.forEach((doc) => {
+                            const task = doc.data();
+                            const taskCard = `
+                                <div class="bg-green-50 p-6 rounded-lg shadow-sm border-l-4 border-green-400">
+                                    <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
+                                    <p class="text-gray-600">You earned: <span class="font-bold text-green-700">₹${task.workerReceives}</span></p>
+                                    <p class="text-gray-500 text-sm mt-2">Completed on: ${task.completedAt ? new Date(task.completedAt.toDate()).toLocaleDateString() : 'N/A'}</p>
+                                </div>
+                            `;
+                            completedTasksList.innerHTML += taskCard;
+                        });
+                    }
                 }
             }, (error) => {
                 console.error("Error fetching completed tasks:", error);
@@ -1093,35 +1059,33 @@
         function fetchMyPostedTasks(userId) {
             const q = query(collection(db, "tasks"), where("postedByUid", "==", userId));
             onSnapshot(q, (snapshot) => {
-                if (snapshot.empty) {
-                    if (myPostedTasks) {
-                        myPostedTasks.innerHTML = '<p class="text-center text-gray-600">No tasks posted yet.</p>';
-                    }
-                    return;
-                }
                 if (myPostedTasks) {
-                        myPostedTasks.innerHTML = '';
-                    snapshot.forEach((doc) => {
-                        const task = doc.data();
-                        const taskCard = `
-                            <div class="bg-gray-50 p-6 rounded-lg shadow-sm border-l-4 border-indigo-400">
-                                <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
-                                <p class="text-gray-600">Format: ${task.format}</p>
-                                <p class="text-gray-600">Offer: ₹${task.price} (Worker gets ₹${task.workerReceives})</p>
-                                <p class="text-gray-600">Status: <span class="font-medium text-blue-700">${task.status.toUpperCase()}</span></p>
-                                <p class="text-gray-500 text-sm mt-2">Posted on: ${task.createdAt ? new Date(task.createdAt.toDate()).toLocaleDateString() : 'N/A'}</p>
-                                ${task.status === 'accepted' ? `<button data-task-id="${doc.id}" class="complete-task-button mt-4 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out">Mark as Complete</button>` : ''}
-                            </div>
-                        `;
-                        myPostedTasks.innerHTML += taskCard;
-                    });
-                    
-                    document.querySelectorAll('.complete-task-button').forEach(button => {
-                        button.addEventListener('click', async (event) => {
-                            const taskId = event.target.dataset.taskId;
-                            await completeTask(taskId);
+                    myPostedTasks.innerHTML = '';
+                    if (snapshot.empty) {
+                        myPostedTasks.innerHTML = '<p class="text-center text-gray-600">No tasks posted yet.</p>';
+                    } else {
+                        snapshot.forEach((doc) => {
+                            const task = doc.data();
+                            const taskCard = `
+                                <div class="bg-gray-50 p-6 rounded-lg shadow-sm border-l-4 ${task.status === 'open' ? 'border-indigo-400' : 'border-green-400'}">
+                                    <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
+                                    <p class="text-gray-600">Format: ${task.format}</p>
+                                    <p class="text-gray-600">Offer: ₹${task.price} (Worker gets ₹${task.workerReceives})</p>
+                                    <p class="text-gray-600">Status: <span class="font-medium text-blue-700">${task.status.toUpperCase()}</span></p>
+                                    <p class="text-gray-500 text-sm mt-2">Posted on: ${task.createdAt ? new Date(task.createdAt.toDate()).toLocaleDateString() : 'N/A'}</p>
+                                    ${task.status === 'accepted' ? `<button data-task-id="${doc.id}" class="complete-task-button mt-4 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out">Mark as Complete</button>` : ''}
+                                </div>
+                            `;
+                            myPostedTasks.innerHTML += taskCard;
                         });
-                    });
+                        
+                        document.querySelectorAll('.complete-task-button').forEach(button => {
+                            button.addEventListener('click', async (event) => {
+                                const taskId = event.target.dataset.taskId;
+                                await completeTask(taskId);
+                            });
+                        });
+                    }
                 }
             }, (error) => {
                 console.error("Error fetching my posted tasks:", error);
@@ -1143,47 +1107,45 @@
             }
 
             onSnapshot(q, async (snapshot) => {
-                if (snapshot.empty) {
-                    if (availableTasksList) {
-                        availableTasksList.innerHTML = '<p class="text-center text-gray-600">No open tasks available.</p>';
-                    }
-                    return;
-                }
                 if (availableTasksList) {
                     availableTasksList.innerHTML = '';
-                    for (const docSnapshot of snapshot.docs) {
-                        const task = docSnapshot.data();
-                        const taskId = docSnapshot.id;
-                        let posterName = "Unknown";
-                        try {
-                            const posterDocRef = doc(db, "users", task.postedByUid);
-                            const posterDocSnap = await getDoc(posterDocRef);
-                            if (posterDocSnap.exists()) {
-                                posterName = posterDocSnap.data().fullName || "A student";
+                    if (snapshot.empty) {
+                        availableTasksList.innerHTML = '<p class="text-center text-gray-600">No open tasks available.</p>';
+                    } else {
+                        for (const docSnapshot of snapshot.docs) {
+                            const task = docSnapshot.data();
+                            const taskId = docSnapshot.id;
+                            let posterName = "Unknown";
+                            try {
+                                const posterDocRef = doc(db, "users", task.postedByUid);
+                                const posterDocSnap = await getDoc(posterDocRef);
+                                if (posterDocSnap.exists()) {
+                                    posterName = posterDocSnap.data().fullName || "A student";
+                                }
+                            } catch (error) {
+                                console.error("Error fetching poster name:", error);
                             }
-                        } catch (error) {
-                            console.error("Error fetching poster name:", error);
+                            const taskCard = `
+                                <div class="bg-blue-50 p-6 rounded-lg shadow-sm border-l-4 border-purple-400">
+                                    <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
+                                    <p class="text-gray-600">Format: ${task.format}</p>
+                                    <p class="text-gray-600">You earn: <span class="font-bold text-green-700">₹${task.workerReceives}</span> (Offer: ₹${task.price})</p>
+                                    <p class="text-gray-600">Posted by: ${posterName} from ${task.college}</p>
+                                    <p class="text-gray-500 text-sm mt-2">Posted on: ${task.createdAt ? new Date(task.createdAt.toDate()).toLocaleDateString() : 'N/A'}</p>
+                                    <button data-task-id="${taskId}" class="accept-task-button mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+                                        Accept Task
+                                    </button>
+                                </div>
+                            `;
+                            availableTasksList.innerHTML += taskCard;
                         }
-                        const taskCard = `
-                            <div class="bg-blue-50 p-6 rounded-lg shadow-sm border-l-4 border-purple-400">
-                                <h4 class="text-lg font-semibold text-gray-800">${task.description}</h4>
-                                <p class="text-gray-600">Format: ${task.format}</p>
-                                <p class="text-gray-600">You earn: <span class="font-bold text-green-700">₹${task.workerReceives}</span> (Offer: ₹${task.price})</p>
-                                <p class="text-gray-600">Posted by: ${posterName} from ${task.college}</p>
-                                <p class="text-gray-500 text-sm mt-2">Posted on: ${task.createdAt ? new Date(task.createdAt.toDate()).toLocaleDateString() : 'N/A'}</p>
-                                <button data-task-id="${taskId}" class="accept-task-button mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
-                                    Accept Task
-                                </button>
-                            </div>
-                        `;
-                        availableTasksList.innerHTML += taskCard;
-                    }
-                    document.querySelectorAll('.accept-task-button').forEach(button => {
-                        button.addEventListener('click', async (event) => {
-                            const taskId = event.target.dataset.taskId;
-                            await acceptTask(taskId);
+                        document.querySelectorAll('.accept-task-button').forEach(button => {
+                            button.addEventListener('click', async (event) => {
+                                const taskId = event.target.dataset.taskId;
+                                await acceptTask(taskId);
+                            });
                         });
-                    });
+                    }
                 }
             }, (error) => {
                 console.error("Error fetching available tasks:", error);
@@ -1205,7 +1167,6 @@
                     return;
                 }
                 
-                // Do not let a user accept their own task
                 if (taskDocSnap.data().postedByUid === user.uid) {
                      showMessage("You cannot accept your own task.", "error");
                      return;
@@ -1245,7 +1206,6 @@
                     completedAt: serverTimestamp()
                 });
                 
-                // Process payment to the worker
                 const workerUserRef = doc(db, "users", taskData.acceptedByUid);
                 const workerDocSnap = await getDoc(workerUserRef);
                 if (workerDocSnap.exists()) {
