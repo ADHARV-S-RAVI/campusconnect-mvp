@@ -508,32 +508,27 @@
         }
 
         // --- Firebase Auth State Listener (Changed to onIdTokenChanged for robustness) ---
-        let isAuthReady = false;
         onIdTokenChanged(auth, async (user) => {
             if (user && user.uid) {
-                if (!isAuthReady) {
-                    isAuthReady = true;
-                    console.log("ID token ready for user:", user.uid);
-                    if (logoutButton) {
-                        logoutButton.classList.remove('hidden');
+                console.log("ID token ready for user:", user.uid);
+                if (logoutButton) {
+                    logoutButton.classList.remove('hidden');
+                }
+                const userDocRef = doc(db, "users", user.uid);
+                try {
+                    const userDocSnap = await getDoc(userDocRef);
+                    if (userDocSnap.exists()) {
+                        currentUserData = userDocSnap.data();
+                        renderDashboard(currentUserData);
+                        showPage('dashboard-page');
+                    } else {
+                        showPage('onboarding-page');
                     }
-                    const userDocRef = doc(db, "users", user.uid);
-                    try {
-                        const userDocSnap = await getDoc(userDocRef);
-                        if (userDocSnap.exists()) {
-                            currentUserData = userDocSnap.data();
-                            renderDashboard(currentUserData);
-                            showPage('dashboard-page');
-                        } else {
-                            showPage('onboarding-page');
-                        }
-                    } catch (error) {
-                        console.error("Error fetching user document:", error);
-                        showMessage(`Error loading profile: ${error.message}`, "error");
-                    }
+                } catch (error) {
+                    console.error("Error fetching user document:", error);
+                    showMessage(`Error loading profile: ${error.message}`, "error");
                 }
             } else {
-                isAuthReady = false;
                 if (logoutButton) {
                     logoutButton.classList.add('hidden');
                 }
